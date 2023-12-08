@@ -9,7 +9,7 @@ namespace cwing
 
 	Rectangle::Rectangle(int x, int y, int w, int h):Component(x,y,w,h)
 	{
-        texture = IMG_LoadTexture(sys.ren, (constants::gResPath + "images/NerKnapp.png").c_str() );
+        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/NerKnapp.png").c_str() );
 	}
 
 	Rectangle::~Rectangle()
@@ -44,6 +44,6 @@ namespace cwing
 
 		const SDL_Rect &rect = getRect();
 
-		SDL_RenderCopy(sys.ren, texture, NULL, &rect);
+		SDL_RenderCopy(sys.get_ren(), texture, NULL, &rect);
 	}
 }
