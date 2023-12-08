@@ -1,5 +1,5 @@
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
 #include "Component.h"
 #include <SDL2/SDL.h>
@@ -7,17 +7,17 @@
 
 namespace cwing 
 {
-	class Button : public Component
+	class Rectangle : public Component
 	{
 	public:
-		static Button* getInstance(int x, int y, int w, int h, std::string txt);
+		static Rectangle* getInstance(int x, int y, int w, int h);
 		void mouseDown(const SDL_Event&);
 		void mouseUp(const SDL_Event&);
+        void tick(int x, int y);
 		void draw() const;
-		virtual void perform(Button* source) {}
-		~Button();
+		~Rectangle();
 	protected:
-		Button(int x, int y, int w, int h, std::string txt);
+		Rectangle(int x, int y, int w, int h);
 	private:
 		std::string text;
 		SDL_Texture* texture;
