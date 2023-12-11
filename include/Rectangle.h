@@ -1,19 +1,19 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
-#include "Component.h"
+#include "Sprite.h"
 #include <SDL2/SDL.h>
 #include <string>
 
 namespace cwing 
 {
-	class Rectangle : public Component
+	class Rectangle : public Sprite
 	{
 	public:
 		static Rectangle* getInstance(int x, int y, int w, int h);
 		void mouseDown(const SDL_Event&);
 		void mouseUp(const SDL_Event&);
-        void tick(int x, int y);
+        void tick();
 		void draw() const;
 		~Rectangle();
 	protected:

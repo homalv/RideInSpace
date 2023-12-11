@@ -1,19 +1,22 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include "Component.h"
+#include "Sprite.h"
+#include "Player.h"
 #include <vector>
 namespace cwing 
 {
 	class Session
 	{
 	public:
-		void add(Component* comp);
-		void remove(Component* comp);
+		void add(Sprite* spriteList);
+		void remove(Sprite* spriteList);
 		void run();
+		//Player const player;
 	private:
-		std::vector<Component*> comps;
-		std::vector<Component*> added, removed;
+		std::vector<Sprite*> spriteList;
+		std::vector<Sprite*> added, removed;
 	};
 }
+
 #endif
