@@ -52,5 +52,4 @@ namespace cwing
 	PlayerBullet* Player::shoot() {
 		return PlayerBullet::getInstance(rect.x, rect.y);
 	}
-
 }

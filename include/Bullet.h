@@ -8,7 +8,6 @@ namespace cwing
         public:
             static Bullet* getInstance(int x, int y, int w, int h);
             void draw() const;
-
             ~Bullet();
         protected:
             Bullet(int x, int y, int w, int h);

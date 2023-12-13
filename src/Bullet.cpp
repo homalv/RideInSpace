@@ -21,12 +21,6 @@ namespace cwing
 		return new Bullet(x, y, w, h);
 	}
 
-    /*
-
-    void Bullet::tick () {}
-
-    */
-
 	void Bullet::draw() const {
 
 		const SDL_Rect &rect = getRect();

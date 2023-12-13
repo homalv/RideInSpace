@@ -4,7 +4,7 @@
 #include "System.h"
 #include "Player.h"
 #include <typeinfo>
-#include "Bullet.h"
+#include "PlayerBullet.h"
 
 using namespace std;
 
@@ -14,35 +14,25 @@ namespace cwing
 {
 
 
-	void Session::add(Sprite* comp) {
-		added.push_back(comp);
+	void Session::add(Sprite* sprite) {
+		added.push_back(sprite);
 	}
 
-	void Session::remove(Sprite* comp) {
-		removed.push_back(comp);
+	void Session::remove(Sprite* sprite) {
+		removed.push_back(sprite);
 	}
 
 	void Session::run() {
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS;
 		Player* newPlayer = Player::getInstance(100, 100, 40, 40);
+		PlayerBullet* pb;
 		while (!quit) {
 			Uint32 nextTick = SDL_GetTicks() + tickInterval;
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
 				case SDL_QUIT: quit = true; break;
-				/*
-				case SDL_MOUSEBUTTONDOWN:
-					for (Sprite* c : spriteList){
-						c->mouseDown(event);
-					}
-					break;
-				case SDL_MOUSEBUTTONUP:
-					for (Sprite* c : spriteList)
-						c->mouseUp(event);
-					break;
-				*/
 				case SDL_KEYDOWN:
                     switch (event.key.keysym.scancode)
                     {
@@ -59,8 +49,9 @@ namespace cwing
                         newPlayer->setDownTrue();
                         break;
 					case SDL_SCANCODE_SPACE:
-						Bullet* newBullet = newPlayer->shoot();
-						add(newBullet);
+						pb = newPlayer->shoot();
+						add(pb);
+						break;
                     default:
                         break;
                     }
@@ -96,6 +87,9 @@ namespace cwing
 
 			for (Sprite* c : spriteList){
 				c->tick();
+				if(c->checkRemove()){
+					remove(c);
+				}
 			}
 
 			for (Sprite* c : added)
