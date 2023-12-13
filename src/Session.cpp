@@ -43,42 +43,42 @@ namespace cwing
 					break;
 				*/
 				case SDL_KEYDOWN:
-					switch (event.key.keysym.scancode)
-					{
-					case SDL_SCANCODE_RIGHT:
-						newPlayer->updateRight();
-						break;
-					case SDL_SCANCODE_LEFT:
-						newPlayer->updateLeft();
-						break;
-					case SDL_SCANCODE_UP:
-						newPlayer->updateUp();
-						break;
-					case SDL_SCANCODE_DOWN:
-						newPlayer->updateDown();
-						break;
-					default:
-						break;
-					}
-					break;
-				case SDL_KEYUP:
-					switch (event.key.keysym.scancode)
-					{
-					case SDL_SCANCODE_RIGHT:
-						newPlayer->updateRight();
-						break;
-					case SDL_SCANCODE_LEFT:
-						newPlayer->updateLeft();
-						break;
-					case SDL_SCANCODE_UP:
-						newPlayer->updateUp();
-						break;
-					case SDL_SCANCODE_DOWN:
-						newPlayer->updateDown();
-						break;
-					default:
-						break;
-					}
+                    switch (event.key.keysym.scancode)
+                    {
+                    case SDL_SCANCODE_RIGHT:
+                        newPlayer->setRightTrue();
+                        break;
+                    case SDL_SCANCODE_LEFT:
+                        newPlayer->setLeftTrue();
+                        break;
+                    case SDL_SCANCODE_UP:
+                        newPlayer->setUpTrue();
+                        break;
+                    case SDL_SCANCODE_DOWN:
+                        newPlayer->setDownTrue();
+                        break;
+                    default:
+                        break;
+                    }
+                    break;
+                case SDL_KEYUP:
+                    switch (event.key.keysym.scancode)
+                    {
+                    case SDL_SCANCODE_RIGHT:
+                        newPlayer->setRightFalse();
+                        break;
+                    case SDL_SCANCODE_LEFT:
+                        newPlayer->setLeftFalse();
+                        break;
+                    case SDL_SCANCODE_UP:
+                        newPlayer->setUpFalse();
+                        break;
+                    case SDL_SCANCODE_DOWN:
+                        newPlayer->setDownFalse();
+                        break;
+                    default:
+                        break;
+                    }
 					break;
 				}
 				 //switch
