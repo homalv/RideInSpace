@@ -10,7 +10,7 @@ namespace cwing
 
 	Player::Player(int x, int y, int w, int h) : MovableSprite(x,y,w,h)
 	{
-        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/NerKnapp.png").c_str() );
+        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str() );
 	}
 
 	Player::~Player()

@@ -1,9 +1,11 @@
 #include "Session.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "Sprite.h"
 #include "System.h"
 #include "Player.h"
 #include <typeinfo>
+#include "Constants.h"
 
 using namespace std;
 
@@ -22,10 +24,16 @@ namespace cwing
 	}
 
 	void Session::run() {
+		SDL_Renderer* ren = SDL_CreateRenderer(sys.get_win(), -1, 0); //renderare till bakgrundsbild
+		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/player_ship.png").c_str());
+    	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(ren, bgSurf);
+    	SDL_FreeSurface(bgSurf);
+
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS;
-		Player* newPlayer = Player::getInstance(100, 100, 40, 40);
+		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
 		while (!quit) {
+			SDL_RenderCopy(ren, bgTx, NULL, NULL);
 			Uint32 nextTick = SDL_GetTicks() + tickInterval;
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
