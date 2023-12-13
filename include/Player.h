@@ -3,6 +3,7 @@
 #include <MovableSprite.h>
 #include <SDL2/SDL.h>
 #include "System.h"
+#include "PlayerBullet.h"
 
 namespace cwing 
 {
@@ -49,6 +50,7 @@ namespace cwing
         void setDownFalse(){
             movingDown = false;
         }
+        PlayerBullet* shoot();
         ~Player();
     protected:
         Player(int x, int y, int w, int h);

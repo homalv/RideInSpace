@@ -4,6 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include "System.h"
 #include "Constants.h"
+#include "PlayerBullet.h"
+#include "Session.h"
 
 namespace cwing 
 {
@@ -46,4 +48,9 @@ namespace cwing
 
 		SDL_RenderCopy(sys.get_ren(), texture, NULL, &rect);
 	}
+
+	PlayerBullet* Player::shoot() {
+		return PlayerBullet::getInstance(rect.x, rect.y);
+	}
+
 }

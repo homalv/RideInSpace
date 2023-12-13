@@ -4,6 +4,7 @@
 #include "System.h"
 #include "Player.h"
 #include <typeinfo>
+#include "Bullet.h"
 
 using namespace std;
 
@@ -57,6 +58,9 @@ namespace cwing
                     case SDL_SCANCODE_DOWN:
                         newPlayer->setDownTrue();
                         break;
+					case SDL_SCANCODE_SPACE:
+						Bullet* newBullet = newPlayer->shoot();
+						add(newBullet);
                     default:
                         break;
                     }
