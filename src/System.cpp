@@ -27,5 +27,9 @@ namespace cwing {
 		return ren;
 	}
 
+	SDL_Window* System::get_win() const {
+		return win;
+	}
+
 	System sys;
 }

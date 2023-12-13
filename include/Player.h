@@ -2,40 +2,52 @@
 #define PLAYER_H
 #include <MovableSprite.h>
 #include <SDL2/SDL.h>
+#include "System.h"
 
 namespace cwing 
 {
-
-
     class Player : public MovableSprite {
     public:
         static Player* getInstance(int x, int y, int w, int h);
         void draw() const;
         void tick() {
-            if(movingRight){
+            SDL_GetWindowSize(sys.get_win(), &windowWidth, &windowHeight);
+            if(movingRight && rect.x + rect.w < windowWidth){
                 rect.x += 5;
             }
-            if(movingLeft){
+            if(movingLeft && rect.x > 5){
                 rect.x -= 5;
             }
-            if(movingUp){
+            if(movingUp && rect.y > 5){
                 rect.y -= 5;
             }
-            if(movingDown){
+            if(movingDown && rect.y + rect.h < windowHeight){
                 rect.y += 5;
             }
         }
-        void updateRight(){
-            movingRight = !movingRight;
+        void setRightTrue(){
+            movingRight = true;
         }
-        void updateLeft(){
-            movingLeft = !movingLeft;
+        void setLeftTrue(){
+            movingLeft = true;
         }
-        void updateUp(){
-            movingUp = !movingUp;
+        void setUpTrue(){
+            movingUp = true;
         }
-        void updateDown(){
-            movingDown = !movingDown;
+        void setDownTrue(){
+            movingDown = true;
+        }
+        void setRightFalse(){
+            movingRight = false;
+        }
+        void setLeftFalse(){
+            movingLeft = false;
+        }
+        void setUpFalse(){
+            movingUp = false;
+        }
+        void setDownFalse(){
+            movingDown = false;
         }
         ~Player();
     protected:
@@ -45,6 +57,8 @@ namespace cwing
         bool movingRight = false;
         bool movingUp = false;
         bool movingDown = false;
+        int windowWidth;
+        int windowHeight;
         SDL_Texture* texture;
     };
 }
