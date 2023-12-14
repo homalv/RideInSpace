@@ -5,20 +5,26 @@
 #include "System.h"
 #include "Player.h"
 #include <typeinfo>
+#include "PlayerBullet.h"
 #include "Constants.h"
 
 using namespace std;
 
 #define FPS 80
 
+
+//hej
+
 namespace cwing 
 {
-	void Session::add(Sprite* comp) {
-		added.push_back(comp);
+
+
+	void Session::add(Sprite* sprite) {
+		added.push_back(sprite);
 	}
 
-	void Session::remove(Sprite* comp) {
-		removed.push_back(comp);
+	void Session::remove(Sprite* sprite) {
+		removed.push_back(sprite);
 	}
 
 	void Session::run() {
@@ -33,7 +39,7 @@ namespace cwing
     	int bgHeight = 500;
 		int bgX1 = 0;       // Position för den första kopian av bakgrundsbilden
     	int bgX2 = bgWidth; // Position för den andra kopian av bakgrundsbilden
-
+		PlayerBullet* pb;
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
         	bgX1 -= 1;
@@ -60,17 +66,6 @@ namespace cwing
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
 				case SDL_QUIT: quit = true; break;
-				/*
-				case SDL_MOUSEBUTTONDOWN:
-					for (Sprite* c : spriteList){
-						c->mouseDown(event);
-					}
-					break;
-				case SDL_MOUSEBUTTONUP:
-					for (Sprite* c : spriteList)
-						c->mouseUp(event);
-					break;
-				*/
 				case SDL_KEYDOWN:
                     switch (event.key.keysym.scancode)
                     {
@@ -86,6 +81,12 @@ namespace cwing
                     case SDL_SCANCODE_DOWN:
                         newPlayer->setDownTrue();
                         break;
+					case SDL_SCANCODE_SPACE:
+						pb = newPlayer->shoot();
+						if(pb != nullptr){
+							add(pb);
+						}
+						break;
                     default:
                         break;
                     }
@@ -121,6 +122,9 @@ namespace cwing
 
 			for (Sprite* c : spriteList){
 				c->tick();
+				if(c->checkRemove()){
+					remove(c);
+				}
 			}
 
 			for (Sprite* c : added)
