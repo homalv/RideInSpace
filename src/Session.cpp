@@ -1,10 +1,12 @@
 #include "Session.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "Sprite.h"
 #include "System.h"
 #include "Player.h"
 #include <typeinfo>
 #include "PlayerBullet.h"
+#include "Constants.h"
 
 using namespace std;
 
@@ -26,11 +28,39 @@ namespace cwing
 	}
 
 	void Session::run() {
+		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/space_bg.png").c_str()); //för bakgrundsbilden
+    	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf);  //för bakgrundsbilden
+    	SDL_FreeSurface(bgSurf);
+		
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS;
-		Player* newPlayer = Player::getInstance(100, 100, 40, 40);
-		PlayerBullet* pb;
+		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
+		int bgWidth = 1501;  // Bredden på bakgrundsbilden
+    	int bgHeight = 500;
+		int bgX1 = 0;       // Position för den första kopian av bakgrundsbilden
+    	int bgX2 = bgWidth; // Position för den andra kopian av bakgrundsbilden
+
 		while (!quit) {
+			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
+        	bgX1 -= 1;
+        	bgX2 -= 1;
+			if (bgX1 <= -bgWidth) { 
+				bgX1 = bgX2 + bgWidth; // Återställ bgX1
+	        }
+			if (bgX2 <= -bgWidth) { // Återställ bgX2
+				bgX2 = bgX1 + bgWidth;
+        	}
+			
+			// Ritar den första kopien av bakgrundsbilden
+        	SDL_Rect srcRect1 = {0, 0, bgWidth, bgHeight};
+        	SDL_Rect destRect1 = {bgX1, 0, bgWidth, bgHeight};
+        	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect1, &destRect1);
+
+        	// Ritar den andra kopien av bakgrundsbilden för sömlös loop
+        	SDL_Rect srcRect2 = {0, 0, bgWidth, bgHeight};
+        	SDL_Rect destRect2 = {bgX2, 0, bgWidth, bgHeight};
+        	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect2, &destRect2); 
+			
 			Uint32 nextTick = SDL_GetTicks() + tickInterval;
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
@@ -116,8 +146,8 @@ namespace cwing
 			}
 			removed.clear();
 
-			SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
-			SDL_RenderClear(sys.get_ren());
+			//SDL_SetRenderDrawColor(sys.get_ren(), 0, 0, 35, 255);
+			//SDL_RenderClear(sys.get_ren());
 
 			//Draw för player
 			newPlayer->draw();
