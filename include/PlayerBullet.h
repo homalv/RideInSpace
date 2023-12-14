@@ -10,15 +10,11 @@ namespace cwing
         public:
             static PlayerBullet* getInstance(int x, int y);
             void tick();
-            ~PlayerBullet();
         protected:
             PlayerBullet(int x, int y);
         private:
             static const int width = 20;
             static const int height = 20;
-            int windowWidth;
-            int windowHeight;
-            int counter = 0;
     };
 }
 

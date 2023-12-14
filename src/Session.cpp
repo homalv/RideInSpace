@@ -50,7 +50,9 @@ namespace cwing
                         break;
 					case SDL_SCANCODE_SPACE:
 						pb = newPlayer->shoot();
-						add(pb);
+						if(pb != nullptr){
+							add(pb);
+						}
 						break;
                     default:
                         break;

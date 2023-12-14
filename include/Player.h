@@ -11,50 +11,21 @@ namespace cwing
     public:
         static Player* getInstance(int x, int y, int w, int h);
         void draw() const;
-        void tick() {
-            SDL_GetWindowSize(sys.get_win(), &windowWidth, &windowHeight);
-            if(movingRight && rect.x + rect.w < windowWidth){
-                rect.x += 5;
-            }
-            if(movingLeft && rect.x > 5){
-                rect.x -= 5;
-            }
-            if(movingUp && rect.y > 5){
-                rect.y -= 5;
-            }
-            if(movingDown && rect.y + rect.h < windowHeight){
-                rect.y += 5;
-            }
-        }
-        void setRightTrue(){
-            movingRight = true;
-        }
-        void setLeftTrue(){
-            movingLeft = true;
-        }
-        void setUpTrue(){
-            movingUp = true;
-        }
-        void setDownTrue(){
-            movingDown = true;
-        }
-        void setRightFalse(){
-            movingRight = false;
-        }
-        void setLeftFalse(){
-            movingLeft = false;
-        }
-        void setUpFalse(){
-            movingUp = false;
-        }
-        void setDownFalse(){
-            movingDown = false;
-        }
+        void tick();
+        void setRightTrue();
+        void setLeftTrue();
+        void setUpTrue();
+        void setDownTrue();
+        void setRightFalse();
+        void setLeftFalse();
+        void setUpFalse();
+        void setDownFalse();
         PlayerBullet* shoot();
         ~Player();
     protected:
         Player(int x, int y, int w, int h);
     private:
+        Uint32 lastShotTime = 0;
         bool movingLeft = false;
         bool movingRight = false;
         bool movingUp = false;

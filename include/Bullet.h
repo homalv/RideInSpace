@@ -7,13 +7,14 @@ namespace cwing
     class Bullet : public MovableSprite {
         public:
             static Bullet* getInstance(int x, int y, int w, int h);
-            void draw() const;
+            virtual void draw() const;
+            virtual void tick() {};
             ~Bullet();
         protected:
             Bullet(int x, int y, int w, int h);
-        private:
             int windowWidth;
             int windowHeight;
+        private:
             SDL_Texture* texture;
 
     };
