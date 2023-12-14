@@ -39,7 +39,7 @@ namespace cwing
     	int bgHeight = 500;
 		int bgX1 = 0;       // Position för den första kopian av bakgrundsbilden
     	int bgX2 = bgWidth; // Position för den andra kopian av bakgrundsbilden
-
+		PlayerBullet* pb;
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
         	bgX1 -= 1;
