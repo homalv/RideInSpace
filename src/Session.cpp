@@ -69,7 +69,7 @@ namespace cwing
 
 			if(currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
-            	newEnemy = Enemy::getInstance(700, dist(rd) * 55, 30, 30);
+            	newEnemy = Enemy::getInstance(700, dist(rd) * 55, 40, 40);
 				add(newEnemy);
         	}
 
