@@ -7,6 +7,8 @@
 #include <typeinfo>
 #include "PlayerBullet.h"
 #include "Constants.h"
+#include <random>
+#include "Enemy.h"
 
 using namespace std;
 
@@ -33,8 +35,11 @@ namespace cwing
     	SDL_FreeSurface(bgSurf);
 		
 		bool quit = false;
-		Uint32 tickInterval = 1000 / FPS;
+		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
+		Enemy* newEnemy;
+		random_device rd;
+		uniform_int_distribution<int> dist(1, 8);
 		int bgWidth = 1501;  // Bredden på bakgrundsbilden
     	int bgHeight = 500;
 		int bgX1 = 0;       // Position för den första kopian av bakgrundsbilden
@@ -61,8 +66,15 @@ namespace cwing
         	SDL_Rect destRect2 = {bgX2, 0, bgWidth, bgHeight};
         	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect2, &destRect2); 
 			
-			Uint32 nextTick = SDL_GetTicks() + tickInterval;
+			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
+
+			if(currentTime - lastEnemyTimer >= 2000){
+            	lastEnemyTimer = currentTime;
+            	newEnemy = Enemy::getInstance(700, dist(rd) * 55, 30, 30);
+				add(newEnemy);
+        	}
+
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
 				case SDL_QUIT: quit = true; break;
