@@ -8,7 +8,7 @@
 namespace cwing 
 {  
     Enemy::Enemy(int x, int y, int w, int h) : MovableSprite(x,y,w,h){
-    texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/UppKnapp.png").c_str() );
+    texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy2.png").c_str() );
 	}
         
     Enemy::~Enemy(){
