@@ -12,9 +12,6 @@ using namespace std;
 
 #define FPS 80
 
-
-//hej
-
 namespace cwing 
 {
 
