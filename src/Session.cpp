@@ -9,6 +9,8 @@
 #include "Constants.h"
 #include <random>
 #include "Enemy.h"
+#include "GamePanel.h"
+#include "Label.h"
 
 using namespace std;
 
@@ -27,6 +29,14 @@ namespace cwing
 	}
 
 	void Session::run() {
+		
+		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
+		add(gamePanel);
+		Label* labelPoints = Label::getInstance(50, 13, 96, 15, "Total Points");
+		add(labelPoints);
+		Label* labelLives = Label::getInstance(50, 38, 88, 15, "Total Lives");
+		add(labelLives);
+
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/space_bg.png").c_str()); //för bakgrundsbilden
     	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf);  //för bakgrundsbilden
     	SDL_FreeSurface(bgSurf);
@@ -34,7 +44,7 @@ namespace cwing
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
-		Enemy* newEnemy;
+		Enemy* newEnemy;		
 		random_device rd;
 		uniform_int_distribution<int> dist(1, 8);
 		int bgWidth = 1501;  // Bredden på bakgrundsbilden
@@ -53,7 +63,6 @@ namespace cwing
 			if (bgX2 <= -bgWidth) { // Återställ bgX2
 				bgX2 = bgX1 + bgWidth;
         	}
-			
 			// Ritar den första kopien av bakgrundsbilden
         	SDL_Rect srcRect1 = {0, 0, bgWidth, bgHeight};
         	SDL_Rect destRect1 = {bgX1, 0, bgWidth, bgHeight};
@@ -130,10 +139,8 @@ namespace cwing
 			//Tick för player
 			newPlayer->tick();
 
-			if(spacePressed){
-				
+			if(spacePressed){	
 			}
-
 
 			for (Sprite* c : spriteList){
 				c->tick();
@@ -165,7 +172,7 @@ namespace cwing
 			//SDL_RenderClear(sys.get_ren());
 
 			//Draw för player
-			newPlayer->draw();
+			newPlayer->draw();			
 
 			for (Sprite* c : spriteList)
 				c->draw();
