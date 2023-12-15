@@ -9,6 +9,7 @@
 #include "Constants.h"
 #include <random>
 #include "Enemy.h"
+#include "EnemyBullet.h"
 
 using namespace std;
 
@@ -34,7 +35,9 @@ namespace cwing
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
-		Enemy* newEnemy;
+		//EnemyBullet* eBullet = EnemyBullet::getInstance(600, 300, newPlayer->getRect().x, newPlayer->getRect().y);
+		//add(eBullet);
+		//Enemy* newEnemy;
 		random_device rd;
 		uniform_int_distribution<int> dist(1, 8);
 		int bgWidth = 1501;  // Bredden på bakgrundsbilden
@@ -66,11 +69,19 @@ namespace cwing
 			
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
-
+			
+			/*
 			if(currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
             	newEnemy = Enemy::getInstance(700, dist(rd) * 55, 40, 40);
 				add(newEnemy);
+        	}
+			*/
+
+			if(currentTime - lastEnemyTimer >= 500){
+            	lastEnemyTimer = currentTime;
+            	EnemyBullet* eBullet = EnemyBullet::getInstance(400, 55, newPlayer->getRect().x, newPlayer->getRect().y);
+				add(eBullet);
         	}
 
 			while (SDL_PollEvent(&event)) {
