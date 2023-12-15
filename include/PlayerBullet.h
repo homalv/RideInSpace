@@ -13,7 +13,7 @@ namespace cwing
         protected:
             PlayerBullet(int x, int y);
         private:
-            static const int width = 20;
+            static const int width = 40;
             static const int height = 20;
     };
 }

@@ -40,6 +40,7 @@ namespace cwing
 		int bgX1 = 0;       // Position för den första kopian av bakgrundsbilden
     	int bgX2 = bgWidth; // Position för den andra kopian av bakgrundsbilden
 		PlayerBullet* pb;
+		bool spacePressed = false;
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
         	bgX1 -= 1;
@@ -119,6 +120,11 @@ namespace cwing
 
 			//Tick för player
 			newPlayer->tick();
+
+			if(spacePressed){
+				
+			}
+
 
 			for (Sprite* c : spriteList){
 				c->tick();
