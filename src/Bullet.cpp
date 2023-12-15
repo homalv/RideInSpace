@@ -7,9 +7,9 @@
 namespace cwing 
 {
 
-	Bullet::Bullet(int x, int y, int w, int h) : MovableSprite(x,y,w,h)
+	Bullet::Bullet(int x, int y, int w, int h) : MovableSprite(x,(y-(h/2)),w,h)
 	{
-        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/NerKnapp.png").c_str() );
+        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/bullet.png").c_str() );
 		SDL_GetWindowSize(sys.get_win(), &windowWidth, &windowHeight);
 	}
 

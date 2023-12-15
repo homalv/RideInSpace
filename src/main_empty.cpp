@@ -20,10 +20,6 @@ class TestEnemy: public Enemy{
 Session ses;
 
 int main(int argc, char** argv){ 
-
-	//PlayerBullet* pb = PlayerBullet::getInstance(50, 50);
-
-	//ses.add(pb);
 	
 	ses.run();
 

@@ -18,6 +18,6 @@ namespace cwing
 		if(rect.x + rect.w > windowWidth){
 			removeThis = true;
 		}
-		rect.x += 5;
+		rect.x += 10;
 	}
 }

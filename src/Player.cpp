@@ -92,7 +92,7 @@ namespace cwing
 		Uint32 currentTime = SDL_GetTicks();
 		if(currentTime - lastShotTime >= 300){
 			lastShotTime = currentTime;
-			return PlayerBullet::getInstance(rect.x, rect.y);
+			return PlayerBullet::getInstance(rect.x+rect.w, rect.y+(rect.h/2));
 		}
 		return nullptr;
 	}
