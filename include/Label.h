@@ -12,7 +12,7 @@ namespace cwing
 	{
 	public:
 		static Label* getInstance(int x, int y, int w, int h, std::string txt);
-		void draw() const;
+		void draw() const override; //varför denna?
 		std::string getText() const;
 		void setText(std::string newText);
 		~Label();

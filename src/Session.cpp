@@ -32,9 +32,9 @@ namespace cwing
 		
 		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 		add(gamePanel);
-		Label* labelPoints = Label::getInstance(50, 13, 96, 15, "Total Points");
+		Label* labelPoints = Label::getInstance(50, 13, 96, 15, "Total Points: ");
 		add(labelPoints);
-		Label* labelLives = Label::getInstance(50, 38, 88, 15, "Total Lives");
+		Label* labelLives = Label::getInstance(50, 38, 88, 15, "Total Lives: ");
 		add(labelLives);
 
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/space_bg.png").c_str()); //för bakgrundsbilden
