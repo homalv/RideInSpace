@@ -13,6 +13,8 @@ namespace cwing {
 		//musik = Mix_LoadWAV("/Users/kjellna/dev/cpp21/f13b/sounds/bgMusic.wav");
 		musik = Mix_LoadWAV( (constants::gResPath + "sounds/bgMusic.wav").c_str() );
 		Mix_PlayChannel(-1, musik, -1);
+		TTF_Init();
+		font = TTF_OpenFont( (constants::gResPath + "fonts/STENCIL.ttf").c_str(), 22);
 	}
 
 	System::~System() {
@@ -21,6 +23,8 @@ namespace cwing {
 		SDL_DestroyWindow(win);
 		SDL_DestroyRenderer(ren);
 		SDL_Quit();
+		TTF_CloseFont(font);
+		TTF_Quit();
 	}
 
 	SDL_Renderer* System::get_ren() const {
@@ -29,6 +33,10 @@ namespace cwing {
 
 	SDL_Window* System::get_win() const {
 		return win;
+	}
+
+	TTF_Font* System::get_font() const {
+		return font;
 	}
 
 	System sys;

@@ -20,6 +20,7 @@ namespace cwing
 			SDL_Window* win;
 			SDL_Renderer* ren;
 			Mix_Chunk* musik;
+			TTF_Font* font;
 	};
 	
 	extern System sys;
