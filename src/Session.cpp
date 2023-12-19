@@ -9,6 +9,7 @@
 #include "Constants.h"
 #include <random>
 #include "Enemy.h"
+#include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
 
@@ -44,13 +45,13 @@ namespace cwing
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
+		//EnemyBullet* eBullet = EnemyBullet::getInstance(600.0f, 300.0f, newPlayer->getRect().x, newPlayer->getRect().y);
 		Enemy* newEnemy;
 
 		Label* actualPoints = Label::getInstance(220, 13, 1, 1, std::to_string(newPlayer->getPoints()));
 		add(actualPoints);
 		Label* actualLives = Label::getInstance(220, 38, 1, 1, std::to_string(newPlayer->getLives()));
 		add(actualLives);
-
 		random_device rd;
 		uniform_int_distribution<int> dist(1, 8);
 		int bgWidth = 1501;  // Bredd  och höjd bakgrundsbild
@@ -80,11 +81,19 @@ namespace cwing
 			
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
-
+			
+			/*
 			if(currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
             	newEnemy = Enemy::getInstance(700, dist(rd) * 55, 40, 40);
 				add(newEnemy);
+        	}
+			*/
+
+			if(currentTime - lastEnemyTimer >= 2000){
+            	lastEnemyTimer = currentTime;
+            	EnemyBullet* eBullet = EnemyBullet::getInstance(400, 55, newPlayer->getRect().x, newPlayer->getRect().y);
+				add(eBullet);
         	}
 
 			while (SDL_PollEvent(&event)) {
@@ -178,6 +187,7 @@ namespace cwing
 
 			//Draw för player
 			newPlayer->draw();			
+
 
 			for (Sprite* c : spriteList)
 				c->draw();

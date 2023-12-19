@@ -7,7 +7,7 @@
 
 namespace cwing 
 {  
-    Enemy::Enemy(int x, int y, int w, int h) : MovableSprite(x,y,w,h){
+    Enemy::Enemy(float x, float y, float w, float h) : MovableSprite(x,y,w,h){
     texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy2.png").c_str() );
 	}
         
@@ -15,14 +15,14 @@ namespace cwing
 	    SDL_DestroyTexture(texture);
     }
 
-    Enemy* Enemy::getInstance(int x, int y, int w, int h) {
+    Enemy* Enemy::getInstance(float x, float y, float w, float h) {
         return new Enemy(x, y, w, h);
     }
         
     void tick() {}
 
     void Enemy::draw() const {
-        const SDL_Rect &rect = getRect();
-        SDL_RenderCopy(sys.get_ren(), texture, NULL, &rect);
+        const SDL_FRect &rect = getRect();
+        SDL_RenderCopyF(sys.get_ren(), texture, NULL, &rect);
     } 
 }

@@ -10,7 +10,7 @@ namespace cwing
     class Enemy : public MovableSprite
 	{
         public:
-            static Enemy* getInstance(int x, int y, int w, int h);        
+            static Enemy* getInstance(float x, float y, float w, float h);        
             void draw() const;
             void tick() {
                 rect.x -= 2;  
@@ -24,7 +24,7 @@ namespace cwing
         }
 
         protected:
-            Enemy(int x, int y, int w, int h);
+            Enemy(float x, float y, float w, float h);
 
         private:
             SDL_Texture* texture;
