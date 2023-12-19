@@ -21,7 +21,6 @@ using namespace std;
 namespace cwing 
 {
 
-
 	void Session::add(Sprite* sprite) {
 		added.push_back(sprite);
 	}
@@ -51,9 +50,13 @@ namespace cwing
 
 
 		Label* actualPoints = Label::getInstance(220, 13, 1, 1, std::to_string(newPlayer->getPoints()));
+		actualPoints->setPlayer(newPlayer);
 		add(actualPoints);
+
 		Label* actualLives = Label::getInstance(220, 38, 1, 1, std::to_string(newPlayer->getLives()));
+		actualLives->setPlayer(newPlayer);
 		add(actualLives);
+		
 		random_device rd;
 		uniform_int_distribution<int> dist(1, 8);
 		int bgWidth = 1501;  // Bredd  och höjd bakgrundsbild
@@ -196,6 +199,7 @@ namespace cwing
 					std::cout << newPlayer->getLives() << std::endl;
 					playerHitTimer = currentTime;
 					newPlayer->looseLife();
+					actualLives->updateLives();
 					std::cout << newPlayer->getLives() << std::endl;
 				}
 			}
