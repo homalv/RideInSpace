@@ -46,7 +46,7 @@ namespace cwing
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
 		//EnemyBullet* eBullet = EnemyBullet::getInstance(600.0f, 300.0f, newPlayer->getRect().x, newPlayer->getRect().y);
-		Enemy* newEnemy;
+		//Enemy* newEnemy;
 
 		Label* actualPoints = Label::getInstance(220, 13, 1, 1, std::to_string(newPlayer->getPoints()));
 		add(actualPoints);

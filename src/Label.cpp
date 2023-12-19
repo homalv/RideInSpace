@@ -27,7 +27,7 @@ namespace cwing
 	}
 
 	void Label::draw() const {
-		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
+		SDL_RenderCopyF(sys.get_ren(), texture, NULL, &getRect());
 	}
 
 	Label::~Label()

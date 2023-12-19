@@ -21,8 +21,8 @@ namespace cwing {
     }
 
     void GamePanel::draw() const {
-        const SDL_Rect &rect = getRect();
-        SDL_RenderCopy(sys.get_ren(), texture, NULL, &rect);
+        const SDL_FRect &rect = getRect();
+        SDL_RenderCopyF(sys.get_ren(), texture, NULL, &rect);
     }
 
 } // namespace cwing
