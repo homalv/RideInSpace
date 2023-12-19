@@ -11,12 +11,6 @@
 using namespace std;
 using namespace cwing;
 
-class TestEnemy: public Enemy{
-	public:
-	TestEnemy() :Enemy(700, 460, 40, 40){}
-	//void perform(){}
-};
-
 Session ses;
 
 int main(int argc, char** argv){ 

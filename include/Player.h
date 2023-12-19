@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include "System.h"
 #include "PlayerBullet.h"
+#include <vector>
 
 namespace cwing 
 {
@@ -21,7 +22,7 @@ namespace cwing
         void setUpFalse();
         void setDownFalse();
         PlayerBullet* shoot();
-
+        bool checkCollision(const Sprite& other) const;
         void looseLife();
         void addPoints();
         int getLives() const;
@@ -40,6 +41,7 @@ namespace cwing
         SDL_Texture* texture;
         int points = 0;
         int lives = 3;
+        SDL_FRect hitbox;
     };
 }
 
