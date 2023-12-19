@@ -9,7 +9,7 @@ namespace cwing
 {
     class Player : public MovableSprite {
     public:
-        static Player* getInstance(int x, int y, int w, int h);
+        static Player* getInstance(float x, float y, float w, float h);
         void draw() const;
         void tick();
         void setRightTrue();
@@ -23,7 +23,7 @@ namespace cwing
         PlayerBullet* shoot();
         ~Player();
     protected:
-        Player(int x, int y, int w, int h);
+        Player(float x, float y, float w, float h);
     private:
         Uint32 lastShotTime = 0;
         bool movingLeft = false;

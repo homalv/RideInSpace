@@ -6,35 +6,29 @@
 
 namespace cwing 
 {
-
-	EnemyBullet::EnemyBullet(int x, int y, int currPlayerX, int currPlayerY) : Bullet(x,y,width,height){
-        this->playerX = currPlayerX;
-        this->playerY = currPlayerY;
+    
+	EnemyBullet::EnemyBullet(float x, float y, float currPlayerX, float currPlayerY): Bullet(x, y, width, height), playerX(currPlayerX), playerY(currPlayerY) {
         calcDist();
     }
 
-	EnemyBullet* EnemyBullet::getInstance(int x, int y, int currPlayerX, int currPlayerY) {
+	EnemyBullet* EnemyBullet::getInstance(float x, float y, float currPlayerX, float currPlayerY) {
 		return new EnemyBullet(x, y, currPlayerX, currPlayerY);
 	}
 
     void EnemyBullet::tick () {
 
-        rect.x += static_cast<int>(dists[0] * 2);
-        rect.y += static_cast<int>(dists[1] * 2);
+        rect.x += dists[0] * 3.0f;
+        rect.y += dists[1] * 3.0f;
 
-		if(rect.x + rect.w > windowWidth){
-			removeThis = true;
-		}
 	}
 
     void EnemyBullet::calcDist(){
+
         float deltaX = static_cast<float>(playerX - rect.x);
         float deltaY = static_cast<float>(playerY - rect.y);
 
-        // Calculate the distance between current and target positions
         float distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
 
-        // Normalize the vector to maintain constant speed
         float directionX = deltaX / distance;
         float directionY = deltaY / distance;
 

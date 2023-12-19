@@ -8,7 +8,7 @@ class MovableSprite : public Sprite
 {
 public:
 protected:
-	MovableSprite(int x, int y, int w, int h) : Sprite{ x,y,w,h } {}
+	MovableSprite(float x, float y, float w, float h) : Sprite{ x,y,w,h } {}
 };
 
 #endif

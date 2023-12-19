@@ -35,8 +35,7 @@ namespace cwing
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
-		//EnemyBullet* eBullet = EnemyBullet::getInstance(600, 300, newPlayer->getRect().x, newPlayer->getRect().y);
-		//add(eBullet);
+		//EnemyBullet* eBullet = EnemyBullet::getInstance(600.0f, 300.0f, newPlayer->getRect().x, newPlayer->getRect().y);
 		//Enemy* newEnemy;
 		random_device rd;
 		uniform_int_distribution<int> dist(1, 8);
@@ -78,7 +77,7 @@ namespace cwing
         	}
 			*/
 
-			if(currentTime - lastEnemyTimer >= 500){
+			if(currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
             	EnemyBullet* eBullet = EnemyBullet::getInstance(400, 55, newPlayer->getRect().x, newPlayer->getRect().y);
 				add(eBullet);
@@ -145,7 +144,6 @@ namespace cwing
 				
 			}
 
-
 			for (Sprite* c : spriteList){
 				c->tick();
 				if(c->checkRemove()){
@@ -177,6 +175,7 @@ namespace cwing
 
 			//Draw för player
 			newPlayer->draw();
+
 
 			for (Sprite* c : spriteList)
 				c->draw();

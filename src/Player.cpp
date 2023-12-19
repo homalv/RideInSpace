@@ -10,7 +10,7 @@
 namespace cwing 
 {
 
-	Player::Player(int x, int y, int w, int h) : MovableSprite(x,y,w,h)
+	Player::Player(float x, float y, float w, float h) : MovableSprite(x,y,w,h)
 	{
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str() );
 	}
@@ -20,7 +20,7 @@ namespace cwing
 		SDL_DestroyTexture(texture);
 	}
 
-	Player* Player::getInstance(int x, int y, int w, int h) {
+	Player* Player::getInstance(float x, float y, float w, float h) {
 		return new Player(x, y, w, h);
 	}
 
@@ -83,9 +83,9 @@ namespace cwing
 
 	void Player::draw() const {
 
-		const SDL_Rect &rect = getRect();
+		const SDL_FRect &rect = getRect();
 
-		SDL_RenderCopy(sys.get_ren(), texture, NULL, &rect);
+		SDL_RenderCopyF(sys.get_ren(), texture, NULL, &rect);
 	}
 
 	PlayerBullet* Player::shoot() {
