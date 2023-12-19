@@ -12,6 +12,7 @@
 #include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
+#include <iostream>
 
 using namespace std;
 
@@ -43,10 +44,11 @@ namespace cwing
     	SDL_FreeSurface(bgSurf);
 		
 		bool quit = false;
-		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
+		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0, playerHitTimer = 4000;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
 		//EnemyBullet* eBullet = EnemyBullet::getInstance(600.0f, 300.0f, newPlayer->getRect().x, newPlayer->getRect().y);
-		//Enemy* newEnemy;
+		//Enemy* newEnemy = Enemy::getInstance(400, 300, 40, 40, 3);
+
 
 		Label* actualPoints = Label::getInstance(220, 13, 1, 1, std::to_string(newPlayer->getPoints()));
 		add(actualPoints);
@@ -92,7 +94,8 @@ namespace cwing
 
 			if(currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
-            	EnemyBullet* eBullet = EnemyBullet::getInstance(400, 55, newPlayer->getRect().x, newPlayer->getRect().y);
+				std::vector centerPos = newPlayer->getCenterPos();
+            	EnemyBullet* eBullet = EnemyBullet::getInstance(400, 300, centerPos[0], centerPos[1]);
 				add(eBullet);
         	}
 
@@ -186,8 +189,16 @@ namespace cwing
 			//SDL_RenderClear(sys.get_ren());
 
 			//Draw för player
-			newPlayer->draw();			
+			newPlayer->draw();
 
+			for	(Sprite* c : spriteList){
+				if(newPlayer->checkCollision(*c) && currentTime - playerHitTimer >= 4000){
+					std::cout << newPlayer->getLives() << std::endl;
+					playerHitTimer = currentTime;
+					newPlayer->looseLife();
+					std::cout << newPlayer->getLives() << std::endl;
+				}
+			}
 
 			for (Sprite* c : spriteList)
 				c->draw();
