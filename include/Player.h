@@ -21,6 +21,11 @@ namespace cwing
         void setUpFalse();
         void setDownFalse();
         PlayerBullet* shoot();
+
+        void looseLife();
+        void addPoints();
+        int getLives() const;
+        int getPoints() const;
         ~Player();
     protected:
         Player(int x, int y, int w, int h);
@@ -33,6 +38,8 @@ namespace cwing
         int windowWidth;
         int windowHeight;
         SDL_Texture* texture;
+        int points = 0;
+        int lives = 3;
     };
 }
 

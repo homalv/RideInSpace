@@ -32,25 +32,31 @@ namespace cwing
 		
 		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 		add(gamePanel);
-		Label* labelPoints = Label::getInstance(50, 13, 96, 15, "Total Points: ");
+		Label* labelPoints = Label::getInstance(50, 13, 1, 1, "Total Points: ");
 		add(labelPoints);
-		Label* labelLives = Label::getInstance(50, 38, 88, 15, "Total Lives: ");
+		Label* labelLives = Label::getInstance(50, 38, 1, 1, "Total Lives: ");
 		add(labelLives);
-
-		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/space_bg.png").c_str()); //för bakgrundsbilden
-    	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf);  //för bakgrundsbilden
+		
+		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/space_bg.png").c_str()); 
+    	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
     	SDL_FreeSurface(bgSurf);
 		
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
-		Enemy* newEnemy;		
+		Enemy* newEnemy;
+
+		Label* actualPoints = Label::getInstance(220, 13, 1, 1, std::to_string(newPlayer->getPoints()));
+		add(actualPoints);
+		Label* actualLives = Label::getInstance(220, 38, 1, 1, std::to_string(newPlayer->getLives()));
+		add(actualLives);
+
 		random_device rd;
 		uniform_int_distribution<int> dist(1, 8);
-		int bgWidth = 1501;  // Bredden på bakgrundsbilden
+		int bgWidth = 1501;  // Bredd  och höjd bakgrundsbild
     	int bgHeight = 500;
-		int bgX1 = 0;       // Position för den första kopian av bakgrundsbilden
-    	int bgX2 = bgWidth; // Position för den andra kopian av bakgrundsbilden
+		int bgX1 = 0;       // Position för första kopian av bakgrundsbild
+    	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
 		PlayerBullet* pb;
 		bool spacePressed = false;
 		while (!quit) {
@@ -67,7 +73,6 @@ namespace cwing
         	SDL_Rect srcRect1 = {0, 0, bgWidth, bgHeight};
         	SDL_Rect destRect1 = {bgX1, 0, bgWidth, bgHeight};
         	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect1, &destRect1);
-
         	// Ritar den andra kopien av bakgrundsbilden för sömlös loop
         	SDL_Rect srcRect2 = {0, 0, bgWidth, bgHeight};
         	SDL_Rect destRect2 = {bgX2, 0, bgWidth, bgHeight};

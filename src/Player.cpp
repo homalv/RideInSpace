@@ -96,4 +96,20 @@ namespace cwing
 		}
 		return nullptr;
 	}
+
+	void Player::looseLife(){
+		this->lives --;
+	};
+
+    void Player::addPoints(){
+		this->points ++;
+	};
+
+    int Player::getLives() const {
+		return lives;
+	};
+
+    int Player::getPoints()const{
+		return points;
+	};
 }
