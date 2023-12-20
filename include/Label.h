@@ -18,6 +18,7 @@ namespace cwing
 		void setText(std::string newText);
 		void setPlayer(Player* newPlayer);
 		void updateLives();
+		void updatePoints();
 		~Label();
 	protected:
 		Label(int x, int y, int w, int h, std::string txt);
