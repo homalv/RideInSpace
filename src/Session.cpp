@@ -47,7 +47,7 @@ namespace cwing
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0, playerHitTimer = 4000;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
 		//EnemyBullet* eBullet = EnemyBullet::getInstance(600.0f, 300.0f, newPlayer->getRect().x, newPlayer->getRect().y);
-		//Enemy* newEnemy = Enemy::getInstance(400, 300, 40, 40, 3);
+		Enemy* newEnemy;
 
 
 		Label* actualPoints = Label::getInstance(220, 13, 1, 1, std::to_string(newPlayer->getPoints()));
@@ -89,7 +89,6 @@ namespace cwing
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
 			
-			/*
 			if(currentTime - lastEnemyTimer >= 2000){
             	position = dist(rd);
 				
@@ -97,12 +96,11 @@ namespace cwing
 					position = dist(rd);
 				}
 				
-				newEnemy = Enemy::getInstance(700, position * 55, 40, 40);
+				newEnemy = Enemy::getInstance(700, position * 55, 40, 40, 2);
 				vektor[position-1] = newEnemy;
 				lastEnemyTimer = currentTime;
 				add(newEnemy);
         	}
-			*/
 
 			if(currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
