@@ -8,15 +8,16 @@
 namespace cwing {
     class Enemy : public MovableSprite {
         public:
-            static Enemy* getInstance(int x, int y, int w, int h);        
+            static Enemy* getInstance(float x, float y, float w, float h, int lives);        
             void draw() const;
             void tick() {
                 if(rect.x + rect.w < 0){
-			        removeThis = true;
-		        } else {
-                    rect.x -= 5;  
+			            removeThis = true;
+		            } else {
+                  rect.x -= 5;  
                 }
             }; 
+            void looseLife(); 
         //    virtual void perform(Enemy* source){}
         ~Enemy();
 
@@ -26,12 +27,13 @@ namespace cwing {
         }
 
         protected:
-            Enemy(int x, int y, int w, int h);
+            Enemy(float x, float y, float w, float h, int lives);
 
         private:
             SDL_Texture* texture;
             int windowWidth;
             int windowHeight;
+            int lives;
     };
 }
 

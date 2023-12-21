@@ -14,7 +14,7 @@ namespace cwing {
 		musik = Mix_LoadWAV( (constants::gResPath + "sounds/bgMusic.wav").c_str() );
 		Mix_PlayChannel(-1, musik, -1);
 		TTF_Init();
-		font = TTF_OpenFont( (constants::gResPath + "fonts/arial.ttf").c_str(), 36);
+		font = TTF_OpenFont( (constants::gResPath + "fonts/STENCIL.ttf").c_str(), 22);
 	}
 
 	System::~System() {

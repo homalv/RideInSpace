@@ -2,6 +2,7 @@
 #define LABEL_H
 
 #include "Sprite.h"
+#include "Player.h"
 #include <string>
 #include <SDL2/SDL.h>
 
@@ -12,15 +13,19 @@ namespace cwing
 	{
 	public:
 		static Label* getInstance(int x, int y, int w, int h, std::string txt);
-		void draw() const;
+		void draw() const override;
 		std::string getText() const;
 		void setText(std::string newText);
+		void setPlayer(Player* newPlayer);
+		void updateLives();
+		void updatePoints();
 		~Label();
 	protected:
 		Label(int x, int y, int w, int h, std::string txt);
 	private:
 		std::string text;
 		SDL_Texture* texture;
+		Player* playerPointer;
 	};
 
 }

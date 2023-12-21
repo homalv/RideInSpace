@@ -3,12 +3,17 @@
 #include <SDL2/SDL.h>
 #include <Sprite.h>
 
-//Döp om till MovableSprite
-class MovableSprite : public Sprite
+namespace cwing
 {
-public:
-protected:
-	MovableSprite(int x, int y, int w, int h) : Sprite{ x,y,w,h } {}
-};
+	class MovableSprite : public Sprite
+	{
+	public:
+	protected:
+		MovableSprite(float x, float y, float w, float h) : Sprite{ x,y,w,h } {}
+	};
+} 
+
+
+
 
 #endif

@@ -7,9 +7,9 @@
 namespace cwing 
 {
 
-	PlayerBullet::PlayerBullet(int x, int y) : Bullet(x,y,width,height){}
+	PlayerBullet::PlayerBullet(float x, float y) : Bullet(x,y,width,height){}
 
-	PlayerBullet* PlayerBullet::getInstance(int x, int y) {
+	PlayerBullet* PlayerBullet::getInstance(float x, float y) {
 		return new PlayerBullet(x, y);
 	}
 
