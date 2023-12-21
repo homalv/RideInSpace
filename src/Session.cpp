@@ -8,6 +8,7 @@
 #include "PlayerBullet.h"
 #include "Constants.h"
 #include <random>
+#include <vector>
 #include "Enemy.h"
 #include "GamePanel.h"
 #include "Label.h"
@@ -18,7 +19,7 @@ using namespace std;
 
 namespace cwing 
 {
-
+	
 
 	void Session::add(Sprite* sprite) {
 		added.push_back(sprite);
@@ -29,7 +30,8 @@ namespace cwing
 	}
 
 	void Session::run() {
-		
+		Enemy* vektor[8] = {nullptr};
+		int position;
 		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 		add(gamePanel);
 		Label* labelPoints = Label::getInstance(50, 13, 96, 15, "Total Points");
@@ -53,6 +55,7 @@ namespace cwing
     	int bgX2 = bgWidth; // Position för den andra kopian av bakgrundsbilden
 		PlayerBullet* pb;
 		bool spacePressed = false;
+		
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
         	bgX1 -= 1;
@@ -77,10 +80,18 @@ namespace cwing
 			SDL_Event event;
 
 			if(currentTime - lastEnemyTimer >= 2000){
-            	lastEnemyTimer = currentTime;
-            	newEnemy = Enemy::getInstance(700, dist(rd) * 55, 40, 40);
+            	position = dist(rd);
+				
+				while(vektor[position - 1] != nullptr){
+					position = dist(rd);
+				}
+				
+				newEnemy = Enemy::getInstance(700, position * 55, 40, 40);
+				vektor[position-1] = newEnemy;
+				lastEnemyTimer = currentTime;
 				add(newEnemy);
         	}
+
 
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
@@ -145,6 +156,7 @@ namespace cwing
 			for (Sprite* c : spriteList){
 				c->tick();
 				if(c->checkRemove()){
+					vektor[position-1]= nullptr;
 					remove(c);
 				}
 			}
