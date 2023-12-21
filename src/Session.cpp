@@ -61,7 +61,7 @@ namespace cwing
 		random_device rd;
 		uniform_int_distribution<int> dist(1, 8);
 		int bgWidth = 1501;  // Bredd  och höjd bakgrundsbild
-    	int bgHeight = 500;
+    	int bgHeight = 520;
 		int bgX1 = 0;       // Position för första kopian av bakgrundsbild
     	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
 		PlayerBullet* pb;
@@ -88,7 +88,6 @@ namespace cwing
 			
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
-			
 			if(currentTime - lastEnemyTimer >= 2000){
             	position = dist(rd);
 				
@@ -96,7 +95,7 @@ namespace cwing
 					position = dist(rd);
 				}
 				
-				newEnemy = Enemy::getInstance(700, position * 60, 40, 40, 2);
+				newEnemy = Enemy::getInstance(700, position * 55, 40, 40, 2);
 				vektor[position-1] = newEnemy;
 				lastEnemyTimer = currentTime;
 				add(newEnemy);
