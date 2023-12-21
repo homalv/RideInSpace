@@ -96,7 +96,7 @@ namespace cwing
 					position = dist(rd);
 				}
 				
-				newEnemy = Enemy::getInstance(700, position * 55, 40, 40, 2);
+				newEnemy = Enemy::getInstance(700, position * 60, 40, 40, 2);
 				vektor[position-1] = newEnemy;
 				lastEnemyTimer = currentTime;
 				add(newEnemy);
