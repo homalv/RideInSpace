@@ -12,7 +12,6 @@ namespace cwing
 		void add(Sprite* spriteList);
 		void remove(Sprite* spriteList);
 		void run();
-		//Player const player;
 	private:
 		std::vector<Sprite*> spriteList;
 		std::vector<Sprite*> added, removed;

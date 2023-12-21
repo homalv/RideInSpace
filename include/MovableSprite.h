@@ -7,9 +7,15 @@ namespace cwing
 {
 	class MovableSprite : public Sprite
 	{
-	public:
-	protected:
-		MovableSprite(float x, float y, float w, float h) : Sprite{ x,y,w,h } {}
+		public:
+			std::vector<float> getCenterPos();
+		protected:
+			MovableSprite(float x, float y, float w, float h) : Sprite{ x,y,w,h } {
+				SDL_GetWindowSize(sys.get_win(), &windowWidth, &windowHeight);
+			}
+			~MovableSprite(){};
+			int windowWidth;
+            int windowHeight;
 	};
 } 
 
