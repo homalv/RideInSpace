@@ -76,7 +76,11 @@ namespace cwing
 	}
 
 	bool Player::checkCollision(const Sprite& other) const{
-		return SDL_HasIntersectionF(&hitbox, &other.getRect());
+		const MovableSprite* movableOther = dynamic_cast<const MovableSprite*>(&other);
+		if(movableOther){
+			return SDL_HasIntersectionF(&hitbox, &other.getRect());
+		}
+		return false;
 	}
 
 	void Player::looseLife(){
