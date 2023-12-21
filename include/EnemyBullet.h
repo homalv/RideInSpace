@@ -12,12 +12,12 @@ namespace cwing
             static EnemyBullet* getInstance(float x, float y, float currPlayerX, float currPlayerY);
             void tick();
             void calcDist();
-            const SDL_FRect& getRect() const { return rect; }
             EnemyBullet(float x, float y, float currPlayerX, float currPlayerY);
+            ~EnemyBullet(){};
         private:
-            float playerX = 0;
-            float playerY = 0;
-            static const int width = 40;
+            float playerX;
+            float playerY;
+            static const int width = 20;
             static const int height = 20;
             std::vector<float> dists; 
     };

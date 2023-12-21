@@ -109,16 +109,16 @@ namespace cwing
                     switch (event.key.keysym.scancode)
                     {
                     case SDL_SCANCODE_RIGHT:
-                        newPlayer->setRightTrue();
+                        newPlayer->move(SDL_SCANCODE_RIGHT);
                         break;
                     case SDL_SCANCODE_LEFT:
-                        newPlayer->setLeftTrue();
+                        newPlayer->move(SDL_SCANCODE_LEFT);
                         break;
                     case SDL_SCANCODE_UP:
-                        newPlayer->setUpTrue();
+                        newPlayer->move(SDL_SCANCODE_UP);
                         break;
                     case SDL_SCANCODE_DOWN:
-                        newPlayer->setDownTrue();
+                        newPlayer->move(SDL_SCANCODE_DOWN);
                         break;
 					case SDL_SCANCODE_SPACE:
 						pb = newPlayer->shoot();
@@ -134,16 +134,16 @@ namespace cwing
                     switch (event.key.keysym.scancode)
                     {
                     case SDL_SCANCODE_RIGHT:
-                        newPlayer->setRightFalse();
+                        newPlayer->stop(SDL_SCANCODE_RIGHT);
                         break;
                     case SDL_SCANCODE_LEFT:
-                        newPlayer->setLeftFalse();
+                        newPlayer->stop(SDL_SCANCODE_LEFT);
                         break;
                     case SDL_SCANCODE_UP:
-                        newPlayer->setUpFalse();
+                        newPlayer->stop(SDL_SCANCODE_UP);
                         break;
                     case SDL_SCANCODE_DOWN:
-                        newPlayer->setDownFalse();
+                        newPlayer->stop(SDL_SCANCODE_DOWN);
                         break;
                     default:
                         break;

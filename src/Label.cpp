@@ -1,7 +1,6 @@
 #include "Label.h"
 #include <SDL2/SDL_ttf.h>
 #include "System.h"
-#include <iostream>
 #include <string>
 #include "Player.h"
 
@@ -27,18 +26,10 @@ namespace cwing
 		SDL_FreeSurface(surf);
 	}
 
-	void Label::draw() const {
-		SDL_RenderCopyF(sys.get_ren(), texture, NULL, &getRect());
-	}
-
-	Label::~Label()
-	{
-		SDL_DestroyTexture(texture);
-	}
-
 	string Label::getText() const {
 		return text;
 	}
+
 	void Label::setText(std::string newText) {
 		text = newText;
 		SDL_DestroyTexture(texture);
@@ -47,6 +38,7 @@ namespace cwing
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
 	}
+
 	void Label::setPlayer(Player* newPlayer){
 		playerPointer = newPlayer;
 	}

@@ -11,26 +11,16 @@ namespace cwing
 	{
         public:
             static Enemy* getInstance(float x, float y, float w, float h, int lives);        
-            void draw() const;
             void tick() {
                 rect.x -= 2;  
             };
             void looseLife(); 
-        //    virtual void perform(Enemy* source){}
-        ~Enemy();
-
-        int getWindowHeight(){
-            SDL_GetWindowSize(sys.get_win(), &windowWidth, &windowHeight);
-            return windowHeight;
-        }
+            ~Enemy(){};
 
         protected:
             Enemy(float x, float y, float w, float h, int lives);
 
         private:
-            SDL_Texture* texture;
-            int windowWidth;
-            int windowHeight;
             int lives;
     };
 }
