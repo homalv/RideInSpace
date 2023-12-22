@@ -12,7 +12,7 @@ namespace cwing
 	class Label: public Sprite
 	{
 	public:
-		static Label* getInstance(int x, int y, int w, int h, std::string txt);
+		static Label* getInstance(int x, int y, int fontSize, std::string txt);
 		void draw() const override;
 		std::string getText() const;
 		void setText(std::string newText);
@@ -21,7 +21,7 @@ namespace cwing
 		void updatePoints();
 		~Label();
 	protected:
-		Label(int x, int y, int w, int h, std::string txt);
+		Label(int x, int y, int fontSize, std::string txt);
 	private:
 		std::string text;
 		SDL_Texture* texture;

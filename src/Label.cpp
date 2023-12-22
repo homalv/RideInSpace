@@ -2,6 +2,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "System.h"
 #include <iostream>
+#include "Constants.h" 
 #include <string>
 #include "Player.h"
 
@@ -10,21 +11,21 @@ using namespace std;
 namespace cwing 
 {
 
-	Label* Label::getInstance(int x, int y, int w,
-		int h, std::string txt) 
-	{
-		return new Label(x, y, w, h, txt);
+	Label* Label::getInstance(int x, int y, int fontSize, std::string txt, Player* playerPtr) {
+		return new Label(x, y, fontSize, txt, playerPtr);
 	}
 
-	Label::Label(int x, int y, int w, int h, const std::string txt): Sprite(x,y,w,h), text(txt)
-	{	int textWidth, textHeight;
-    	TTF_SizeText(sys.get_font(), text.c_str(), &textWidth, &textHeight);
+	Label::Label(int x, int y, int fontSize, std::string txt, Player* playerPtr):Sprite(x,y,1,1), text(txt), playerPointer(PlayerPtr){	
+		TTF_Font* customFont = TTF_OpenFont((constants::gResPath + "fonts/STENCIL.ttf").c_str(), fontSize);    	
+		int textWidth, textHeight;
+    	TTF_SizeText(customFont, text.c_str(), &textWidth, &textHeight);
 		rect.w = textWidth;
     	rect.h = textHeight;
 
-		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), text.c_str(), { 50,0,10 });
+		SDL_Surface* surf = TTF_RenderText_Solid(customFont, text.c_str(), { 60,0,10 });
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
+		TTF_CloseFont(customFont);
 	}
 
 	void Label::draw() const {
@@ -47,6 +48,7 @@ namespace cwing
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
 	}
+
 	void Label::setPlayer(Player* newPlayer){
 		playerPointer = newPlayer;
 	}

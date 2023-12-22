@@ -21,6 +21,9 @@ using namespace std;
 
 namespace cwing 
 {
+	Uint32 startDelayTime = 0;  
+	//Uint32 labelDelayDuration = 3000;
+
 	void Session::add(Sprite* sprite) {
 		added.push_back(sprite);
 	}
@@ -28,15 +31,18 @@ namespace cwing
 	void Session::remove(Sprite* sprite) {
 		removed.push_back(sprite);
 	}
+	
+	
 
 	void Session::run() {
+		bool gameOver = false;
 		Enemy* vektor[8] = {nullptr};
 		int position;
 		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 		add(gamePanel);
-		Label* labelPoints = Label::getInstance(50, 13, 1, 1, "Total Points: ");
+		Label* labelPoints = Label::getInstance(50, 13, 22, "Total Points: ");
 		add(labelPoints);
-		Label* labelLives = Label::getInstance(50, 38, 1, 1, "Total Lives: ");
+		Label* labelLives = Label::getInstance(50, 38, 22, "Total Lives: ");
 		add(labelLives);
 		
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/space_bg.png").c_str()); 
@@ -46,15 +52,15 @@ namespace cwing
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0, playerHitTimer = 4000;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
-		//EnemyBullet* eBullet = EnemyBullet::getInstance(600.0f, 300.0f, newPlayer->getRect().x, newPlayer->getRect().y);
+		//EnemyBullet* eBullet = EnemyBullet::getInstance(600.0f, 300.0f, newPlayer->getRect().x, newPlayer->getRect().y);		
 		Enemy* newEnemy;
 
 
-		Label* actualPoints = Label::getInstance(220, 13, 1, 1, std::to_string(newPlayer->getPoints()));
+		Label* actualPoints = Label::getInstance(220, 13, 22 , std::to_string(newPlayer->getPoints()));
 		actualPoints->setPlayer(newPlayer);
 		add(actualPoints);
 
-		Label* actualLives = Label::getInstance(220, 38, 1, 1, std::to_string(newPlayer->getLives()));
+		Label* actualLives = Label::getInstance(220, 38, 22 , std::to_string(newPlayer->getLives()));
 		actualLives->setPlayer(newPlayer);
 		add(actualLives);
 		
@@ -67,7 +73,8 @@ namespace cwing
 		PlayerBullet* pb;
 		bool spacePressed = false;
 		
-		while (!quit) {
+		
+		while (!quit) {			
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
         	bgX1 -= 1;
         	bgX2 -= 1;
@@ -85,10 +92,30 @@ namespace cwing
         	SDL_Rect srcRect2 = {0, 0, bgWidth, bgHeight};
         	SDL_Rect destRect2 = {bgX2, 0, bgWidth, bgHeight};
         	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect2, &destRect2); 
-			
+			  
+			 				
+
+			if(newPlayer->getLives()<3){
+				if(startDelayTime == 0)	{							
+					gameOver = true;							
+					Label* labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER");
+					add(labelGameOver);
+					startDelayTime = 1;
+				} 
+				else if (SDL_GetTicks() - startDelayTime >= 7000) {					
+					Label* labelRestart = Label::getInstance(300, 360, 36, "RESTART");
+					add(labelRestart);
+					Label* labelQuit = Label::getInstance(300, 420, 36, "QUIT");
+					add(labelQuit);
+
+					// Återställ starttiden för eventuella framtida fördröjningar
+					startDelayTime = 0;											
+				}													
+			}
+
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
-			if(currentTime - lastEnemyTimer >= 2000){
+			if( !gameOver && currentTime - lastEnemyTimer >= 2000){
             	position = dist(rd);
 				
 				while(vektor[position - 1] != nullptr){
@@ -100,14 +127,14 @@ namespace cwing
 				lastEnemyTimer = currentTime;
 				add(newEnemy);
         	}
-
-			if(currentTime - lastEnemyTimer >= 2000){
+			/*
+			if(  currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
 				std::vector centerPos = newPlayer->getCenterPos();
             	EnemyBullet* eBullet = EnemyBullet::getInstance(400, 300, centerPos[0], centerPos[1]);
 				add(eBullet);
         	}
-
+			*/
 
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {

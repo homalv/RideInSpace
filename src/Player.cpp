@@ -109,6 +109,11 @@ namespace cwing
 		return SDL_HasIntersectionF(&hitbox, &other.getRect());
 	}
 
+	void Player::resetPlayer(){
+		points = 0;
+		lives = 3;
+	}
+
 	void Player::looseLife(){
 		this->lives --;
 	};
