@@ -12,9 +12,15 @@ namespace cwing
 		void add(Sprite* spriteList);
 		void remove(Sprite* spriteList);
 		void run();
+
 	private:
 		std::vector<Sprite*> spriteList;
 		std::vector<Sprite*> added, removed;
+		enum GameState {
+            Playing,
+            GameOver
+        };
+        GameState gameState = Playing; 
 	};
 }
 

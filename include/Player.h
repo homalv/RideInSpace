@@ -19,7 +19,9 @@ namespace cwing
         void addPoints();
         int getLives() const;
         int getPoints() const;
-        ~Player(){};
+        void resetPlayer();
+        ~Player();
+
     protected:
         Player(float x, float y, float w, float h);
     private:
