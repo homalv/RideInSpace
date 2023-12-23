@@ -22,7 +22,6 @@ using namespace std;
 namespace cwing 
 {
 	Uint32 startDelayTime = 0;  
-	//Uint32 labelDelayDuration = 3000;
 
 	void Session::add(Sprite* sprite) {
 		added.push_back(sprite);
@@ -32,17 +31,15 @@ namespace cwing
 		removed.push_back(sprite);
 	}
 	
-	
-
 	void Session::run() {
 		bool gameOver = false;
 		Enemy* vektor[8] = {nullptr};
 		int position;
 		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 		add(gamePanel);
-		Label* labelPoints = Label::getInstance(50, 13, 22, "Total Points: ");
+		Label* labelPoints = Label::getInstance(50, 13, 22, "Total Points: ", nullptr  , 60, 0, 10);
 		add(labelPoints);
-		Label* labelLives = Label::getInstance(50, 38, 22, "Total Lives: ");
+		Label* labelLives = Label::getInstance(50, 38, 22, "Total Lives: ", nullptr  , 60, 0, 10);
 		add(labelLives);
 		
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + "images/space_bg.png").c_str()); 
@@ -56,11 +53,11 @@ namespace cwing
 		Enemy* newEnemy;
 
 
-		Label* actualPoints = Label::getInstance(220, 13, 22 , std::to_string(newPlayer->getPoints()));
+		Label* actualPoints = Label::getInstance(220, 13, 22 , std::to_string(newPlayer->getPoints()),nullptr, 60, 0, 10);
 		actualPoints->setPlayer(newPlayer);
 		add(actualPoints);
 
-		Label* actualLives = Label::getInstance(220, 38, 22 , std::to_string(newPlayer->getLives()));
+		Label* actualLives = Label::getInstance(220, 38, 22 , std::to_string(newPlayer->getLives()),nullptr, 60, 0, 10);
 		actualLives->setPlayer(newPlayer);
 		add(actualLives);
 		
@@ -72,7 +69,9 @@ namespace cwing
     	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
 		PlayerBullet* pb;
 		bool spacePressed = false;
-		
+		Label* labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER", nullptr  , 85, 0, 14);
+		Label* labelRestart = Label::getInstance(300, 360, 34, "RESTART   ", nullptr  , 150, 150, 150);
+		Label* labelQuit = Label::getInstance(300, 440, 34, "QUIT      ", nullptr  , 150, 150, 150);
 		
 		while (!quit) {			
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
@@ -92,26 +91,20 @@ namespace cwing
         	SDL_Rect srcRect2 = {0, 0, bgWidth, bgHeight};
         	SDL_Rect destRect2 = {bgX2, 0, bgWidth, bgHeight};
         	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect2, &destRect2); 
-			  
-			 				
 
-			if(newPlayer->getLives()<3){
+			if(newPlayer->getLives()<1){
 				if(startDelayTime == 0)	{							
-					gameOver = true;							
-					Label* labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER");
+					gameOver = true;												
 					add(labelGameOver);
-					startDelayTime = 1;
+					startDelayTime = SDL_GetTicks();
 				} 
-				else if (SDL_GetTicks() - startDelayTime >= 7000) {					
-					Label* labelRestart = Label::getInstance(300, 360, 36, "RESTART");
-					add(labelRestart);
-					Label* labelQuit = Label::getInstance(300, 420, 36, "QUIT");
-					add(labelQuit);
-
-					// Återställ starttiden för eventuella framtida fördröjningar
-					startDelayTime = 0;											
+				else if ( SDL_GetTicks() - startDelayTime >= 3000) {										
+					add(labelRestart);						
+					add(labelQuit);					
+					startDelayTime = 0;										
 				}													
 			}
+			
 
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
@@ -183,8 +176,42 @@ namespace cwing
                         break;
                     }
 					break;
+				case SDL_MOUSEBUTTONDOWN:
+					int mouseX, mouseY;
+					SDL_GetMouseState(&mouseX, &mouseY);
+					float mouseXFloat = static_cast<float>(mouseX);
+					float mouseYFloat = static_cast<float>(mouseY);
+					
+					if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)){
+						//startDelayTime = SDL_GetTicks();
+						std::cout << "Restart button clicked!" << std::endl;
+						newPlayer->resetPlayer();
+						remove(labelQuit);
+						remove(labelGameOver);
+						remove(labelRestart);
+						actualLives->updateLives();
+						actualPoints->updatePoints();
+						for (int i = 0; i < 8; ++i) {
+							remove(vektor[i]);
+							vektor[i] = nullptr;
+						}
+    					lastEnemyTimer = SDL_GetTicks(); 
+						gameOver = false;
+					}
+					
+					if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)){																		
+						GamePanel* gameOverPanel = GamePanel::getInstance(1,1, 700, 520);	
+						add(gameOverPanel);
+						Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!", nullptr  , 60, 0, 10);
+						add(labelGoodBye);							
+						startDelayTime = SDL_GetTicks();
+						//SDL_Delay(1500);
+						quit = true;																									
+					}
+					
+					break;	
 				}
-				 //switch
+				 //switch				
 			} //inre while
 
 			int mouseX, mouseY;
