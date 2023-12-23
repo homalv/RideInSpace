@@ -30,18 +30,10 @@ namespace cwing
 		TTF_CloseFont(customFont);
 	}
 
-	void Label::draw() const {
-		SDL_RenderCopyF(sys.get_ren(), texture, NULL, &getRect());
-	}
-
-	Label::~Label()
-	{
-		SDL_DestroyTexture(texture);
-	}
-
 	string Label::getText() const {
 		return text;
 	}
+
 	void Label::setText(std::string newText) {
 		text = newText;
 		SDL_DestroyTexture(texture);

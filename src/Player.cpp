@@ -19,58 +19,35 @@ namespace cwing
     	hitbox.h = rect.h-10;
 	}
 
-	Player::~Player()
-	{
-		SDL_DestroyTexture(texture);
-	}
-
 	Player* Player::getInstance(float x, float y, float w, float h) {
 		return new Player(x, y, w, h);
 	}
 
-    /*
-	
-	void Player::mouseDown(const SDL_Event& eve) {
-		SDL_Point p = { eve.button.x, eve.button.y };
-		if (SDL_PointInRect(&p, &getRect()))
-			isDown = true;
+	void Player::move(const SDL_Scancode& scancode){
+		if(scancode == SDL_SCANCODE_RIGHT){
+			movingRight = true;
+		} else if(scancode == SDL_SCANCODE_LEFT){
+			movingLeft = true;
+		} else if(scancode == SDL_SCANCODE_DOWN){
+			movingDown = true;
+		} else if(scancode == SDL_SCANCODE_UP){
+			movingUp = true;
+		}
 	}
 
-	void Player::mouseUp(const SDL_Event& eve) {
-		SDL_Point p = { eve.button.x, eve.button.y };
-		if (SDL_PointInRect(&p, &getRect()))
-			isDown = false;
-	}
-
-	*/
-
-	void Player::setRightTrue(){
-		movingRight = true;
-	}
-	void Player::setLeftTrue(){
-		movingLeft = true;
-	}
-	void Player::setUpTrue(){
-		movingUp = true;
-	}
-	void Player::setDownTrue(){
-		movingDown = true;
-	}
-	void Player::setRightFalse(){
-		movingRight = false;
-	}
-	void Player::setLeftFalse(){
-		movingLeft = false;
-	}
-	void Player::setUpFalse(){
-		movingUp = false;
-	}
-	void Player::setDownFalse(){
-		movingDown = false;
+	void Player::stop(const SDL_Scancode& scancode){
+		if(scancode == SDL_SCANCODE_RIGHT){
+			movingRight = false;
+		} else if(scancode == SDL_SCANCODE_LEFT){
+			movingLeft = false;
+		} else if(scancode == SDL_SCANCODE_DOWN){
+			movingDown = false;
+		} else if(scancode == SDL_SCANCODE_UP){
+			movingUp = false;
+		}
 	}
 
     void Player::tick () {
-		SDL_GetWindowSize(sys.get_win(), &windowWidth, &windowHeight);
 		if(movingRight && rect.x + rect.w < windowWidth){
 			rect.x += 5;
 			hitbox.x += 5;
@@ -89,13 +66,6 @@ namespace cwing
 		}
 	}
 
-	void Player::draw() const {
-
-		const SDL_FRect &rect = getRect();
-
-		SDL_RenderCopyF(sys.get_ren(), texture, NULL, &rect);
-	}
-
 	PlayerBullet* Player::shoot() {
 		Uint32 currentTime = SDL_GetTicks();
 		if(currentTime - lastShotTime >= 300){
@@ -106,7 +76,11 @@ namespace cwing
 	}
 
 	bool Player::checkCollision(const Sprite& other) const{
-		return SDL_HasIntersectionF(&hitbox, &other.getRect());
+		const MovableSprite* movableOther = dynamic_cast<const MovableSprite*>(&other);
+		if(movableOther){
+			return SDL_HasIntersectionF(&hitbox, &other.getRect());
+		}
+		return false;
 	}
 
 	void Player::resetPlayer(){

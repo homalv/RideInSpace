@@ -10,8 +10,12 @@ namespace cwing
         public:
             static PlayerBullet* getInstance(float x, float y);
             void tick();
+            ~PlayerBullet(){};
         protected:
             PlayerBullet(float x, float y);
+        private:
+            static const int width = 20;
+            static const int height = 20;
     };
 }
 

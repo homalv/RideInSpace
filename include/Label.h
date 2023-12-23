@@ -11,6 +11,7 @@ namespace cwing
 	class Label: public Sprite
 	{
 	public:
+
 		static Label* getInstance(int x, int y, int fontSize, 
 			std::string txt, Player* playerPtr =0, Uint8 r=0, Uint8 g=0, Uint8 b=0);
 		void draw() const override;
@@ -23,11 +24,11 @@ namespace cwing
 		int getHeight() const;
 		bool isPointInside(float x, float y)const;
 		~Label();
+
 	protected:
 		Label(int x, int y, int fontSize, std::string txt, Player* playerPtr, Uint8 r, Uint8 g, Uint8 b);
 	private:
 		std::string text;
-		SDL_Texture* texture;
 		Player* playerPointer;
 		int width;
 		int height;

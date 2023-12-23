@@ -12,9 +12,7 @@ namespace cwing
 		void add(Sprite* spriteList);
 		void remove(Sprite* spriteList);
 		void run();
-		void gameOver();
-		void playGame();
-		//Player const player;
+
 	private:
 		std::vector<Sprite*> spriteList;
 		std::vector<Sprite*> added, removed;
