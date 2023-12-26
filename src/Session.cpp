@@ -184,9 +184,7 @@ namespace cwing
 				float mouseXFloat = static_cast<float>(mouseX);
 				float mouseYFloat = static_cast<float>(mouseY);
 				
-					if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)){
-						//startDelayTime = SDL_GetTicks();
-						std::cout << "Restart button clicked!" << std::endl;
+					if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)){						
 						newPlayer->resetPlayer();
 						remove(labelQuit);
 						remove(labelGameOver);
