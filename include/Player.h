@@ -19,17 +19,22 @@ namespace cwing
         void addPoints();
         int getLives() const;
         int getPoints() const;
+        bool isHit();
+        void setHit(bool isHit);
         void resetPlayer();
         ~Player(){};
 
     protected:
         Player(float x, float y, float w, float h);
+        //SDL_Texture* texture;
+        //SDL_Texture* altTexture; // Den alternativa texturen när spelaren är träffad
     private:
         Uint32 lastShotTime = 0;
         bool movingLeft = false;
         bool movingRight = false;
         bool movingUp = false;
         bool movingDown = false;
+        bool isPlayerHit = false;        
         int points = 0;
         int lives = 3;
         SDL_FRect hitbox;

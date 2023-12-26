@@ -83,6 +83,21 @@ namespace cwing
 		return false;
 	}
 
+	void Player::setHit(bool isHit) {
+        isPlayerHit = isHit;
+        if (isHit) {
+            // Byt ut texturvägen när spelaren är träffad
+            texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_hit.png").c_str());
+        } else {
+            // Återställ texturvägen när spelaren inte är träffad
+            texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str());
+        }
+    }
+
+	bool Player::isHit(){
+		return isPlayerHit;
+	};
+
 	void Player::resetPlayer(){
 		points = 0;
 		lives = 3;

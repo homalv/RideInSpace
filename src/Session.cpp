@@ -32,7 +32,7 @@ namespace cwing
 	}
 
 	void Session::run() {
-		bool gameOver = false;
+		bool pause = false;
 		Enemy* vektor[8] = {nullptr};
 		int position;
 		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
@@ -72,6 +72,8 @@ namespace cwing
 		Label* labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER", nullptr  , 85, 0, 14);
 		Label* labelRestart = Label::getInstance(300, 360, 34, "RESTART   ", nullptr  , 150, 150, 150);
 		Label* labelQuit = Label::getInstance(300, 440, 34, "QUIT      ", nullptr  , 150, 150, 150);
+		Mix_Chunk* hit_sound;
+		hit_sound = Mix_LoadWAV((constants::gResPath + "sounds/hit_sound2.mp3").c_str());
 		
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
@@ -93,8 +95,9 @@ namespace cwing
         	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect2, &destRect2); 
 
 			if(newPlayer->getLives()<1){
-				if(startDelayTime == 0)	{							
-					gameOver = true;												
+				if(startDelayTime == 0)	{											
+					pause = true;	
+					newPlayer->setHit(true);											
 					add(labelGameOver);
 					startDelayTime = SDL_GetTicks();
 				} 
@@ -107,7 +110,7 @@ namespace cwing
 			
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
-			if( !gameOver && currentTime - lastEnemyTimer >= 2000){
+			if( !pause && currentTime - lastEnemyTimer >= 2000){
             	position = dist(rd);
 				
 				while(vektor[position - 1] != nullptr){
@@ -150,7 +153,7 @@ namespace cwing
                         break;
 					case SDL_SCANCODE_SPACE:
 						pb = newPlayer->shoot();
-						if(pb != nullptr){
+						if(pb != nullptr && !pause){
 							add(pb);
 						}
 						break;
@@ -196,7 +199,7 @@ namespace cwing
 							vektor[i] = nullptr;
 						}
 						lastEnemyTimer = SDL_GetTicks(); 
-						gameOver = false;
+						pause = false;
 					}
 				
 					if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)){																		
@@ -260,10 +263,24 @@ namespace cwing
 				if(newPlayer->checkCollision(*c) && currentTime - playerHitTimer >= 4000){
 					std::cout << newPlayer->getLives() << std::endl;
 					playerHitTimer = currentTime;
+					pause = true;
+					newPlayer->setHit(true);       // Här anropas en ny bild via setHit. 
+					Mix_PlayChannel(-1, hit_sound, 0);														
+						for (int i = 0; i < 8; ++i) {  
+								remove(vektor[i]); //Tömmer hela vektorn på fiender så det blir lite lugnt.
+								vektor[i] = nullptr;
+							}
 					newPlayer->looseLife();
 					actualLives->updateLives();
-					std::cout << newPlayer->getLives() << std::endl;
+					std::cout << newPlayer->getLives() << std::endl;	
+									
 				}
+			}
+
+			if (newPlayer->isHit() && currentTime - playerHitTimer >= 2000  && newPlayer->getLives()>0) {
+    		// Om det har gått 2 sekunder sedan träffen, återställ skeppet
+    		newPlayer->setHit(false);
+			pause = false;
 			}
 
 			for (Sprite* c : spriteList)
