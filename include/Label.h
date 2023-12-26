@@ -26,10 +26,12 @@ namespace cwing
 		~Label(){};
 
 	protected:
-		Label(int x, int y, int w, int h, std::string txt);
+		Label(int x, int y, int fontSize, std::string txt, Player* playerPtr, Uint8 r, Uint8 g, Uint8 b);
 	private:
 		std::string text;
 		Player* playerPointer;
+		int width;
+		int height;
 	};
 
 }

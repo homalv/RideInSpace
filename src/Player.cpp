@@ -83,6 +83,11 @@ namespace cwing
 		return false;
 	}
 
+	void Player::resetPlayer(){
+		points = 0;
+		lives = 3;
+	}
+	
 	void Player::looseLife(){
 		this->lives --;
 	};
