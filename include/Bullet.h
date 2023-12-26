@@ -12,6 +12,9 @@ namespace cwing
         protected:
             Bullet(float x, float y, float w, float h);
 
+        private:
+        Mix_Chunk* shotSound;
+
     };
 }
 
