@@ -68,6 +68,7 @@ namespace cwing
 		int bgX1 = 0;       // Position för första kopian av bakgrundsbild
     	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
 		PlayerBullet* pb;
+		EnemyBullet* eb;
 		bool spacePressed = false;
 		Label* labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER", nullptr  , 85, 0, 14);
 		Label* labelRestart = Label::getInstance(300, 360, 34, "RESTART   ", nullptr  , 150, 150, 150);
@@ -110,7 +111,7 @@ namespace cwing
 			
 			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
 			SDL_Event event;
-			if( !pause && currentTime - lastEnemyTimer >= 2000){
+			if( !pause && currentTime - lastEnemyTimer >= 4000){
             	position = dist(rd);
 				
 				while(vektor[position - 1] != nullptr){
@@ -276,6 +277,15 @@ namespace cwing
 					actualLives->updateLives();
 					std::cout << newPlayer->getLives() << std::endl;	
 									
+				}
+
+				Enemy* enemyObject = dynamic_cast<Enemy*>(c);
+				if(enemyObject != nullptr){
+					eb = enemyObject->shoot(newPlayer->getRect().x, newPlayer->getRect().y);
+
+					if(eb != nullptr && !pause){
+						add(eb);
+					}
 				}
 			}
 
