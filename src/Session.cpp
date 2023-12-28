@@ -117,7 +117,7 @@ namespace cwing
 					position = dist(rd);
 				}
 				
-				newEnemy = Enemy::getInstance(700, position * 55, 40, 40, 2);
+				newEnemy = Enemy::getInstance(700, position * 55, 40, 40, 1);
 				vektor[position-1] = newEnemy;
 				lastEnemyTimer = currentTime;
 				add(newEnemy);
@@ -275,8 +275,18 @@ namespace cwing
 					newPlayer->looseLife();
 					actualLives->updateLives();
 					std::cout << newPlayer->getLives() << std::endl;	
-									
 				}
+				if(PlayerBullet* playerBullet = dynamic_cast<PlayerBullet*>(c)){
+					if(playerBullet != nullptr){
+						if(newEnemy->checkCollision(*playerBullet)){
+						std::cout << newEnemy->getLives() << std::endl;
+						newPlayer->addPoints();
+						actualPoints->updatePoints();
+						newEnemy->looseLife();
+						newEnemy->draw();
+						}
+					}
+				} 
 			}
 
 			if (newPlayer->isHit() && currentTime - playerHitTimer >= 3000  && newPlayer->getLives()>0) {

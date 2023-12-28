@@ -9,21 +9,21 @@ namespace cwing {
     class Enemy : public MovableSprite {
         public:
             static Enemy* getInstance(float x, float y, float w, float h, int lives);        
-            void tick() {
-                if(rect.x + rect.w < 0){
-			            removeThis = true;
-		            } else {
-                  rect.x -= 5;  
-                }
-            }; 
-            void looseLife(); 
+            void tick(); 
+            bool checkCollision(const Sprite& other) const;
+            void looseLife();
+            int getLives();
+            
             ~Enemy(){};
 
         protected:
             Enemy(float x, float y, float w, float h, int lives);
 
         private:
+            void isDead();
+            SDL_FRect enemyHitbox;
             int lives;
+            
     };
 }
 
