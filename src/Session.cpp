@@ -133,10 +133,11 @@ namespace cwing
 			*/
 
 
-			while (SDL_PollEvent(&event)) {
+			while (SDL_PollEvent(&event)) {				
 				switch (event.type) {
 				case SDL_QUIT: quit = true; break;
 				case SDL_KEYDOWN:
+				if(!pause){
                     switch (event.key.keysym.scancode)
                     {
                     case SDL_SCANCODE_RIGHT:
@@ -148,7 +149,7 @@ namespace cwing
                     case SDL_SCANCODE_UP:
                         newPlayer->move(SDL_SCANCODE_UP);
                         break;
-                    case SDL_SCANCODE_DOWN:
+                    case SDL_SCANCODE_DOWN: 
                         newPlayer->move(SDL_SCANCODE_DOWN);
                         break;
 					case SDL_SCANCODE_SPACE:
@@ -161,6 +162,7 @@ namespace cwing
                         break;
                     }
                     break;
+				}	
                 case SDL_KEYUP:
                     switch (event.key.keysym.scancode)
                     {
@@ -260,7 +262,7 @@ namespace cwing
 			newPlayer->draw();
 
 			for	(Sprite* c : spriteList){
-				if(newPlayer->checkCollision(*c) && currentTime - playerHitTimer >= 4000){
+				if(newPlayer->checkCollision(*c) && currentTime - playerHitTimer >= 3000){
 					std::cout << newPlayer->getLives() << std::endl;
 					playerHitTimer = currentTime;
 					pause = true;
@@ -277,7 +279,7 @@ namespace cwing
 				}
 			}
 
-			if (newPlayer->isHit() && currentTime - playerHitTimer >= 2000  && newPlayer->getLives()>0) {
+			if (newPlayer->isHit() && currentTime - playerHitTimer >= 3000  && newPlayer->getLives()>0) {
     		// Om det har gått 2 sekunder sedan träffen, återställ skeppet
     		newPlayer->setHit(false);
 			pause = false;
