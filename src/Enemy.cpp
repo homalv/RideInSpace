@@ -20,21 +20,45 @@ namespace cwing
         return new Enemy(x, y, w, h, lives);
     }        
 
-    void Enemy::isDead(){
-        if (lives<1) {
-            // Byt ut texturvägen när enemy träffats.
-            texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy_crash.png").c_str());
-        }
+    void Enemy::looseLife(){
+		lives --;
+        if(lives<1)
+        dies();
+	};
+
+
+    void Enemy::dies(){        
+        // Byt ut texturvägen när enemy träffats.
+        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy_crash.png").c_str());
+        
     }
 
     int Enemy::getLives(){
 		return lives;
 	};
+
+    bool Enemy::isDead(){
+        return lives<1;
+    }
+
+    void Enemy::setRemoveThis(bool value) {
+        removeThis = value;
+    }
        
     void Enemy::tick() {
         if(rect.x + rect.w < 0){
 			removeThis = true;
-		}else if(rect.x == 500){
+		}
+        if(isDead()){
+            endmyDeadTimer = SDL_GetTicks();
+            if(stopTimer == 0){
+                stopTimer = SDL_GetTicks();
+            }
+            if(endmyDeadTimer - stopTimer >= 2000){
+                setRemoveThis(true);
+            }
+        }
+        else if(rect.x == 500){
             currTimer = SDL_GetTicks();
             if(stopTimer == 0){
                 stopTimer = SDL_GetTicks();
@@ -47,11 +71,6 @@ namespace cwing
         }
     };
 
-    void Enemy::looseLife(){
-		lives --;
-        if(lives<1)
-        isDead();
-	};
 
     bool Enemy::checkCollision(const Sprite& other) const{
 		const MovableSprite* movableOther = dynamic_cast<const MovableSprite*>(&other);

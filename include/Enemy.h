@@ -14,6 +14,8 @@ namespace cwing {
             bool checkCollision(const Sprite& other) const;
             void looseLife();
             int getLives();
+            bool isDead();
+            void setRemoveThis(bool value);
             
             EnemyBullet* shoot(float playerX, float playerY);
             ~Enemy(){};
@@ -22,10 +24,11 @@ namespace cwing {
             Enemy(float x, float y, float w, float h, int lives);
 
         private:
-            void isDead();
+            void dies();
             SDL_FRect enemyHitbox;
             int lives;
             Uint32 stopTimer = 0;
+            Uint32 endmyDeadTimer = 0;
             Uint32 currTimer = 0;
             Uint32 stopShootTimer = 0;
             Uint32 shootTimer = 0;

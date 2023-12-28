@@ -31,8 +31,7 @@ namespace cwing
 		removed.push_back(sprite);
 	}
 
-	void Session::run() {
-		bool pause = false;
+	void Session::run() {		
 		Enemy* vektor[8] = {nullptr};
 		int position;
 		GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
@@ -46,6 +45,7 @@ namespace cwing
     	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
     	SDL_FreeSurface(bgSurf);
 		
+		bool pause = false;
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0, playerHitTimer = 4000;
 		Player* newPlayer = Player::getInstance(100, 100, 60, 60);
@@ -163,7 +163,7 @@ namespace cwing
                         break;
                     }
                     break;
-				}	
+					
                 case SDL_KEYUP:
                     switch (event.key.keysym.scancode)
                     {
@@ -183,6 +183,7 @@ namespace cwing
                         break;
                     }
 					break;
+				}	
 
 				case SDL_MOUSEBUTTONDOWN:
 				int mouseX, mouseY;
@@ -279,8 +280,7 @@ namespace cwing
 				}
 				if(PlayerBullet* playerBullet = dynamic_cast<PlayerBullet*>(c)){
 					if(playerBullet != nullptr){
-						if(newEnemy->checkCollision(*playerBullet)){
-						std::cout << newEnemy->getLives() << std::endl;
+						if(newEnemy->checkCollision(*playerBullet)){						
 						newPlayer->addPoints();
 						actualPoints->updatePoints();
 						newEnemy->looseLife();
@@ -290,10 +290,10 @@ namespace cwing
 				} 
 
 				Enemy* enemyObject = dynamic_cast<Enemy*>(c);
-				if(enemyObject != nullptr){
+				if(!pause && enemyObject != nullptr){
 					eb = enemyObject->shoot(newPlayer->getRect().x, newPlayer->getRect().y);
 
-					if(eb != nullptr && !pause){
+					if(!pause && eb != nullptr && !pause){
 						add(eb);
 					}
 				}
