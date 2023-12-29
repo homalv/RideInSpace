@@ -14,7 +14,7 @@ namespace cwing
         void move(const SDL_Scancode&);
         void stop(const SDL_Scancode&);
         PlayerBullet* shoot();
-        bool checkCollision(const Sprite& other) const;
+        //bool checkCollision(const Sprite& other) const;
         void looseLife();
         void addPoints();
         int getLives() const;
@@ -22,6 +22,7 @@ namespace cwing
         bool isHit();
         void setHit(bool isHit);
         void resetPlayer();
+        bool checkCollision(const Sprite& other);
         ~Player(){};
 
     protected:
@@ -37,7 +38,7 @@ namespace cwing
         bool isPlayerHit = false;        
         int points = 0;
         int lives = 3;
-        SDL_FRect hitbox;
+        //SDL_FRect hitbox;
     };
 }
 

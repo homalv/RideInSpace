@@ -58,7 +58,7 @@ namespace cwing
                 setRemoveThis(true);
             }
         }
-        else if(rect.x == 500){
+        if(rect.x == 500){
             currTimer = SDL_GetTicks();
             if(stopTimer == 0){
                 stopTimer = SDL_GetTicks();
@@ -91,4 +91,8 @@ namespace cwing
         }
         return nullptr;
     }
+
+    bool Enemy::checkCollision(const Sprite& other) {
+		return SDL_HasIntersectionF(&hitbox, &other.getRect());
+	}
 }

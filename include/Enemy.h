@@ -16,7 +16,7 @@ namespace cwing {
             int getLives();
             bool isDead();
             void setRemoveThis(bool value);
-            
+            bool checkCollision(const Sprite& other);
             EnemyBullet* shoot(float playerX, float playerY);
             ~Enemy(){};
 

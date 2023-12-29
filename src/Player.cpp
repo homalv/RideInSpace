@@ -75,6 +75,7 @@ namespace cwing
 		return nullptr;
 	}
 
+	/*
 	bool Player::checkCollision(const Sprite& other) const{
 		const MovableSprite* movableOther = dynamic_cast<const MovableSprite*>(&other);
 		if(movableOther){
@@ -82,6 +83,7 @@ namespace cwing
 		}
 		return false;
 	}
+	*/
 
 	void Player::setHit(bool isHit) {
         isPlayerHit = isHit;
@@ -93,6 +95,17 @@ namespace cwing
             texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str());
         }
     }
+
+	bool Player::checkCollision(const Sprite& other){
+		if(SDL_HasIntersectionF(&hitbox, &other.getRect())){
+			ses.setPause(true);
+			setHit(true);
+			ses.playSound("sounds/hit_sound.mp3");
+			looseLife();
+		}
+		return SDL_HasIntersectionF(&hitbox, &other.getRect());
+	}
+	
 
 	bool Player::isHit(){
 		return isPlayerHit;
