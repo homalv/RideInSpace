@@ -17,7 +17,7 @@
 
 using namespace std;
 
-#define FPS 80
+//#define FPS 80
 
 namespace cwing 
 {
@@ -39,8 +39,16 @@ namespace cwing
 		newPlayer = addedPlayer;
 	}
 
+	void Session::addEnemySpawner(EnemySpawner* addedSpawn){
+		newSpawner = addedSpawn;
+	}
+
 	void Session::setPause(bool value){
 		paused = value;
+	}
+
+	bool Session::getPause() const {
+		return paused;
 	}
 
 	void Session::playSound(std::string soundLocInput){
@@ -48,17 +56,38 @@ namespace cwing
 		Mix_PlayChannel(-1, sound, 0);
 	}
 
+	void Session::handleEndGame(){
+		if(startDelayTime == 0)	{
+			std::cout << "Start" << std::endl;											
+			paused = true;	
+			newPlayer->setHit(true);											
+			add(labelGameOver);
+			newSpawner->clearVector();
+			startDelayTime = SDL_GetTicks();
+		} else if (SDL_GetTicks() - startDelayTime >= 3000) {										
+			add(labelRestart);						
+			add(labelQuit);														
+		}	
+	}
+
+	void Session::addPoints(){
+		newPlayer->addPoints();
+	}
+
+	Player* Session::getPlayer() const{
+		return newPlayer;
+	}
+
 	void Session::run() {		
-		Enemy* vektor[8] = {nullptr};
-		int position;
+		//int position = 0;
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + backgroundLoc).c_str()); 
     	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
     	SDL_FreeSurface(bgSurf);
 		
 		//bool pause = false;
 		bool quit = false;
-		Uint32 tickInterval = 1000 / FPS, lastEnemyTimer = 0, playerHitTimer = 4000;
-		Enemy* newEnemy;
+		Uint32 tickInterval = 1000 / FPS; //lastEnemyTimer = 0, playerHitTimer = 4000;
+		//Enemy* newEnemy;
 
 		/*
 
@@ -72,19 +101,14 @@ namespace cwing
 
 		*/
 
-
-
-		random_device rd;
-		uniform_int_distribution<int> dist(1, 8);
 		int bgWidth = 1501;  // Bredd  och höjd bakgrundsbild
     	int bgHeight = 520;
 		int bgX1 = 0;       // Position för första kopian av bakgrundsbild
     	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
-		PlayerBullet* pb;
-		EnemyBullet* eb;
-		Label* labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER" , 85, 0, 14);
-		Label* labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
-		Label* labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);
+		labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER" , 85, 0, 14);
+		labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
+		labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);
+
 		
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
@@ -105,7 +129,8 @@ namespace cwing
         	SDL_Rect destRect2 = {bgX2, 0, bgWidth, bgHeight};
         	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect2, &destRect2); 
 
-			if(newPlayer->getLives()<1){
+			/*
+			if(newPlayer->getLives()<3){
 				if(startDelayTime == 0)	{											
 					paused = true;	
 					newPlayer->setHit(true);											
@@ -118,9 +143,15 @@ namespace cwing
 					startDelayTime = 0;										
 				}													
 			}
+			*/
+
+
 			
-			Uint32 nextTick = SDL_GetTicks() + tickInterval, currentTime = SDL_GetTicks();
+			Uint32 nextTick = SDL_GetTicks() + tickInterval; //currentTime = SDL_GetTicks();
 			SDL_Event event;
+
+			/*
+
 			if( !paused && currentTime - lastEnemyTimer >= 4000){
             	position = dist(rd);
 				
@@ -134,6 +165,8 @@ namespace cwing
 				add(newEnemy);
         	}
 
+			*/
+
 			/*
 			if(currentTime - lastEnemyTimer >= 2000){
             	lastEnemyTimer = currentTime;
@@ -146,89 +179,86 @@ namespace cwing
 
 			while (SDL_PollEvent(&event)) {				
 				switch (event.type) {
-				case SDL_QUIT: quit = true; break;
-				case SDL_KEYDOWN:
-				if(!paused){
-                    switch (event.key.keysym.scancode)
-                    {
-                    case SDL_SCANCODE_RIGHT:
-                        newPlayer->move(SDL_SCANCODE_RIGHT);
-                        break;
-                    case SDL_SCANCODE_LEFT:
-                        newPlayer->move(SDL_SCANCODE_LEFT);
-                        break;
-                    case SDL_SCANCODE_UP:
-                        newPlayer->move(SDL_SCANCODE_UP);
-                        break;
-                    case SDL_SCANCODE_DOWN: 
-                        newPlayer->move(SDL_SCANCODE_DOWN);
-                        break;
-					case SDL_SCANCODE_SPACE:
-						pb = newPlayer->shoot();
-						if(pb != nullptr && !paused){
-							add(pb);
+					case SDL_QUIT: quit = true; 
+						break;
+					case SDL_KEYDOWN:
+						if(!paused){
+                    		switch (event.key.keysym.scancode){
+                    			case SDL_SCANCODE_RIGHT:
+                        			newPlayer->move(SDL_SCANCODE_RIGHT);
+                        			break;
+                    			case SDL_SCANCODE_LEFT:
+                        			newPlayer->move(SDL_SCANCODE_LEFT);
+                        			break;
+                    			case SDL_SCANCODE_UP:
+                        			newPlayer->move(SDL_SCANCODE_UP);
+                        			break;
+                    			case SDL_SCANCODE_DOWN: 
+                        			newPlayer->move(SDL_SCANCODE_DOWN);
+                        			break;
+								case SDL_SCANCODE_SPACE:
+									newPlayer->shoot();
+									break;
+                    			default:
+                        			break;
+                    	}
+                    	break;
+
+                	case SDL_KEYUP:
+                    	switch (event.key.keysym.scancode){
+                    		case SDL_SCANCODE_RIGHT:
+                        		newPlayer->stop(SDL_SCANCODE_RIGHT);
+                        		break;
+                    		case SDL_SCANCODE_LEFT:
+                        		newPlayer->stop(SDL_SCANCODE_LEFT);
+                        		break;
+                    	case SDL_SCANCODE_UP:
+                        		newPlayer->stop(SDL_SCANCODE_UP);
+                        		break;
+                    	case SDL_SCANCODE_DOWN:
+                        		newPlayer->stop(SDL_SCANCODE_DOWN);
+                        		break;
+                    	default:
+                        	break;
+                    	}
+						break;
+					}	
+
+					case SDL_MOUSEBUTTONDOWN:
+						int mouseX, mouseY;
+						SDL_GetMouseState(&mouseX, &mouseY);
+						float mouseXFloat = static_cast<float>(mouseX);
+						float mouseYFloat = static_cast<float>(mouseY);
+				
+						if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)){						
+							newPlayer->resetPlayer();
+							remove(labelQuit);
+							remove(labelGameOver);
+							remove(labelRestart);
+							startDelayTime = 0;
+							//actualLives->updateLives();
+							//actualPoints->updatePoints();
+							/*
+							for (int i = 0; i < 8; ++i) {
+								remove(vektor[i]);
+								vektor[i] = nullptr;
+							}
+							*/
+							//lastEnemyTimer = SDL_GetTicks(); 
+							paused = false;
+						}
+				
+						if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)){																		
+							GamePanel* gameOverPanel = GamePanel::getInstance(1,1, 700, 520);	
+							add(gameOverPanel);
+							Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!"  , 60, 0, 10);
+							add(labelGoodBye);							
+							startDelayTime = SDL_GetTicks();
+							//SDL_Delay(1500);
+							quit = true;																									
 						}
 						break;
-                    default:
-                        break;
-                    }
-                    break;
-					
-                case SDL_KEYUP:
-                    switch (event.key.keysym.scancode)
-                    {
-                    case SDL_SCANCODE_RIGHT:
-                        newPlayer->stop(SDL_SCANCODE_RIGHT);
-                        break;
-                    case SDL_SCANCODE_LEFT:
-                        newPlayer->stop(SDL_SCANCODE_LEFT);
-                        break;
-                    case SDL_SCANCODE_UP:
-                        newPlayer->stop(SDL_SCANCODE_UP);
-                        break;
-                    case SDL_SCANCODE_DOWN:
-                        newPlayer->stop(SDL_SCANCODE_DOWN);
-                        break;
-                    default:
-                        break;
-                    }
-					break;
-				}	
-
-				case SDL_MOUSEBUTTONDOWN:
-				int mouseX, mouseY;
-				SDL_GetMouseState(&mouseX, &mouseY);
-				float mouseXFloat = static_cast<float>(mouseX);
-				float mouseYFloat = static_cast<float>(mouseY);
-				
-					if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)){						
-						newPlayer->resetPlayer();
-						remove(labelQuit);
-						remove(labelGameOver);
-						remove(labelRestart);
-						//actualLives->updateLives();
-						//actualPoints->updatePoints();
-						for (int i = 0; i < 8; ++i) {
-							remove(vektor[i]);
-							vektor[i] = nullptr;
-						}
-						lastEnemyTimer = SDL_GetTicks(); 
-						paused = false;
-					}
-				
-					if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)){																		
-						GamePanel* gameOverPanel = GamePanel::getInstance(1,1, 700, 520);	
-						add(gameOverPanel);
-						Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!"  , 60, 0, 10);
-						add(labelGoodBye);							
-						startDelayTime = SDL_GetTicks();
-						//SDL_Delay(1500);
-						quit = true;																									
-					}
-				
-				break;
-				}
-				 //switch
+				} //switch
 			} //inre while
 
 			int mouseX, mouseY;
@@ -236,11 +266,14 @@ namespace cwing
 
 			//Tick för player
 			newPlayer->tick();
+			//Tick för enemyspawner
+			if(!paused){
+				newSpawner->tick();
+			}
 
 			for (Sprite* c : spriteList){
 				c->tick();
 				if(c->checkRemove()){
-					vektor[position-1]= nullptr;
 					remove(c);
 				}
 			}
@@ -272,53 +305,28 @@ namespace cwing
 
 
 			for	(Sprite* c1 : spriteList){
-				Enemy* enemy = dynamic_cast<Enemy*>(c1);
-				if(enemy != nullptr){
-					for(Sprite* c2 : spriteList){
-						newEnemy->checkCollision(*c2);
-					}
+				for(Sprite* c2 : spriteList){
+					c1->checkCollision(*c2);
 				}
-				if(newPlayer->checkCollision(*c1) && currentTime - playerHitTimer >= 3000){
-					playerHitTimer = currentTime;
-					//pause = true;
-					//newPlayer->setHit(true);       // Här anropas en ny bild via setHit. 
-					//Mix_PlayChannel(-1, hit_sound, 0);
-					/*														
-					for (int i = 0; i < 8; ++i) {  
-						remove(vektor[i]); //Tömmer hela vektorn på fiender så det blir lite lugnt.
-						vektor[i] = nullptr;
-					}
-					*/
-					//newPlayer->looseLife();
-					//actualLives->updateLives();
-				}
-				if(PlayerBullet* playerBullet = dynamic_cast<PlayerBullet*>(c1)){
-					if(playerBullet != nullptr){
-						if(newEnemy->checkCollision(*playerBullet)){						
-						newPlayer->addPoints();
-						//actualPoints->updatePoints();
-						newEnemy->looseLife();
-						newEnemy->draw();
-						}
-					}
-				} 
-
-				Enemy* enemyObject = dynamic_cast<Enemy*>(c1);
-				if(!paused && enemyObject != nullptr){
-					eb = enemyObject->shoot(newPlayer->getRect().x, newPlayer->getRect().y);
+				newPlayer->checkCollision(*c1);
+				
+				/*
+				if(!paused && enemy != nullptr){
+					eb = enemy->shoot(newPlayer->getRect().x, newPlayer->getRect().y);
 
 					if(!paused && eb != nullptr && !paused){
 						add(eb);
 					}
 				}
+				*/
 			}
-
+			/*
 			if (newPlayer->isHit() && currentTime - playerHitTimer >= 3000  && newPlayer->getLives()>0) {
     			// Om det har gått 2 sekunder sedan träffen, återställ skeppet
     			newPlayer->setHit(false);
 				paused = false;
 			}
-
+			*/
 			for (Sprite* c : spriteList)
 				c->draw();
 			SDL_RenderPresent(sys.get_ren());

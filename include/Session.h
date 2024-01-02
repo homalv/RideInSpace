@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include <vector>
+#include "EnemySpawner.h"
 
 namespace cwing 
 {
@@ -17,12 +18,21 @@ namespace cwing
 		void addPlayer(Player* addedPlayer);
 		void setPause(bool value);
 		void playSound(std::string soundLoc);
+		bool getPause() const;
+		void addEnemySpawner(EnemySpawner* addedSpawn);
+		void handleEndGame();
+		void addPoints();
+		Player* getPlayer() const;
 	private:
 		std::vector<Sprite*> spriteList;
 		std::vector<Sprite*> added, removed;
 		std::string backgroundLoc;
 		Player* newPlayer;
+		EnemySpawner* newSpawner;
 		bool paused = false;
+		Label* labelGameOver;
+		Label* labelRestart;
+		Label* labelQuit;
 	};
 
 	extern Session ses;

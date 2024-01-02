@@ -4,16 +4,18 @@
 #include <SDL2/SDL_image.h>
 #include "System.h"
 #include "Constants.h"
+#include "Session.h"
+#include <iostream>
 
 namespace cwing 
 {  
-    Enemy::Enemy(float x, float y, float w, float h, int lives) : MovableSprite(x,y,w,h){
-        this->lives = lives;
+    Enemy::Enemy(float x, float y, float w, float h, int livesInput) : MovableSprite(x,y,w,h){
+        lives= livesInput;
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy2.png").c_str() );
         enemyHitbox.x = rect.x;
-    	enemyHitbox.y = rect.y-10;
-    	enemyHitbox.w = 40;
-    	enemyHitbox.h = rect.h-10;
+    	enemyHitbox.y = rect.y;
+    	enemyHitbox.w = rect.w;
+    	enemyHitbox.h = rect.h;
 	}
 
     Enemy* Enemy::getInstance(float x, float y, float w, float h, int lives) {
@@ -23,7 +25,7 @@ namespace cwing
     void Enemy::looseLife(){
 		lives --;
         if(lives<1)
-        dies();
+            dies();
 	};
 
 
@@ -46,6 +48,8 @@ namespace cwing
     }
        
     void Enemy::tick() {
+        counter++;
+        shotCounter++;
         if(rect.x + rect.w < 0){
 			removeThis = true;
 		}
@@ -63,36 +67,32 @@ namespace cwing
             if(stopTimer == 0){
                 stopTimer = SDL_GetTicks();
             }
-            if(currTimer - stopTimer >= 7000){
+            if(currTimer - stopTimer >= 3000){
                 rect.x--;
             }
         } else {
             rect.x -= 5;  
         }
+
+        shoot(ses.getPlayer()->getHitBoxPosX(), ses.getPlayer()->getHitBoxPosY());
+
     };
-
-
-    bool Enemy::checkCollision(const Sprite& other) const{
-		const MovableSprite* movableOther = dynamic_cast<const MovableSprite*>(&other);
-		if(movableOther){
-			return SDL_HasIntersectionF(&enemyHitbox, &other.getRect());
-		}
-		return false;
-	}
  
-    EnemyBullet* Enemy::shoot(float playerX, float playerY){
-        shootTimer = SDL_GetTicks();
-        if(stopShootTimer == 0){
-                stopShootTimer = SDL_GetTicks();
+    void Enemy::shoot(float playerX, float playerY){
+        if(shotCounter >= (FPS*3)){
+            shotCounter = 0;
+            EnemyBullet* eb = EnemyBullet::getInstance(rect.x, rect.y, playerX, playerY);
+            ses.add(eb);
         }
-        if(shootTimer - stopShootTimer >= 2000){
-            stopShootTimer = shootTimer;
-            return EnemyBullet::getInstance(rect.x, rect.y, playerX, playerY);
-        }
-        return nullptr;
     }
 
-    bool Enemy::checkCollision(const Sprite& other) {
-		return SDL_HasIntersectionF(&hitbox, &other.getRect());
+    void Enemy::checkCollision(const Sprite& other) {
+        if(SDL_HasIntersectionF(&hitbox, &other.getRect()) && !isDead()){
+            const PlayerBullet* playerBullet = dynamic_cast<const PlayerBullet*>(&other);
+            if(playerBullet != nullptr){
+                ses.addPoints();
+                looseLife();
+            }   
+        }
 	}
 }

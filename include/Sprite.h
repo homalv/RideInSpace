@@ -14,7 +14,9 @@ namespace cwing{
 		const SDL_FRect& getRect() const { return rect; }
 		std::vector<float> getCenterPos();
 		virtual bool checkRemove() const { return removeThis; }
-		virtual bool checkCollision(const Sprite& other) {return false;};
+		virtual void checkCollision(const Sprite& other){};
+		virtual float getHitBoxPosX() {return 0.0;};
+		virtual float getHitBoxPosY() {return 0.0;};
 		virtual ~Sprite();
 	protected:
 		Sprite(float x, float y, float w, float h) : rect{ x,y,w,h } {}

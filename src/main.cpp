@@ -33,6 +33,9 @@ int main(int argc, char** argv){
 
 	ValueLabel* actualLives = ValueLabel::getInstance(220, 38, 22 , newPlayer->getLives(), 0, newPlayer, 60, 0, 10);
 	ses.add(actualLives);
+
+	EnemySpawner* enemySpawner = EnemySpawner::getInstance(500, 100, 465, 55.0);
+	ses.addEnemySpawner(enemySpawner);
 	
 	ses.run();
 

@@ -5,19 +5,19 @@
 #include <SDL2/SDL.h>
 #include "System.h"
 #include "EnemyBullet.h"
+#include "PlayerBullet.h"
 
 namespace cwing {
     class Enemy : public MovableSprite {
         public:
             static Enemy* getInstance(float x, float y, float w, float h, int lives);        
             void tick(); 
-            bool checkCollision(const Sprite& other) const;
+            void checkCollision(const Sprite& other);
             void looseLife();
             int getLives();
             bool isDead();
             void setRemoveThis(bool value);
-            bool checkCollision(const Sprite& other);
-            EnemyBullet* shoot(float playerX, float playerY);
+            void shoot(float playerX, float playerY);
             ~Enemy(){};
 
         protected:
@@ -32,6 +32,8 @@ namespace cwing {
             Uint32 currTimer = 0;
             Uint32 stopShootTimer = 0;
             Uint32 shootTimer = 0;
+            int counter = 0;
+            int shotCounter = 0;
     };
 }
 
