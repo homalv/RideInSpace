@@ -1,15 +1,12 @@
 #include "EnemySpawner.h"
 #include "Session.h"
+#include <iostream>
 
 namespace cwing 
 {
 
-    EnemySpawner::EnemySpawner(int x, int startY, int endY, float eSize) : nrOfPlaces((endY - startY) / eSize), xPos(x), firstPos(startY), enemySize(eSize), dist(1, nrOfPlaces), spawnVector(nrOfPlaces, nullptr){}
-
-    std::uniform_int_distribution<int> dist; 
-    std::vector<Enemy*> spawnVector;
-    std::random_device rd;
-
+    EnemySpawner::EnemySpawner(int x, int startY, int endY, float eSize) : nrOfPlaces((endY - startY) / eSize), xPos(x), firstPos(startY), enemySize(eSize), dist(1, nrOfPlaces), spawnVector(6, nullptr){
+    }
 
     EnemySpawner* EnemySpawner::getInstance(int x, int startY, int endY, float enemySize){
         return new EnemySpawner(x, startY, endY, enemySize);
@@ -21,6 +18,7 @@ namespace cwing
             counter = 0;
             position = dist(rd);
             while(spawnVector[position - 1] != nullptr){
+                std::cout << "Position: " << position - 1 << std::endl;
                 position = dist(rd);
             }
             Enemy* newEnemy = Enemy::getInstance(700, firstPos + position * enemySize, 40, 40, 1);
@@ -29,7 +27,7 @@ namespace cwing
         }
         for (Enemy* ptr : spawnVector) {
             if (!isValidPointer(ptr)) {
-                delete ptr;
+                spawnVector.erase(spawnVector.begin() + position - 1);
             }
         }
     }

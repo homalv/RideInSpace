@@ -19,7 +19,7 @@ namespace cwing
 		void setPause(bool value);
 		void playSound(std::string soundLoc);
 		bool getPause() const;
-		void addEnemySpawner(EnemySpawner* addedSpawn);
+		void addEnemySpawner(EnemySpawner*& addedSpawn);
 		void handleEndGame();
 		void addPoints();
 		Player* getPlayer() const;

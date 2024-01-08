@@ -39,7 +39,7 @@ namespace cwing
 		newPlayer = addedPlayer;
 	}
 
-	void Session::addEnemySpawner(EnemySpawner* addedSpawn){
+	void Session::addEnemySpawner(EnemySpawner*& addedSpawn){
 		newSpawner = addedSpawn;
 	}
 
