@@ -14,7 +14,7 @@ namespace cwing {
             void tick(); 
             void checkCollision(const Sprite& other);
             void looseLife();
-            int getLives();
+            int getLives() const;
             bool isDead();
             void setRemoveThis(bool value);
             void shoot(float playerX, float playerY);

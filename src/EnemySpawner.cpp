@@ -18,24 +18,26 @@ namespace cwing
             counter = 0;
             position = dist(rd);
             while(spawnVector[position - 1] != nullptr){
-                std::cout << "Position: " << position - 1 << std::endl;
+                //std::cout << "Position: " << position - 1 << std::endl;
                 position = dist(rd);
             }
             Enemy* newEnemy = Enemy::getInstance(700, firstPos + position * enemySize, 40, 40, 1);
             spawnVector[position-1] = newEnemy;
             ses.add(newEnemy);
-        }
-        for (Enemy* ptr : spawnVector) {
-            if (!isValidPointer(ptr)) {
-                spawnVector.erase(spawnVector.begin() + position - 1);
+            forCounter1 = 0;
+            std::cout << "#################################" << std::endl;
+            for (Enemy* ptr : spawnVector) {
+                if(ptr != nullptr){
+                    if(ptr->checkRemove()){
+                        std::cout << "Checked Remove" << std::endl;
+                        spawnVector[forCounter1] = nullptr;
+                        //ses.remove(ptr);
+                    }
+                }
+                forCounter1++;
             }
         }
     }
-
-    bool EnemySpawner::isValidPointer(const Enemy* ptr) {
-        return ptr != nullptr;  
-    }
-
     /*
     
         if( !paused && currentTime - lastEnemyTimer >= 4000){

@@ -35,7 +35,7 @@ namespace cwing
         
     }
 
-    int Enemy::getLives(){
+    int Enemy::getLives() const {
 		return lives;
 	};
 

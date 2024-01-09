@@ -23,6 +23,7 @@ namespace cwing
             int counter = 0;
             int position = 0;
             int enemySize = 0;
+            int forCounter1 = 0;
             std::uniform_int_distribution<int> dist; 
             std::vector<Enemy*> spawnVector;
             std::random_device rd; 
