@@ -87,7 +87,7 @@ namespace cwing
     }
 
     void Enemy::checkCollision(const Sprite& other) {
-        if(SDL_HasIntersectionF(&hitbox, &other.getRect()) && !isDead()){
+        if(SDL_HasIntersectionF(&enemyHitbox, &other.getRect()) && !isDead()){
             const PlayerBullet* playerBullet = dynamic_cast<const PlayerBullet*>(&other);
             if(playerBullet != nullptr){
                 ses.addPoints();
