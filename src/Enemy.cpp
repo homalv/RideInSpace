@@ -90,6 +90,7 @@ namespace cwing
         if(SDL_HasIntersectionF(&enemyHitbox, &other.getRect()) && !isDead()){
             const PlayerBullet* playerBullet = dynamic_cast<const PlayerBullet*>(&other);
             if(playerBullet != nullptr){
+                ses.playSound("sounds/hit_sound_enemy.mp3");
                 ses.addPoints();
                 looseLife();
             }   

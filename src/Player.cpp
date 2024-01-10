@@ -58,7 +58,7 @@ namespace cwing
 			rect.x -= 5;
 			hitbox.x -= 5;
 		}
-		if(movingUp && rect.y > 60){
+		if(movingUp && rect.y > 70){
 			rect.y -= 5;
 			hitbox.y -= 5;
 		}
