@@ -6,10 +6,6 @@ namespace cwing
 {
 
 	PlayerBullet::PlayerBullet(float x, float y) : Bullet(x,y,width,height){
-		// Ladda ljudfilen när en Bullet skapas
-        sound_PlayerShot = Mix_LoadWAV((constants::gResPath + "sounds/laser_shot.mp3").c_str());
-        // Spela upp ljudet
-        Mix_PlayChannel(-1, sound_PlayerShot, 0);
 	}
 
 	PlayerBullet* PlayerBullet::getInstance(float x, float y) {

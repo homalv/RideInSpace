@@ -6,11 +6,7 @@ namespace cwing
 {
     
 	EnemyBullet::EnemyBullet(float x, float y, float currPlayerX, float currPlayerY): Bullet(x, y, width, height), playerX(currPlayerX), playerY(currPlayerY) {
-        calcDist();
-        // Ladda ljudfilen när en Bullet skapas
-        sound_EnemyShot = Mix_LoadWAV((constants::gResPath + "sounds/laser_shot_enemy.mp3").c_str());
-        // Spela upp ljudet
-        Mix_PlayChannel(-1, sound_EnemyShot, 0);
+        calcDist();       
     }
 
 	EnemyBullet* EnemyBullet::getInstance(float x, float y, float currPlayerX, float currPlayerY) {

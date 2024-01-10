@@ -10,7 +10,7 @@ namespace cwing {
 		ren = SDL_CreateRenderer(win, -1, 0);
 		Mix_OpenAudio(20050, AUDIO_S16SYS, 2, 4096);
 		// Path to the 'sounds' folder!
-		musik = Mix_LoadWAV( (constants::gResPath + "sounds/ridInSpace").c_str() );
+		musik = Mix_LoadWAV( (constants::gResPath + "sounds/rideInSpace").c_str() );
 		Mix_PlayChannel(-1, musik, -1);
 		TTF_Init();
 		font = TTF_OpenFont( (constants::gResPath + "fonts/STENCIL.ttf").c_str(), 22);

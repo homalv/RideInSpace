@@ -12,8 +12,7 @@ namespace cwing
             ~PlayerBullet(){};
         protected:
             PlayerBullet(float x, float y);
-        private:
-            Mix_Chunk* sound_PlayerShot;
+        private:            
             static const int width = 20;
             static const int height = 20;
     };

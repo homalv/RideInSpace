@@ -82,6 +82,7 @@ namespace cwing
         if(shotCounter >= (FPS*3)){
             shotCounter = 0;
             EnemyBullet* eb = EnemyBullet::getInstance(rect.x, rect.y, playerX, playerY);
+            ses.playSound("sounds/laser_shot_enemy.mp3");
             ses.add(eb);
         }
     }

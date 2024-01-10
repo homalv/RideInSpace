@@ -15,7 +15,6 @@ namespace cwing
             EnemyBullet(float x, float y, float currPlayerX, float currPlayerY);
             ~EnemyBullet(){};
         private:
-            Mix_Chunk* sound_EnemyShot;
             float playerX;
             float playerY;
             static const int width = 20;

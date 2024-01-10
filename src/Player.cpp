@@ -83,6 +83,7 @@ namespace cwing
 		if(currentTime - lastShotTime >= 300){
 			lastShotTime = currentTime;
 			PlayerBullet* pb = PlayerBullet::getInstance(rect.x+rect.w, rect.y+(rect.h/2));
+			ses.playSound("sounds/laser_shot.mp3");
 			ses.add(pb);
 		}
 	}
