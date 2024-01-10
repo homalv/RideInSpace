@@ -2,7 +2,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "System.h"
 #include <iostream>
-#include "Constants.h" 
+#include "Constants.h"
 #include <string>
 #include "Player.h"
 #include "Sprite.h"
@@ -12,12 +12,12 @@ using namespace std;
 namespace cwing 
 {
 
-	Label* Label::getInstance(int x, int y, int fontSize, std::string txt, Player* playerPtr, Uint8 r, Uint8 g, Uint8 b) {
-		return new Label(x, y, fontSize, txt, playerPtr, r, g, b);
+	Label* Label::getInstance(int x, int y, int fontSize, std::string txt, Uint8 r, Uint8 g, Uint8 b) {
+		return new Label(x, y, fontSize, txt, r, g, b);
 	}
 
-	Label::Label(int x, int y, int fontSize, std::string txt, Player* playerPtr, Uint8 r, Uint8 g, Uint8 b)
-			: Sprite(x,y,0,0), text(txt), playerPointer(playerPtr){	
+	Label::Label(int x, int y, int fontSize, std::string txt, Uint8 r, Uint8 g, Uint8 b)
+			: Sprite(x,y,0,0), text(txt){	
 		TTF_Font* customFont = TTF_OpenFont((constants::gResPath + "fonts/STENCIL.ttf").c_str(), fontSize);    	
 
     	TTF_SizeText(customFont, text.c_str(), &width, &height);
@@ -43,34 +43,6 @@ namespace cwing
 		SDL_FreeSurface(surf);
 	}
 
-	void Label::setPlayer(Player* newPlayer){
-		playerPointer = newPlayer;
-	}
-
-	void Label::updateLives() {
-		if(playerPointer){	
-			std::string lives;		
-			lives =std::to_string(playerPointer->getLives());
-
-			SDL_DestroyTexture(texture);
-			SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), lives.c_str(), { 50,0,10 });
-			texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
-			SDL_FreeSurface(surf);
-		}	
-	}
-
-	void Label::updatePoints() {
-		if(playerPointer){	
-			std::string points;		
-			points =std::to_string(playerPointer->getPoints());
-
-			SDL_DestroyTexture(texture);
-			SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), points.c_str(), { 50,0,10 });
-			texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
-			SDL_FreeSurface(surf);
-		}	
-	}
-
 	int Label::getWidth() const{
 		return width;
 	};
@@ -84,5 +56,12 @@ namespace cwing
 		SDL_FRect rect = getRect();
     	return (x >= rect.x && x < rect.x + width && y >= rect.y && y < rect.y + height);		
 	};
-	
+
+	/*
+
+	void Label::getPlayerLives(){
+		std::cout << playerPointer->getLives() << std::endl;
+	}
+
+	*/
 }

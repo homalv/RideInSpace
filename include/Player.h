@@ -3,6 +3,7 @@
 #include <MovableSprite.h>
 #include <SDL2/SDL.h>
 #include "PlayerBullet.h"
+#include "Label.h"
 #include <vector>
 
 namespace cwing 
@@ -13,8 +14,8 @@ namespace cwing
         void tick();
         void move(const SDL_Scancode&);
         void stop(const SDL_Scancode&);
-        PlayerBullet* shoot();
-        bool checkCollision(const Sprite& other) const;
+        void shoot();
+        //bool checkCollision(const Sprite& other) const;
         void looseLife();
         void addPoints();
         int getLives() const;
@@ -22,6 +23,9 @@ namespace cwing
         bool isHit();
         void setHit(bool isHit);
         void resetPlayer();
+        void checkCollision(const Sprite& other);
+        float getHitBoxPosX();
+		float getHitBoxPosY();
         ~Player(){};
 
     protected:
@@ -37,7 +41,10 @@ namespace cwing
         bool isPlayerHit = false;        
         int points = 0;
         int lives = 3;
-        SDL_FRect hitbox;
+        Uint32 hitTime = 3000;
+        int counter = 0;
+        int deathCounter = 0;
+        //SDL_FRect hitbox;
     };
 }
 

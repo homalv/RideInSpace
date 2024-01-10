@@ -48,6 +48,8 @@ namespace cwing
 	}
 
     void Player::tick () {
+
+		counter++;
 		if(movingRight && rect.x + rect.w < windowWidth){
 			rect.x += 5;
 			hitbox.x += 5;
@@ -64,17 +66,28 @@ namespace cwing
 			rect.y += 5;
 			hitbox.y += 5;
 		}
+
+		if (isPlayerHit && counter >= (FPS*3) && lives>0) {
+			// Om det har gått 2 sekunder sedan träffen, återställ skeppet
+			setHit(false);
+			ses.setPause(false);
+		}
+		
+		if(lives<1){
+			ses.handleEndGame();
+		}
 	}
 
-	PlayerBullet* Player::shoot() {
+	void Player::shoot() {
 		Uint32 currentTime = SDL_GetTicks();
 		if(currentTime - lastShotTime >= 300){
 			lastShotTime = currentTime;
-			return PlayerBullet::getInstance(rect.x+rect.w, rect.y+(rect.h/2));
+			PlayerBullet* pb = PlayerBullet::getInstance(rect.x+rect.w, rect.y+(rect.h/2));
+			ses.add(pb);
 		}
-		return nullptr;
 	}
 
+	/*
 	bool Player::checkCollision(const Sprite& other) const{
 		const MovableSprite* movableOther = dynamic_cast<const MovableSprite*>(&other);
 		if(movableOther){
@@ -82,6 +95,7 @@ namespace cwing
 		}
 		return false;
 	}
+	*/
 
 	void Player::setHit(bool isHit) {
         isPlayerHit = isHit;
@@ -93,6 +107,25 @@ namespace cwing
             texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str());
         }
     }
+
+	void Player::checkCollision(const Sprite& other){
+		if(SDL_HasIntersectionF(&hitbox, &other.getRect()) && counter >= (FPS*3)){
+			counter = 0;
+			ses.setPause(true);
+			setHit(true);
+			ses.playSound("sounds/hit_sound.mp3");
+			looseLife();
+		}
+	}
+	
+	float Player::getHitBoxPosX(){
+		return hitbox.x;
+	}
+
+	float Player::getHitBoxPosY(){
+		return hitbox.y;
+	}
+
 
 	bool Player::isHit(){
 		return isPlayerHit;
