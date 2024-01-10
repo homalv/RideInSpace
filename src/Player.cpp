@@ -6,12 +6,11 @@
 #include "Constants.h"
 #include "PlayerBullet.h"
 #include "Session.h"
+#include <iostream>
 
-namespace cwing 
-{
 
-	Player::Player(float x, float y, float w, float h) : MovableSprite(x,y,w,h)
-	{
+namespace cwing {
+	Player::Player(float x, float y, float w, float h) : MovableSprite(x,y,w,h){
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str() );
 		hitbox.x = rect.x;
     	hitbox.y = rect.y-10;
@@ -19,7 +18,7 @@ namespace cwing
     	hitbox.h = rect.h-10;
 	}
 
-	Player* Player::getInstance(float x, float y, float w, float h) {
+	Player* Player::getInstance(float x, float y, float w, float h){
 		return new Player(x, y, w, h);
 	}
 
@@ -46,9 +45,8 @@ namespace cwing
 			movingUp = false;
 		}
 	}
-
-    void Player::tick () {
-
+	
+	void Player::tick (){
 		counter++;
 		if(movingRight && rect.x + rect.w < windowWidth){
 			rect.x += 5;
@@ -69,6 +67,7 @@ namespace cwing
 
 		if (isPlayerHit && counter >= (FPS*3) && lives>0) {
 			// Om det har gått 2 sekunder sedan träffen, återställ skeppet
+			std::cout << "Waiting" << std::endl;
 			setHit(false);
 			ses.setPause(false);
 		}
@@ -78,7 +77,7 @@ namespace cwing
 		}
 	}
 
-	void Player::shoot() {
+	void Player::shoot(){
 		Uint32 currentTime = SDL_GetTicks();
 		if(currentTime - lastShotTime >= 300){
 			lastShotTime = currentTime;
@@ -88,9 +87,9 @@ namespace cwing
 		}
 	}
 
-	void Player::setHit(bool isHit) {
+	void Player::setHit(bool isHit){
         isPlayerHit = isHit;
-        if (isHit) {
+        if (isHit){
             // Byt ut texturvägen när spelaren är träffad
             texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_hit.png").c_str());
         } else {
@@ -117,12 +116,12 @@ namespace cwing
 		return hitbox.y;
 	}
 
-
 	bool Player::isHit(){
 		return isPlayerHit;
 	};
 
 	void Player::resetPlayer(){
+		setHit(false);
 		points = 0;
 		lives = 3;
 	}

@@ -14,6 +14,7 @@
 #include "GamePanel.h"
 #include "Label.h"
 #include "SoundManager.h"
+#include <iostream>
 
 using namespace std;
 
@@ -62,7 +63,7 @@ namespace cwing
 	void Session::handleEndGame(){
 		if(startDelayTime == 0)	{									
 			paused = true;	
-			newPlayer->setHit(true);											
+			//newPlayer->setHit(true);											
 			add(labelGameOver);
 			newSpawner->clearVector();
 			startDelayTime = SDL_GetTicks();
@@ -119,6 +120,8 @@ namespace cwing
 			Uint32 nextTick = SDL_GetTicks() + tickInterval;
 			SDL_Event event;
 
+			float mouseXFloat, mouseYFloat;
+
 			while (SDL_PollEvent(&event)) {				
 				switch (event.type) {
 					case SDL_QUIT: quit = true; 
@@ -143,6 +146,7 @@ namespace cwing
 									break;
                     			default:
                         			break;
+							}		
                     	}
                     	break;
 
@@ -164,7 +168,7 @@ namespace cwing
                         	break;
                     	}
 						break;
-					}	
+						
 
 					case SDL_MOUSEBUTTONDOWN:
 						int mouseX, mouseY;
@@ -191,6 +195,8 @@ namespace cwing
 							quit = true;																									
 						}
 						break;
+					default:
+						break;	
 				} //switch
 			} //inre while
 
@@ -211,19 +217,17 @@ namespace cwing
 				}
 			}
 
-			for (Sprite* c : added)
+			for (Sprite* c : added){
 				spriteList.push_back(c);
 			added.clear();
+			}
 
 			for (Sprite* c : removed) {
 				for (vector<Sprite*>::iterator i = spriteList.begin();
-					i != spriteList.end();)
-				{
-					if (*i == c) 
-					{
+					i != spriteList.end();){				
+					if (*i == c){ 					
 						i = spriteList.erase(i);
-					}
-					else {
+					} else {
 						i++;
 					}
 				}
@@ -245,8 +249,9 @@ namespace cwing
 			SDL_RenderPresent(sys.get_ren());
 
 			int delay = nextTick - SDL_GetTicks();
-			if (delay > 0)
+			if (delay > 0){
 				SDL_Delay(delay);
+			}
 		} // yttre while
 	}
 

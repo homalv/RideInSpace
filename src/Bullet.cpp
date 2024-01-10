@@ -4,9 +4,7 @@
 #include "Constants.h"
 #include "Bullet.h"
 
-namespace cwing 
-{
-
+namespace cwing {
 	Bullet::Bullet(float x, float y, float w, float h) : MovableSprite(x,(y-(h/2)),w,h){
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/bullet.png").c_str() );
 		

@@ -9,15 +9,12 @@
 
 using namespace std;
 
-namespace cwing 
-{
-
+namespace cwing {
 	Label* Label::getInstance(int x, int y, int fontSize, std::string txt, Uint8 r, Uint8 g, Uint8 b) {
 		return new Label(x, y, fontSize, txt, r, g, b);
 	}
 
-	Label::Label(int x, int y, int fontSize, std::string txt, Uint8 r, Uint8 g, Uint8 b)
-			: Sprite(x,y,0,0), text(txt){	
+	Label::Label(int x, int y, int fontSize, std::string txt, Uint8 r, Uint8 g, Uint8 b): Sprite(x,y,0,0), text(txt){	
 		TTF_Font* customFont = TTF_OpenFont((constants::gResPath + "fonts/STENCIL.ttf").c_str(), fontSize);    	
 
     	TTF_SizeText(customFont, text.c_str(), &width, &height);
@@ -38,7 +35,7 @@ namespace cwing
 		text = newText;
 		SDL_DestroyTexture(texture);
 		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(),
-			text.c_str(), { 0,0,0 });
+		text.c_str(), { 0,0,0 });
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
 	}

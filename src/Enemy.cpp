@@ -7,8 +7,7 @@
 #include "Session.h"
 #include <iostream>
 
-namespace cwing 
-{  
+namespace cwing {  
     Enemy::Enemy(float x, float y, float w, float h, int livesInput) : MovableSprite(x,y,w,h){
         lives= livesInput;
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy2.png").c_str() );
@@ -24,8 +23,9 @@ namespace cwing
 
     void Enemy::looseLife(){
 		lives --;
-        if(lives<1)
+        if(lives<1){
             dies();
+        }
 	};
 
 
