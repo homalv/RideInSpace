@@ -1,9 +1,7 @@
 #include "EnemySpawner.h"
 #include "Session.h"
 
-namespace cwing 
-{
-
+namespace cwing {
     EnemySpawner::EnemySpawner(int x, int startY, int endY, float eSize) : nrOfPlaces((endY - startY) / eSize), xPos(x), firstPos(startY), enemySize(eSize), dist(1, nrOfPlaces), spawnVector(6, nullptr){
     }
 

@@ -2,9 +2,7 @@
 #include "Constants.h"
 #include "EnemyBullet.h"
 
-namespace cwing 
-{
-    
+namespace cwing {
 	EnemyBullet::EnemyBullet(float x, float y, float currPlayerX, float currPlayerY): Bullet(x, y, width, height), playerX(currPlayerX), playerY(currPlayerY) {
         calcDist();       
     }
@@ -14,7 +12,6 @@ namespace cwing
 	}
 
     void EnemyBullet::tick () {
-
         if(rect.x < -100){
 			removeThis = true;
 		}
@@ -30,11 +27,9 @@ namespace cwing
 
         rect.x += dists[0] * 3.0f;
         rect.y += dists[1] * 3.0f;
-
 	}
 
     void EnemyBullet::calcDist(){
-
         std::vector<float> centerPos = getCenterPos();
 
         float deltaX = static_cast<float>(playerX - centerPos[0]);
