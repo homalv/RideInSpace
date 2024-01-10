@@ -13,6 +13,7 @@
 #include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
+#include "SoundManager.h"
 
 using namespace std;
 
@@ -51,6 +52,11 @@ namespace cwing
 	void Session::playSound(std::string soundLocInput){
 		Mix_Chunk* sound = Mix_LoadWAV((constants::gResPath + soundLocInput).c_str());
 		Mix_PlayChannel(-1, sound, 0);
+	}
+
+	void Session::addBackgroundMusic(std::string bgMLoc){
+		bgMusicLoc=bgMLoc;
+		
 	}
 
 	void Session::handleEndGame(){

@@ -8,11 +8,15 @@
 #include "GamePanel.h"
 #include "Label.h"
 #include "ValueLabel.h"
+#include "SoundManager.h"
 
 using namespace std;
 using namespace cwing;
 
 int main(int argc, char** argv){
+
+	SoundManager* backgroundMusic = SoundManager::getInstance();
+	
 
 	GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 	ses.add(gamePanel);

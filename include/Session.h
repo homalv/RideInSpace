@@ -22,6 +22,7 @@ namespace cwing
 		void addEnemySpawner(EnemySpawner*& addedSpawn);
 		void handleEndGame();
 		void addPoints();
+		void addBackgroundMusic(std::string bgMLoc);
 		Player* getPlayer() const;
 	private:
 		std::vector<Sprite*> spriteList;
@@ -34,6 +35,7 @@ namespace cwing
 		Label* labelRestart;
 		Label* labelQuit;
 		bool inEndGame = false;
+		std::string bgMusicLoc;
 	};
 
 	extern Session ses;
