@@ -14,7 +14,6 @@ namespace cwing
 
         private:
         Mix_Chunk* shotSound;
-
     };
 }
 

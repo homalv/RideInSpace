@@ -1,6 +1,5 @@
 #include "EnemySpawner.h"
 #include "Session.h"
-#include <iostream>
 
 namespace cwing 
 {
@@ -18,42 +17,22 @@ namespace cwing
             counter = 0;
             position = dist(rd);
             while(spawnVector[position - 1] != nullptr){
-                //std::cout << "Position: " << position - 1 << std::endl;
                 position = dist(rd);
             }
             Enemy* newEnemy = Enemy::getInstance(700, firstPos + position * enemySize, 40, 40, 1);
             spawnVector[position-1] = newEnemy;
             ses.add(newEnemy);
-            forCounter1 = 0;
-            std::cout << "#################################" << std::endl;
+            forCounter = 0;
             for (Enemy* ptr : spawnVector) {
                 if(ptr != nullptr){
                     if(ptr->checkRemove()){
-                        std::cout << "Checked Remove" << std::endl;
-                        spawnVector[forCounter1] = nullptr;
-                        //ses.remove(ptr);
+                        spawnVector[forCounter] = nullptr;
                     }
                 }
-                forCounter1++;
+                forCounter++;
             }
         }
     }
-    /*
-    
-        if( !paused && currentTime - lastEnemyTimer >= 4000){
-            position = dist(rd);
-            
-            while(vektor[position - 1] != nullptr){
-                position = dist(rd);
-            }
-
-            newEnemy = Enemy::getInstance(700, position * 55, 40, 40, 1);
-            vektor[position-1] = newEnemy;
-            lastEnemyTimer = currentTime;
-            add(newEnemy);
-        }
-    
-    */
 
     void EnemySpawner::clearVector(){
         if(ses.getPause()){

@@ -56,12 +56,4 @@ namespace cwing
 		SDL_FRect rect = getRect();
     	return (x >= rect.x && x < rect.x + width && y >= rect.y && y < rect.y + height);		
 	};
-
-	/*
-
-	void Label::getPlayerLives(){
-		std::cout << playerPointer->getLives() << std::endl;
-	}
-
-	*/
 }

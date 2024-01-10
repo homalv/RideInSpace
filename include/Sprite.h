@@ -12,7 +12,6 @@ namespace cwing{
 		virtual void draw() const;
 		virtual void tick() {};
 		const SDL_FRect& getRect() const { return rect; }
-		std::vector<float> getCenterPos();
 		virtual bool checkRemove() const { return removeThis; }
 		virtual void checkCollision(const Sprite& other){};
 		virtual float getHitBoxPosX() {return 0.0;};

@@ -13,11 +13,8 @@
 #include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
-#include <iostream>
 
 using namespace std;
-
-//#define FPS 80
 
 namespace cwing 
 {
@@ -57,16 +54,16 @@ namespace cwing
 	}
 
 	void Session::handleEndGame(){
-		if(startDelayTime == 0)	{
-			std::cout << "Start" << std::endl;											
+		if(startDelayTime == 0)	{									
 			paused = true;	
 			newPlayer->setHit(true);											
 			add(labelGameOver);
 			newSpawner->clearVector();
 			startDelayTime = SDL_GetTicks();
-		} else if (SDL_GetTicks() - startDelayTime >= 3000) {										
+		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false) {										
 			add(labelRestart);						
-			add(labelQuit);														
+			add(labelQuit);
+			inEndGame = true;														
 		}	
 	}
 
@@ -79,27 +76,11 @@ namespace cwing
 	}
 
 	void Session::run() {		
-		//int position = 0;
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + backgroundLoc).c_str()); 
     	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
     	SDL_FreeSurface(bgSurf);
-		
-		//bool pause = false;
 		bool quit = false;
-		Uint32 tickInterval = 1000 / FPS; //lastEnemyTimer = 0, playerHitTimer = 4000;
-		//Enemy* newEnemy;
-
-		/*
-
-		Label* actualPoints = Label::getInstance(220, 13, 22 , std::to_string(newPlayer->getPoints()),nullptr, 60, 0, 10);
-		actualPoints->setPlayer(newPlayer);
-		add(actualPoints);
-
-		Label* actualLives = Label::getInstance(220, 38, 22 , std::to_string(newPlayer->getLives()),nullptr, 60, 0, 10);
-		actualLives->setPlayer(newPlayer);
-		add(actualLives);
-
-		*/
+		Uint32 tickInterval = 1000 / FPS;
 
 		int bgWidth = 1501;  // Bredd  och höjd bakgrundsbild
     	int bgHeight = 520;
@@ -128,54 +109,9 @@ namespace cwing
         	SDL_Rect srcRect2 = {0, 0, bgWidth, bgHeight};
         	SDL_Rect destRect2 = {bgX2, 0, bgWidth, bgHeight};
         	SDL_RenderCopy(sys.get_ren(), bgTx, &srcRect2, &destRect2); 
-
-			/*
-			if(newPlayer->getLives()<3){
-				if(startDelayTime == 0)	{											
-					paused = true;	
-					newPlayer->setHit(true);											
-					add(labelGameOver);
-					startDelayTime = SDL_GetTicks();
-				} 
-				else if ( SDL_GetTicks() - startDelayTime >= 3000) {										
-					add(labelRestart);						
-					add(labelQuit);					
-					startDelayTime = 0;										
-				}													
-			}
-			*/
-
-
 			
-			Uint32 nextTick = SDL_GetTicks() + tickInterval; //currentTime = SDL_GetTicks();
+			Uint32 nextTick = SDL_GetTicks() + tickInterval;
 			SDL_Event event;
-
-			/*
-
-			if( !paused && currentTime - lastEnemyTimer >= 4000){
-            	position = dist(rd);
-				
-				while(vektor[position - 1] != nullptr){
-					position = dist(rd);
-				}
-
-				newEnemy = Enemy::getInstance(700, position * 55, 40, 40, 1);
-				vektor[position-1] = newEnemy;
-				lastEnemyTimer = currentTime;
-				add(newEnemy);
-        	}
-
-			*/
-
-			/*
-			if(currentTime - lastEnemyTimer >= 2000){
-            	lastEnemyTimer = currentTime;
-				std::vector centerPos = newPlayer->getCenterPos();
-            	EnemyBullet* eBullet = EnemyBullet::getInstance(400, 300, centerPos[0], centerPos[1]);
-				add(eBullet);
-        	}
-			*/
-
 
 			while (SDL_PollEvent(&event)) {				
 				switch (event.type) {
@@ -236,16 +172,8 @@ namespace cwing
 							remove(labelGameOver);
 							remove(labelRestart);
 							startDelayTime = 0;
-							//actualLives->updateLives();
-							//actualPoints->updatePoints();
-							/*
-							for (int i = 0; i < 8; ++i) {
-								remove(vektor[i]);
-								vektor[i] = nullptr;
-							}
-							*/
-							//lastEnemyTimer = SDL_GetTicks(); 
 							paused = false;
+							inEndGame = false;
 						}
 				
 						if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)){																		
@@ -254,7 +182,6 @@ namespace cwing
 							Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!"  , 60, 0, 10);
 							add(labelGoodBye);							
 							startDelayTime = SDL_GetTicks();
-							//SDL_Delay(1500);
 							quit = true;																									
 						}
 						break;
@@ -297,36 +224,16 @@ namespace cwing
 			}
 			removed.clear();
 
-			//SDL_SetRenderDrawColor(sys.get_ren(), 0, 0, 35, 255);
-			//SDL_RenderClear(sys.get_ren());
-
 			//Draw för player
 			newPlayer->draw();
-
 
 			for	(Sprite* c1 : spriteList){
 				for(Sprite* c2 : spriteList){
 					c1->checkCollision(*c2);
 				}
 				newPlayer->checkCollision(*c1);
-				
-				/*
-				if(!paused && enemy != nullptr){
-					eb = enemy->shoot(newPlayer->getRect().x, newPlayer->getRect().y);
+			}
 
-					if(!paused && eb != nullptr && !paused){
-						add(eb);
-					}
-				}
-				*/
-			}
-			/*
-			if (newPlayer->isHit() && currentTime - playerHitTimer >= 3000  && newPlayer->getLives()>0) {
-    			// Om det har gått 2 sekunder sedan träffen, återställ skeppet
-    			newPlayer->setHit(false);
-				paused = false;
-			}
-			*/
 			for (Sprite* c : spriteList)
 				c->draw();
 			SDL_RenderPresent(sys.get_ren());

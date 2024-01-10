@@ -7,7 +7,6 @@
 #include "PlayerBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
-#include <iostream>
 #include "ValueLabel.h"
 
 using namespace std;

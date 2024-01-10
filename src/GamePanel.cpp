@@ -15,4 +15,4 @@ namespace cwing {
     GamePanel* GamePanel::getInstance(int x , int y ,int w, int h) {
         return new GamePanel(x, y, w, h);
     }
-} // namespace cwing
+}

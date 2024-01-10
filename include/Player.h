@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <MovableSprite.h>
-#include <SDL2/SDL.h>
 #include "PlayerBullet.h"
 #include "Label.h"
 #include <vector>
@@ -15,7 +14,6 @@ namespace cwing
         void move(const SDL_Scancode&);
         void stop(const SDL_Scancode&);
         void shoot();
-        //bool checkCollision(const Sprite& other) const;
         void looseLife();
         void addPoints();
         int getLives() const;
@@ -30,8 +28,6 @@ namespace cwing
 
     protected:
         Player(float x, float y, float w, float h);
-        //SDL_Texture* texture;
-        //SDL_Texture* altTexture; // Den alternativa texturen när spelaren är träffad
     private:
         Uint32 lastShotTime = 0;
         bool movingLeft = false;

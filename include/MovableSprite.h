@@ -1,6 +1,5 @@
 #ifndef MovableSprite_H
 #define MovableSprite_H
-#include <SDL2/SDL.h>
 #include <Sprite.h>
 
 namespace cwing

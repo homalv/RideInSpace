@@ -33,6 +33,7 @@ namespace cwing
 		Label* labelGameOver;
 		Label* labelRestart;
 		Label* labelQuit;
+		bool inEndGame = false;
 	};
 
 	extern Session ses;

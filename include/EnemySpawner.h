@@ -13,7 +13,6 @@ namespace cwing
             static EnemySpawner* getInstance(int x, int startY, int endY, float enemySize);
             void tick();
             EnemySpawner(int x, int startY, int endY, float enemySize);
-            bool isValidPointer(const Enemy* ptr);
             void clearVector();
             ~EnemySpawner(){};
         private:
@@ -23,7 +22,7 @@ namespace cwing
             int counter = 0;
             int position = 0;
             int enemySize = 0;
-            int forCounter1 = 0;
+            int forCounter = 0;
             std::uniform_int_distribution<int> dist; 
             std::vector<Enemy*> spawnVector;
             std::random_device rd; 

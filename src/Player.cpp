@@ -87,16 +87,6 @@ namespace cwing
 		}
 	}
 
-	/*
-	bool Player::checkCollision(const Sprite& other) const{
-		const MovableSprite* movableOther = dynamic_cast<const MovableSprite*>(&other);
-		if(movableOther){
-			return SDL_HasIntersectionF(&hitbox, &other.getRect());
-		}
-		return false;
-	}
-	*/
-
 	void Player::setHit(bool isHit) {
         isPlayerHit = isHit;
         if (isHit) {
