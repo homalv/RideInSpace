@@ -13,6 +13,7 @@
 #include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
+#include <iostream>
 
 using namespace std;
 
@@ -41,6 +42,7 @@ namespace cwing
 	}
 
 	void Session::setPause(bool value){
+		std::cout << "setPause" << std::endl;
 		paused = value;
 	}
 
@@ -56,7 +58,7 @@ namespace cwing
 	void Session::handleEndGame(){
 		if(startDelayTime == 0)	{									
 			paused = true;	
-			newPlayer->setHit(true);											
+			//newPlayer->setHit(true);											
 			add(labelGameOver);
 			newSpawner->clearVector();
 			startDelayTime = SDL_GetTicks();
@@ -113,60 +115,64 @@ namespace cwing
 			Uint32 nextTick = SDL_GetTicks() + tickInterval;
 			SDL_Event event;
 
+			float mouseXFloat, mouseYFloat;
+
 			while (SDL_PollEvent(&event)) {				
 				switch (event.type) {
-					case SDL_QUIT: quit = true; 
+					case SDL_QUIT: 
+						quit = true; 
 						break;
 					case SDL_KEYDOWN:
-						if(!paused){
-                    		switch (event.key.keysym.scancode){
-                    			case SDL_SCANCODE_RIGHT:
-                        			newPlayer->move(SDL_SCANCODE_RIGHT);
-                        			break;
-                    			case SDL_SCANCODE_LEFT:
-                        			newPlayer->move(SDL_SCANCODE_LEFT);
-                        			break;
-                    			case SDL_SCANCODE_UP:
-                        			newPlayer->move(SDL_SCANCODE_UP);
-                        			break;
-                    			case SDL_SCANCODE_DOWN: 
-                        			newPlayer->move(SDL_SCANCODE_DOWN);
-                        			break;
+						if (!paused) {
+							switch (event.key.keysym.scancode) {
+								case SDL_SCANCODE_RIGHT:
+									newPlayer->move(SDL_SCANCODE_RIGHT);
+									break;
+								case SDL_SCANCODE_LEFT:
+									newPlayer->move(SDL_SCANCODE_LEFT);
+									break;
+								case SDL_SCANCODE_UP:
+									newPlayer->move(SDL_SCANCODE_UP);
+									break;
+								case SDL_SCANCODE_DOWN:
+									newPlayer->move(SDL_SCANCODE_DOWN);
+									break;
 								case SDL_SCANCODE_SPACE:
 									newPlayer->shoot();
 									break;
-                    			default:
-                        			break;
-                    	}
-                    	break;
-
-                	case SDL_KEYUP:
-                    	switch (event.key.keysym.scancode){
-                    		case SDL_SCANCODE_RIGHT:
-                        		newPlayer->stop(SDL_SCANCODE_RIGHT);
-                        		break;
-                    		case SDL_SCANCODE_LEFT:
-                        		newPlayer->stop(SDL_SCANCODE_LEFT);
-                        		break;
-                    	case SDL_SCANCODE_UP:
-                        		newPlayer->stop(SDL_SCANCODE_UP);
-                        		break;
-                    	case SDL_SCANCODE_DOWN:
-                        		newPlayer->stop(SDL_SCANCODE_DOWN);
-                        		break;
-                    	default:
-                        	break;
-                    	}
+								default:
+									break;
+							}
+						}
 						break;
-					}	
+
+					case SDL_KEYUP:
+						switch (event.key.keysym.scancode) {
+							case SDL_SCANCODE_RIGHT:
+								newPlayer->stop(SDL_SCANCODE_RIGHT);
+								break;
+							case SDL_SCANCODE_LEFT:
+								newPlayer->stop(SDL_SCANCODE_LEFT);
+								break;
+							case SDL_SCANCODE_UP:
+								newPlayer->stop(SDL_SCANCODE_UP);
+								break;
+							case SDL_SCANCODE_DOWN:
+								newPlayer->stop(SDL_SCANCODE_DOWN);
+								break;
+							default:
+								break;
+						}
+						break;
 
 					case SDL_MOUSEBUTTONDOWN:
+						std::cout << "Mouse" << std::endl;
 						int mouseX, mouseY;
 						SDL_GetMouseState(&mouseX, &mouseY);
-						float mouseXFloat = static_cast<float>(mouseX);
-						float mouseYFloat = static_cast<float>(mouseY);
-				
-						if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)){						
+						mouseXFloat = static_cast<float>(mouseX);
+						mouseYFloat = static_cast<float>(mouseY);
+
+						if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)) {
 							newPlayer->resetPlayer();
 							remove(labelQuit);
 							remove(labelGameOver);
@@ -175,15 +181,18 @@ namespace cwing
 							paused = false;
 							inEndGame = false;
 						}
-				
-						if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)){																		
-							GamePanel* gameOverPanel = GamePanel::getInstance(1,1, 700, 520);	
+
+						if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)) {
+							GamePanel* gameOverPanel = GamePanel::getInstance(1, 1, 700, 520);
 							add(gameOverPanel);
-							Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!"  , 60, 0, 10);
-							add(labelGoodBye);							
+							Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!", 60, 0, 10);
+							add(labelGoodBye);
 							startDelayTime = SDL_GetTicks();
-							quit = true;																									
+							quit = true;
 						}
+						break;
+
+					default:
 						break;
 				} //switch
 			} //inre while
