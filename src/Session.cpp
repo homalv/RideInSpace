@@ -17,8 +17,7 @@
 
 using namespace std;
 
-namespace cwing 
-{
+namespace cwing {
 	Uint32 startDelayTime = 0; 
 	
 	void Session::add(Sprite* sprite) {
@@ -56,13 +55,13 @@ namespace cwing
 	}
 
 	void Session::handleEndGame(){
-		if(startDelayTime == 0)	{									
+		if(startDelayTime == 0){									
 			paused = true;	
 			//newPlayer->setHit(true);											
 			add(labelGameOver);
 			newSpawner->clearVector();
 			startDelayTime = SDL_GetTicks();
-		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false) {										
+		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false){										
 			add(labelRestart);						
 			add(labelQuit);
 			inEndGame = true;														
@@ -77,7 +76,7 @@ namespace cwing
 		return newPlayer;
 	}
 
-	void Session::run() {		
+	void Session::run(){		
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + backgroundLoc).c_str()); 
     	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
     	SDL_FreeSurface(bgSurf);
@@ -92,15 +91,14 @@ namespace cwing
 		labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
 		labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);
 
-		
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
         	bgX1 -= 1;
         	bgX2 -= 1;
-			if (bgX1 <= -bgWidth) { 
+			if (bgX1 <= -bgWidth){ 
 				bgX1 = bgX2 + bgWidth; // Återställ bgX1
 	        }
-			if (bgX2 <= -bgWidth) { // Återställ bgX2
+			if (bgX2 <= -bgWidth){ // Återställ bgX2
 				bgX2 = bgX1 + bgWidth;
         	}
 			// Ritar den första kopien av bakgrundsbilden
@@ -117,10 +115,9 @@ namespace cwing
 
 			float mouseXFloat, mouseYFloat;
 
-			while (SDL_PollEvent(&event)) {				
-				switch (event.type) {
-					case SDL_QUIT: 
-						quit = true; 
+			while (SDL_PollEvent(&event)){				
+				switch (event.type){
+					case SDL_QUIT: quit = true; 
 						break;
 					case SDL_KEYDOWN:
 						if (!paused) {
@@ -214,19 +211,17 @@ namespace cwing
 				}
 			}
 
-			for (Sprite* c : added)
+			for (Sprite* c : added){
 				spriteList.push_back(c);
 			added.clear();
+			}
 
-			for (Sprite* c : removed) {
+			for (Sprite* c : removed){
 				for (vector<Sprite*>::iterator i = spriteList.begin();
-					i != spriteList.end();)
-				{
-					if (*i == c) 
-					{
+				i != spriteList.end();){
+					if (*i == c){
 						i = spriteList.erase(i);
-					}
-					else {
+					} else {
 						i++;
 					}
 				}
@@ -248,10 +243,10 @@ namespace cwing
 			SDL_RenderPresent(sys.get_ren());
 
 			int delay = nextTick - SDL_GetTicks();
-			if (delay > 0)
+			if (delay > 0){
 				SDL_Delay(delay);
+			}
 		} // yttre while
 	}
-
 	Session ses;
 }

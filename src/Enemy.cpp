@@ -7,8 +7,7 @@
 #include "Session.h"
 #include <iostream>
 
-namespace cwing 
-{  
+namespace cwing {  
     Enemy::Enemy(float x, float y, float w, float h, int livesInput) : MovableSprite(x,y,w,h){
         lives= livesInput;
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy2.png").c_str() );
@@ -24,8 +23,9 @@ namespace cwing
 
     void Enemy::looseLife(){
 		lives --;
-        if(lives<1)
+        if(lives<1){
             dies();
+        }
 	};
 
 
@@ -82,6 +82,7 @@ namespace cwing
         if(shotCounter >= (FPS*3)){
             shotCounter = 0;
             EnemyBullet* eb = EnemyBullet::getInstance(rect.x, rect.y, playerX, playerY);
+            ses.playSound("sounds/laser_shot_enemy.mp3");
             ses.add(eb);
         }
     }
@@ -90,6 +91,7 @@ namespace cwing
         if(SDL_HasIntersectionF(&enemyHitbox, &other.getRect()) && !isDead()){
             const PlayerBullet* playerBullet = dynamic_cast<const PlayerBullet*>(&other);
             if(playerBullet != nullptr){
+                ses.playSound("sounds/hit_sound_enemy.mp3");
                 ses.addPoints();
                 looseLife();
             }   

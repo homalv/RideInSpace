@@ -2,9 +2,7 @@
 #include "Constants.h"
 #include "PlayerBullet.h"
 
-namespace cwing 
-{
-
+namespace cwing {
 	PlayerBullet::PlayerBullet(float x, float y) : Bullet(x,y,width,height){}
 
 	PlayerBullet* PlayerBullet::getInstance(float x, float y) {
@@ -12,7 +10,6 @@ namespace cwing
 	}
 
     void PlayerBullet::tick () {
-
 		if(rect.x + rect.w > windowWidth){
 			removeThis = true;
 		}
