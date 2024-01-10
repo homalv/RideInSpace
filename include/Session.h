@@ -35,7 +35,6 @@ namespace cwing
 		Label* labelRestart;
 		Label* labelQuit;
 		bool inEndGame = false;
-		std::string bgMusicLoc;
 	};
 
 	extern Session ses;

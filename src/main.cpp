@@ -8,16 +8,14 @@
 #include "GamePanel.h"
 #include "Label.h"
 #include "ValueLabel.h"
-#include "SoundManager.h"
+
 
 using namespace std;
 using namespace cwing;
 
 int main(int argc, char** argv){
 
-	SoundManager* backgroundMusic = SoundManager::getInstance();
-	
-
+	ses.addBackgroundMusic("sounds/rideInSpace.mp3");
 	GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 	ses.add(gamePanel);
 	Label* labelPoints = Label::getInstance(50, 13, 22, "Total Points: ", 60, 0, 10);

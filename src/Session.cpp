@@ -13,7 +13,6 @@
 #include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
-#include "SoundManager.h"
 #include <iostream>
 
 using namespace std;
@@ -56,8 +55,9 @@ namespace cwing
 	}
 
 	void Session::addBackgroundMusic(std::string bgMLoc){
-		bgMusicLoc=bgMLoc;
-		
+		Mix_OpenAudio(20050, AUDIO_S16SYS, 2, 4096);
+		Mix_Music* backgroundMusic = Mix_LoadMUS((constants::gResPath + bgMLoc).c_str());
+		Mix_PlayMusic(backgroundMusic, -1);		
 	}
 
 	void Session::handleEndGame(){
@@ -173,8 +173,8 @@ namespace cwing
 					case SDL_MOUSEBUTTONDOWN:
 						int mouseX, mouseY;
 						SDL_GetMouseState(&mouseX, &mouseY);
-						float mouseXFloat = static_cast<float>(mouseX);
-						float mouseYFloat = static_cast<float>(mouseY);
+						mouseXFloat = static_cast<float>(mouseX);
+						mouseYFloat = static_cast<float>(mouseY);
 				
 						if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)){						
 							newPlayer->resetPlayer();
