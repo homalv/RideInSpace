@@ -11,9 +11,10 @@ namespace cwing
         public:
             static EnemyBullet* getInstance(float x, float y, float currPlayerX, float currPlayerY);
             void tick();
-            void calcDist();
-            EnemyBullet(float x, float y, float currPlayerX, float currPlayerY);
+            void calcDist();            
             ~EnemyBullet(){};
+        protected:
+            EnemyBullet(float x, float y, float currPlayerX, float currPlayerY);
         private:
             float playerX;
             float playerY;
