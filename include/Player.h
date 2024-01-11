@@ -16,6 +16,7 @@ namespace cwing
         void shoot();
         void looseLife();
         void addPoints();
+        void resetPoints();
         int getLives() const;
         int getPoints() const;
         bool isHit();

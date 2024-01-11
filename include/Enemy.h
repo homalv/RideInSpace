@@ -6,6 +6,7 @@
 #include "System.h"
 #include "EnemyBullet.h"
 #include "PlayerBullet.h"
+#include <iostream>
 
 namespace cwing {
     class Enemy : public MovableSprite {
@@ -18,7 +19,7 @@ namespace cwing {
             bool isDead();
             void setRemoveThis(bool value);
             void shoot(float playerX, float playerY);
-            ~Enemy(){};
+            ~Enemy(){}
 
         protected:
             Enemy(float x, float y, float w, float h, int lives);

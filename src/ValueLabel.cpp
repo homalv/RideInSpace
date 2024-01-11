@@ -25,8 +25,8 @@ namespace cwing {
 
     void ValueLabel::updatePoints(){
         if(playerPtr->getPoints() != playerPoints){	
-            std::string points;		
-            points = std::to_string(playerPtr->getPoints());
+            playerPoints = playerPtr->getPoints();
+            std::string points = std::to_string(playerPtr->getPoints());
             SDL_DestroyTexture(texture);
             SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), points.c_str(), { 50,0,10 });
             texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);

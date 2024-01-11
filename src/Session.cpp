@@ -182,6 +182,7 @@ namespace cwing
 							remove(labelGameOver);
 							remove(labelRestart);
 							startDelayTime = 0;
+							newPlayer->resetPoints();
 							paused = false;
 							inEndGame = false;
 						}
@@ -225,7 +226,8 @@ namespace cwing
 			for (Sprite* c : removed) {
 				for (vector<Sprite*>::iterator i = spriteList.begin();
 					i != spriteList.end();){				
-					if (*i == c){ 					
+					if (*i == c){ 	
+						delete *i;				
 						i = spriteList.erase(i);
 					} else {
 						i++;
