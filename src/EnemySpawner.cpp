@@ -31,6 +31,8 @@ namespace cwing {
                 }
                 forCounter++;
             }
+        } else if(ses.getPause()){
+            clearVector();
         }
     }
 

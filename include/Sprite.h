@@ -11,7 +11,6 @@ namespace SpelMotor{
 		virtual void draw() const;
 		virtual void tick() {};
 		virtual void setHit(bool isHit) {};
-		virtual void clearVector() {};
 		const SDL_FRect& getRect() const { return rect; }
 		virtual bool checkRemove() const { return removeThis; }
 		virtual void checkCollision(const Sprite& other){};

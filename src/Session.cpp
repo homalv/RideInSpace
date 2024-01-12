@@ -66,18 +66,15 @@ namespace SpelMotor {
 
 	void Session::handleEndGame(){
 		if(startDelayTime == 0)	{
-			labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER" , 85, 0, 14);
-			labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
-			labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);									
-			paused = true;	
-			//newPlayer->setHit(true);											
-			add(labelGameOver);
-			for (Sprite* s : spriteList)
-				s->clearVector();
+			endGamelabels.push_back(labelGameOver);								
+			paused = true;										
+			//add(labelGameOver);
 			startDelayTime = SDL_GetTicks();
 		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false) {										
-			add(labelRestart);						
-			add(labelQuit);
+			//add(labelRestart);						
+			//add(labelQuit);
+			endGamelabels.push_back(labelRestart);
+    		endGamelabels.push_back(labelQuit);	
 			inEndGame = true;														
 		}	
 	}
@@ -93,6 +90,10 @@ namespace SpelMotor {
     	int bgHeight = 520;
 		int bgX1 = 0;       // Position för första kopian av bakgrundsbild
     	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
+
+		labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER" , 85, 0, 14);
+		labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
+		labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);
 
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
@@ -173,9 +174,12 @@ namespace SpelMotor {
 
 						if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)) {
 							newPlayer->reset();
+							/*
 							remove(labelQuit);
 							remove(labelGameOver);
 							remove(labelRestart);
+							*/
+							endGamelabels.clear();
 							startDelayTime = 0;
 							paused = false;
 							inEndGame = false;
@@ -234,6 +238,10 @@ namespace SpelMotor {
 
 			for (Sprite* c : spriteList)
 				c->draw();
+
+			for (Label* l : endGamelabels)
+				l->draw();
+
 			SDL_RenderPresent(sys.get_ren());
 			//std::cout << "Sprite draw" << std::endl;
 			int delay = nextTick - SDL_GetTicks();
