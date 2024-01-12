@@ -5,11 +5,10 @@
 #include "System.h"
 #include "Constants.h"
 #include "PlayerBullet.h"
-#include "Session.h"
 #include <iostream>
+#include "Session.h"
 
-
-namespace cwing {
+namespace SpelMotor {
 	Player::Player(float x, float y, float w, float h) : MovableSprite(x,y,w,h){
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str() );
 		hitbox.x = rect.x;
@@ -77,16 +76,6 @@ namespace cwing {
 		}
 	}
 
-	void Player::shoot(){
-		Uint32 currentTime = SDL_GetTicks();
-		if(currentTime - lastShotTime >= 300){
-			lastShotTime = currentTime;
-			PlayerBullet* pb = PlayerBullet::getInstance(rect.x+rect.w, rect.y+(rect.h/2));
-			ses.playSound("sounds/laser_shot.mp3");
-			ses.add(pb);
-		}
-	}
-
 	void Player::setHit(bool isHit){
         isPlayerHit = isHit;
         if (isHit){
@@ -97,6 +86,14 @@ namespace cwing {
             texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str());
         }
     }
+
+	int Player::getCounter() const {
+		return counter;
+	}
+
+	void Player::resetCounter() {
+		counter = 0;
+	}
 
 	void Player::checkCollision(const Sprite& other){
 		if(SDL_HasIntersectionF(&hitbox, &other.getRect()) && counter >= (FPS*3)){
@@ -116,22 +113,18 @@ namespace cwing {
 		return hitbox.y;
 	}
 
-	bool Player::isHit(){
-		return isPlayerHit;
-	};
-
-	void Player::resetPlayer(){
+	void Player::reset(){
 		setHit(false);
 		points = 0;
 		lives = 3;
 	}
 	
 	void Player::looseLife(){
-		this->lives --;
+		this->lives--;
 	};
 
     void Player::addPoints(){
-		this->points ++;
+		this->points++;
 	};
 
     int Player::getLives() const {

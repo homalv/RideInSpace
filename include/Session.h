@@ -5,8 +5,9 @@
 #include "Player.h"
 #include <vector>
 #include "EnemySpawner.h"
+#include "Label.h"
 
-namespace cwing 
+namespace SpelMotor
 {
 	class Session
 	{
@@ -15,24 +16,22 @@ namespace cwing
 		void remove(Sprite* spriteList);
 		void run();
 		void addBackground(std::string backgroundLocInput);
-		void addPlayer(Player* addedPlayer);
 		void setPause(bool value);
 		void playSound(std::string soundLoc);
+		void addPlayer(Player* addPlayer);
 		bool getPause() const;
-		void addEnemySpawner(EnemySpawner*& addedSpawn);
 		void handleEndGame();
-		void addPoints();
 		Player* getPlayer() const;
+		void addPoints();
 	private:
 		std::vector<Sprite*> spriteList;
 		std::vector<Sprite*> added, removed;
 		std::string backgroundLoc;
-		Player* newPlayer;
-		EnemySpawner* newSpawner;
 		bool paused = false;
 		Label* labelGameOver;
 		Label* labelRestart;
 		Label* labelQuit;
+		Player* newPlayer;
 		bool inEndGame = false;
 	};
 

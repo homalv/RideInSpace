@@ -1,6 +1,7 @@
 #include "Session.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <vector>
 #include "Sprite.h"
 #include "System.h"
 #include "Player.h"
@@ -8,16 +9,13 @@
 #include "PlayerBullet.h"
 #include "Constants.h"
 #include <random>
-#include <vector>
 #include "Enemy.h"
 #include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
 #include <iostream>
 
-using namespace std;
-
-namespace cwing {
+namespace SpelMotor {
 	Uint32 startDelayTime = 0; 
 	
 	void Session::add(Sprite* sprite) {
@@ -32,12 +30,8 @@ namespace cwing {
 		backgroundLoc = backgroundLocInput;
 	}
 
-	void Session::addPlayer(Player* addedPlayer){
-		newPlayer = addedPlayer;
-	}
-
-	void Session::addEnemySpawner(EnemySpawner*& addedSpawn){
-		newSpawner = addedSpawn;
+	void Session::addPlayer(Player* addPlayer){
+		newPlayer = addPlayer;
 	}
 
 	void Session::setPause(bool value){
@@ -47,6 +41,14 @@ namespace cwing {
 
 	bool Session::getPause() const {
 		return paused;
+	}
+
+	Player* Session::getPlayer() const {
+		return newPlayer;
+	}
+
+	void Session::addPoints(){
+		newPlayer->addPoints();
 	}
 
 	void Session::playSound(std::string soundLocInput){
@@ -59,21 +61,14 @@ namespace cwing {
 			paused = true;	
 			//newPlayer->setHit(true);											
 			add(labelGameOver);
-			newSpawner->clearVector();
+			for (Sprite* s : spriteList)
+				s->clearVector();
 			startDelayTime = SDL_GetTicks();
 		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false){										
 			add(labelRestart);						
 			add(labelQuit);
 			inEndGame = true;														
 		}	
-	}
-
-	void Session::addPoints(){
-		newPlayer->addPoints();
-	}
-
-	Player* Session::getPlayer() const{
-		return newPlayer;
 	}
 
 	void Session::run(){		
@@ -87,6 +82,7 @@ namespace cwing {
     	int bgHeight = 520;
 		int bgX1 = 0;       // Position för första kopian av bakgrundsbild
     	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
+
 		labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER" , 85, 0, 14);
 		labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
 		labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);
@@ -135,7 +131,7 @@ namespace cwing {
 									newPlayer->move(SDL_SCANCODE_DOWN);
 									break;
 								case SDL_SCANCODE_SPACE:
-									newPlayer->shoot();
+									newPlayer->spaceKeyPressed();
 									break;
 								default:
 									break;
@@ -163,14 +159,13 @@ namespace cwing {
 						break;
 
 					case SDL_MOUSEBUTTONDOWN:
-						std::cout << "Mouse" << std::endl;
 						int mouseX, mouseY;
 						SDL_GetMouseState(&mouseX, &mouseY);
 						mouseXFloat = static_cast<float>(mouseX);
 						mouseYFloat = static_cast<float>(mouseY);
 
 						if (labelRestart->isPointInside(mouseXFloat, mouseYFloat)) {
-							newPlayer->resetPlayer();
+							newPlayer->reset();
 							remove(labelQuit);
 							remove(labelGameOver);
 							remove(labelRestart);
@@ -197,12 +192,7 @@ namespace cwing {
 			int mouseX, mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
 
-			//Tick för player
 			newPlayer->tick();
-			//Tick för enemyspawner
-			if(!paused){
-				newSpawner->tick();
-			}
 
 			for (Sprite* c : spriteList){
 				c->tick();
@@ -211,14 +201,14 @@ namespace cwing {
 				}
 			}
 
+
 			for (Sprite* c : added){
 				spriteList.push_back(c);
 			added.clear();
 			}
 
 			for (Sprite* c : removed){
-				for (vector<Sprite*>::iterator i = spriteList.begin();
-				i != spriteList.end();){
+				for (std::vector<Sprite*>::iterator i = spriteList.begin(); i != spriteList.end();){
 					if (*i == c){
 						i = spriteList.erase(i);
 					} else {
@@ -228,15 +218,16 @@ namespace cwing {
 			}
 			removed.clear();
 
-			//Draw för player
-			newPlayer->draw();
-
 			for	(Sprite* c1 : spriteList){
 				for(Sprite* c2 : spriteList){
 					c1->checkCollision(*c2);
 				}
 				newPlayer->checkCollision(*c1);
 			}
+
+
+
+			newPlayer->draw();
 
 			for (Sprite* c : spriteList)
 				c->draw();

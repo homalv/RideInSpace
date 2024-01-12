@@ -3,6 +3,7 @@
 #include "EnemyBullet.h"
 
 namespace cwing {
+
 	EnemyBullet::EnemyBullet(float x, float y, float currPlayerX, float currPlayerY): Bullet(x, y, width, height), playerX(currPlayerX), playerY(currPlayerY) {
         calcDist();       
     }
