@@ -1,10 +1,11 @@
 #include "EnemySpawner.h"
 #include "Session.h"
-#include <SDL2/SDL_image.h>
+
 
 namespace cwing {
     EnemySpawner::EnemySpawner(int x, int startY, int endY, float eSize) : Sprite(1, 1, 1, 1), nrOfPlaces((endY - startY) / eSize), xPos(x), firstPos(startY), enemySize(eSize), dist(1, nrOfPlaces), spawnVector(6, nullptr){
-        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy2.png").c_str() );
+        setTexture("images/enemy2.png");
+        
     }
 
     EnemySpawner* EnemySpawner::getInstance(int x, int startY, int endY, float enemySize){

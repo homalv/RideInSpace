@@ -1,5 +1,6 @@
 #include "Sprite.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 namespace SpelMotor{
     void Sprite::draw() const{
@@ -10,5 +11,10 @@ namespace SpelMotor{
 
     Sprite::~Sprite(){
 	    SDL_DestroyTexture(texture);
+    }
+
+    void Sprite::setTexture(std::string textLocaltion){
+        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + textLocaltion).c_str() );
+
     }
 }

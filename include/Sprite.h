@@ -2,6 +2,7 @@
 #define SPRITE_H
 #include <vector>
 #include "System.h"
+#include "Constants.h"
 
 namespace SpelMotor{
 
@@ -20,6 +21,7 @@ namespace SpelMotor{
 		virtual ~Sprite();
 	protected:
 		Sprite(float x, float y, float w, float h) : rect{ x,y,w,h } {}
+		void setTexture(std::string textLocation);	
 		SDL_FRect rect;
 		bool removeThis = false;
 		SDL_Texture* texture;

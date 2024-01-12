@@ -2,7 +2,6 @@
 #define Enemy_H
 
 #include "MovableSprite.h"
-#include <SDL2/SDL.h>
 #include "System.h"
 #include "EnemyBullet.h"
 #include "PlayerBullet.h"
