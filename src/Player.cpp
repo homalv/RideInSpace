@@ -10,7 +10,8 @@
 
 namespace SpelMotor {
 	Player::Player(float x, float y, float w, float h) : MovableSprite(x,y,w,h){
-        texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str() );
+		setTexture("images/player_ship.png");
+        //texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/player_ship.png").c_str() );
 		hitbox.x = rect.x;
     	hitbox.y = rect.y-10;
     	hitbox.w = 40;

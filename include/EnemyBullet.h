@@ -1,7 +1,6 @@
 #ifndef ENEMY_BULLET_H
 #define ENEMY_BULLET_H
 #include "System.h"
-#include <SDL2/SDL.h>
 #include <vector>
 #include "Bullet.h"
 
