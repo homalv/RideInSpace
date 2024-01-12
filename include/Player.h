@@ -16,6 +16,7 @@ namespace SpelMotor
         virtual void spaceKeyPressed() {std::cout << "Player::spaceKeyPressed" << std::endl;};
         void looseLife();
         void addPoints();
+        void resetPoints();
         int getLives() const;
         int getPoints() const;
         void setHit(bool isHit);

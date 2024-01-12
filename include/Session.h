@@ -21,6 +21,8 @@ namespace SpelMotor
 		void addPlayer(Player* addPlayer);
 		bool getPause() const;
 		void handleEndGame();
+		void addPoints();
+		void addBackgroundMusic(std::string bgMLoc);
 		Player* getPlayer() const;
 		void addPoints();
 	private:

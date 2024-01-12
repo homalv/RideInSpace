@@ -109,6 +109,10 @@ namespace SpelMotor {
 		return hitbox.x;
 	}
 
+	void Player::resetPoints(){
+		points =0;
+	}
+
 	float Player::getHitBoxPosY(){
 		return hitbox.y;
 	}

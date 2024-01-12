@@ -2,6 +2,7 @@
 #define PLAYER_BULLET_H
 #include "Bullet.h"
 #include "System.h"
+#include <iostream>
 
 namespace cwing 
 {
@@ -9,7 +10,7 @@ namespace cwing
         public:
             static PlayerBullet* getInstance(float x, float y);
             void tick();
-            ~PlayerBullet(){};
+            ~PlayerBullet(){}
         protected:
             PlayerBullet(float x, float y);
         private:            

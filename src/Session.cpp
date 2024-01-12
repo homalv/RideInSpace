@@ -15,7 +15,10 @@
 #include "Label.h"
 #include <iostream>
 
+using namespace std;
+
 namespace SpelMotor {
+
 	Uint32 startDelayTime = 0; 
 	
 	void Session::add(Sprite* sprite) {
@@ -35,7 +38,6 @@ namespace SpelMotor {
 	}
 
 	void Session::setPause(bool value){
-		std::cout << "setPause" << std::endl;
 		paused = value;
 	}
 
@@ -56,25 +58,40 @@ namespace SpelMotor {
 		Mix_PlayChannel(-1, sound, 0);
 	}
 
+	void Session::addBackgroundMusic(std::string bgMLoc){
+		Mix_OpenAudio(20050, AUDIO_S16SYS, 2, 4096);
+		Mix_Music* backgroundMusic = Mix_LoadMUS((constants::gResPath + bgMLoc).c_str());
+		Mix_PlayMusic(backgroundMusic, -1);		
+	}
+
 	void Session::handleEndGame(){
-		if(startDelayTime == 0){									
+		if(startDelayTime == 0)	{									
 			paused = true;	
 			//newPlayer->setHit(true);											
 			add(labelGameOver);
 			for (Sprite* s : spriteList)
 				s->clearVector();
 			startDelayTime = SDL_GetTicks();
-		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false){										
+		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false) {										
 			add(labelRestart);						
 			add(labelQuit);
 			inEndGame = true;														
 		}	
 	}
 
-	void Session::run(){		
+	void Session::addPoints(){
+		newPlayer->addPoints();
+	}
+
+	Player* Session::getPlayer() const{
+		return newPlayer;
+	}
+
+	void Session::run() {		
+
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + backgroundLoc).c_str()); 
-    	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
-    	SDL_FreeSurface(bgSurf);
+    SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
+    SDL_FreeSurface(bgSurf);
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS;
 
@@ -87,14 +104,15 @@ namespace SpelMotor {
 		labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
 		labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);
 
+		
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
         	bgX1 -= 1;
         	bgX2 -= 1;
-			if (bgX1 <= -bgWidth){ 
+			if (bgX1 <= -bgWidth) { 
 				bgX1 = bgX2 + bgWidth; // Återställ bgX1
 	        }
-			if (bgX2 <= -bgWidth){ // Återställ bgX2
+			if (bgX2 <= -bgWidth) { // Återställ bgX2
 				bgX2 = bgX1 + bgWidth;
         	}
 			// Ritar den första kopien av bakgrundsbilden
@@ -111,52 +129,53 @@ namespace SpelMotor {
 
 			float mouseXFloat, mouseYFloat;
 
-			while (SDL_PollEvent(&event)){				
-				switch (event.type){
+			while (SDL_PollEvent(&event)) {				
+				switch (event.type) {
 					case SDL_QUIT: quit = true; 
 						break;
 					case SDL_KEYDOWN:
-						if (!paused) {
-							switch (event.key.keysym.scancode) {
-								case SDL_SCANCODE_RIGHT:
-									newPlayer->move(SDL_SCANCODE_RIGHT);
-									break;
-								case SDL_SCANCODE_LEFT:
-									newPlayer->move(SDL_SCANCODE_LEFT);
-									break;
-								case SDL_SCANCODE_UP:
-									newPlayer->move(SDL_SCANCODE_UP);
-									break;
-								case SDL_SCANCODE_DOWN:
-									newPlayer->move(SDL_SCANCODE_DOWN);
-									break;
+						if(!paused){
+                    		switch (event.key.keysym.scancode){
+                    			case SDL_SCANCODE_RIGHT:
+                        			newPlayer->move(SDL_SCANCODE_RIGHT);
+                        			break;
+                    			case SDL_SCANCODE_LEFT:
+                        			newPlayer->move(SDL_SCANCODE_LEFT);
+                        			break;
+                    			case SDL_SCANCODE_UP:
+                        			newPlayer->move(SDL_SCANCODE_UP);
+                        			break;
+                    			case SDL_SCANCODE_DOWN: 
+                        			newPlayer->move(SDL_SCANCODE_DOWN);
+                        			break;
 								case SDL_SCANCODE_SPACE:
 									newPlayer->spaceKeyPressed();
 									break;
-								default:
-									break;
-							}
-						}
-						break;
+                    			default:
+                        			break;
+							}		
+                    	}
+                    	break;
 
-					case SDL_KEYUP:
-						switch (event.key.keysym.scancode) {
-							case SDL_SCANCODE_RIGHT:
-								newPlayer->stop(SDL_SCANCODE_RIGHT);
-								break;
-							case SDL_SCANCODE_LEFT:
-								newPlayer->stop(SDL_SCANCODE_LEFT);
-								break;
-							case SDL_SCANCODE_UP:
-								newPlayer->stop(SDL_SCANCODE_UP);
-								break;
-							case SDL_SCANCODE_DOWN:
-								newPlayer->stop(SDL_SCANCODE_DOWN);
-								break;
-							default:
-								break;
-						}
+                	case SDL_KEYUP:
+                    	switch (event.key.keysym.scancode){
+                    		case SDL_SCANCODE_RIGHT:
+                        		newPlayer->stop(SDL_SCANCODE_RIGHT);
+                        		break;
+                    		case SDL_SCANCODE_LEFT:
+                        		newPlayer->stop(SDL_SCANCODE_LEFT);
+                        		break;
+                    	case SDL_SCANCODE_UP:
+                        		newPlayer->stop(SDL_SCANCODE_UP);
+                        		break;
+                    	case SDL_SCANCODE_DOWN:
+                        		newPlayer->stop(SDL_SCANCODE_DOWN);
+                        		break;
+                    	default:
+                        	break;
+                    	}
 						break;
+						
 
 					case SDL_MOUSEBUTTONDOWN:
 						int mouseX, mouseY;
@@ -170,22 +189,22 @@ namespace SpelMotor {
 							remove(labelGameOver);
 							remove(labelRestart);
 							startDelayTime = 0;
+							newPlayer->resetPoints();
 							paused = false;
 							inEndGame = false;
 						}
-
-						if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)) {
-							GamePanel* gameOverPanel = GamePanel::getInstance(1, 1, 700, 520);
+				
+						if (labelQuit->isPointInside(mouseXFloat, mouseYFloat)){																		
+							GamePanel* gameOverPanel = GamePanel::getInstance(1,1, 700, 520);	
 							add(gameOverPanel);
-							Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!", 60, 0, 10);
-							add(labelGoodBye);
+							Label* labelGoodBye = Label::getInstance(220, 240, 64, "GOOD BYE!"  , 60, 0, 10);
+							add(labelGoodBye);							
 							startDelayTime = SDL_GetTicks();
-							quit = true;
+							quit = true;																									
 						}
 						break;
-
 					default:
-						break;
+						break;	
 				} //switch
 			} //inre while
 
@@ -210,6 +229,7 @@ namespace SpelMotor {
 			for (Sprite* c : removed){
 				for (std::vector<Sprite*>::iterator i = spriteList.begin(); i != spriteList.end();){
 					if (*i == c){
+						delete *i;				
 						i = spriteList.erase(i);
 					} else {
 						i++;
@@ -239,5 +259,6 @@ namespace SpelMotor {
 			}
 		} // yttre while
 	}
+
 	Session ses;
 }
