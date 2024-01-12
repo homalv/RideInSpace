@@ -13,7 +13,7 @@ namespace SpelMotor
         void tick();
         void move(const SDL_Scancode&);
         void stop(const SDL_Scancode&);
-        virtual void spaceKeyPressed() {std::cout << "Player::spaceKeyPressed" << std::endl;};
+        virtual void spaceKeyPressed() {};
         void looseLife();
         void addPoints();
         void resetPoints();

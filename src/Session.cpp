@@ -79,19 +79,10 @@ namespace SpelMotor {
 		}	
 	}
 
-	void Session::addPoints(){
-		newPlayer->addPoints();
-	}
-
-	Player* Session::getPlayer() const{
-		return newPlayer;
-	}
-
-	void Session::run() {		
-
+	void Session::run() {			
 		SDL_Surface* bgSurf = IMG_Load((constants::gResPath + backgroundLoc).c_str()); 
-    SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
-    SDL_FreeSurface(bgSurf);
+    	SDL_Texture* bgTx = SDL_CreateTextureFromSurface(sys.get_ren(), bgSurf); 
+    	SDL_FreeSurface(bgSurf);
 		bool quit = false;
 		Uint32 tickInterval = 1000 / FPS;
 
@@ -128,7 +119,6 @@ namespace SpelMotor {
 			SDL_Event event;
 
 			float mouseXFloat, mouseYFloat;
-
 			while (SDL_PollEvent(&event)) {				
 				switch (event.type) {
 					case SDL_QUIT: quit = true; 
@@ -210,9 +200,7 @@ namespace SpelMotor {
 
 			int mouseX, mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
-
-			newPlayer->tick();
-
+			newPlayer->tick();		
 			for (Sprite* c : spriteList){
 				c->tick();
 				if(c->checkRemove()){
@@ -220,12 +208,10 @@ namespace SpelMotor {
 				}
 			}
 
-
 			for (Sprite* c : added){
 				spriteList.push_back(c);
 			added.clear();
 			}
-
 			for (Sprite* c : removed){
 				for (std::vector<Sprite*>::iterator i = spriteList.begin(); i != spriteList.end();){
 					if (*i == c){
@@ -245,14 +231,11 @@ namespace SpelMotor {
 				newPlayer->checkCollision(*c1);
 			}
 
-
-
 			newPlayer->draw();
 
 			for (Sprite* c : spriteList)
 				c->draw();
 			SDL_RenderPresent(sys.get_ren());
-
 			int delay = nextTick - SDL_GetTicks();
 			if (delay > 0){
 				SDL_Delay(delay);
