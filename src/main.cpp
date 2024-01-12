@@ -31,9 +31,6 @@ int main(int argc, char** argv){
 
 	ses.addPlayer(newPlayer);
 
-	//Player* newPlayer = Player::getInstance(100, 100, 60, 60);
-	//ses.addPlayer(newPlayer);
-
 	ValueLabel* actualPoints = ValueLabel::getInstance(220, 13, 22 , newPlayer->getPoints(), 1, newPlayer, 60, 0, 10);
 	ses.add(actualPoints);
 

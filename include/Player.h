@@ -37,7 +37,7 @@ namespace SpelMotor
         bool movingDown = false;
         bool isPlayerHit = false;        
         int points = 0;
-        int lives = 1;
+        int lives = 3;
         Uint32 hitTime = 3000;
         int counter = 0;
         int deathCounter = 0;

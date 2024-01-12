@@ -9,7 +9,6 @@ namespace cwing {
     Enemy::Enemy(float x, float y, float w, float h, int livesInput) : MovableSprite(x,y,w,h){
         lives= livesInput;
         setTexture("images/enemy2.png");   
-        //texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/enemy2.png").c_str() );
         enemyHitbox.x = rect.x;
     	enemyHitbox.y = rect.y;
     	enemyHitbox.w = rect.w;
