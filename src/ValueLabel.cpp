@@ -17,7 +17,7 @@ namespace SpelMotor {
         if(playerPtr->getLives() != playerLives){
             playerLives = playerPtr->getLives();	
             std::string lives = std::to_string(playerPtr->getLives());
-            removeTexture(texture);
+            SDL_DestroyTexture(texture);
             SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), lives.c_str(), { 50,0,10 });
             texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
             SDL_FreeSurface(surf);
@@ -28,7 +28,7 @@ namespace SpelMotor {
         if(playerPtr->getPoints() != playerPoints){
             playerPoints = playerPtr->getPoints();	
             std::string points = std::to_string(playerPtr->getPoints());
-            removeTexture(texture);
+            SDL_DestroyTexture(texture);
             SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), points.c_str(), { 50,0,10 });
             texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
             SDL_FreeSurface(surf);

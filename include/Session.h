@@ -4,7 +4,6 @@
 #include "Sprite.h"
 #include "Player.h"
 #include <vector>
-#include "EnemySpawner.h"
 #include "Label.h"
 
 namespace SpelMotor

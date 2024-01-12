@@ -16,7 +16,6 @@ namespace SpelMotor
         virtual void spaceKeyPressed() {};
         void looseLife();
         void addPoints();
-        void resetPoints();
         int getLives() const;
         int getPoints() const;
         void setHit(bool isHit);
@@ -38,7 +37,7 @@ namespace SpelMotor
         bool movingDown = false;
         bool isPlayerHit = false;        
         int points = 0;
-        int lives = 3;
+        int lives = 1;
         Uint32 hitTime = 3000;
         int counter = 0;
         int deathCounter = 0;

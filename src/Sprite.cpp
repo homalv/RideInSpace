@@ -11,8 +11,4 @@ namespace SpelMotor{
     Sprite::~Sprite(){
 	    SDL_DestroyTexture(texture);
     }
-
-    void Sprite::removeTexture(SDL_Texture* textureToRemove){
-         SDL_DestroyTexture(texture);
-    }
 }

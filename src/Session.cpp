@@ -65,7 +65,10 @@ namespace SpelMotor {
 	}
 
 	void Session::handleEndGame(){
-		if(startDelayTime == 0)	{									
+		if(startDelayTime == 0)	{
+			labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER" , 85, 0, 14);
+			labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
+			labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);									
 			paused = true;	
 			//newPlayer->setHit(true);											
 			add(labelGameOver);
@@ -91,15 +94,10 @@ namespace SpelMotor {
 		int bgX1 = 0;       // Position för första kopian av bakgrundsbild
     	int bgX2 = bgWidth; // Position för andra kopian av bakgrundsbild
 
-		labelGameOver = Label::getInstance(300 , 250, 64, "GAME OVER" , 85, 0, 14);
-		labelRestart = Label::getInstance(300, 360, 34, "RESTART   "  , 150, 150, 150);
-		labelQuit = Label::getInstance(300, 440, 34, "QUIT      "  , 150, 150, 150);
-
-		
 		while (!quit) {
 			// Uppdatera x-positionerna för båda kopior av bakgrundsbilden
-        	bgX1 -= 1;
-        	bgX2 -= 1;
+        	bgX1 -= 3;
+        	bgX2 -= 3;
 			if (bgX1 <= -bgWidth) { 
 				bgX1 = bgX2 + bgWidth; // Återställ bgX1
 	        }
@@ -179,7 +177,6 @@ namespace SpelMotor {
 							remove(labelGameOver);
 							remove(labelRestart);
 							startDelayTime = 0;
-							newPlayer->resetPoints();
 							paused = false;
 							inEndGame = false;
 						}
@@ -223,6 +220,8 @@ namespace SpelMotor {
 				}
 			}
 			removed.clear();
+			
+			newPlayer->draw();
 
 			for	(Sprite* c1 : spriteList){
 				for(Sprite* c2 : spriteList){
@@ -231,11 +230,12 @@ namespace SpelMotor {
 				newPlayer->checkCollision(*c1);
 			}
 
-			newPlayer->draw();
+			//std::cout << "Player draw" << std::endl;
 
 			for (Sprite* c : spriteList)
 				c->draw();
 			SDL_RenderPresent(sys.get_ren());
+			//std::cout << "Sprite draw" << std::endl;
 			int delay = nextTick - SDL_GetTicks();
 			if (delay > 0){
 				SDL_Delay(delay);

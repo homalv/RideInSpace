@@ -5,6 +5,9 @@
 #include "Enemy.h"
 #include <random>
 #include "Constants.h"
+#include "Sprite.h"
+
+using namespace SpelMotor;
 
 namespace cwing 
 {

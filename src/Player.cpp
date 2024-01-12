@@ -109,10 +109,6 @@ namespace SpelMotor {
 		return hitbox.x;
 	}
 
-	void Player::resetPoints(){
-		points =0;
-	}
-
 	float Player::getHitBoxPosY(){
 		return hitbox.y;
 	}
@@ -120,7 +116,7 @@ namespace SpelMotor {
 	void Player::reset(){
 		setHit(false);
 		points = 0;
-		lives = 3;
+		lives = 1;
 	}
 	
 	void Player::looseLife(){

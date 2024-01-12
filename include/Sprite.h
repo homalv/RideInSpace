@@ -17,7 +17,6 @@ namespace SpelMotor{
 		virtual void checkCollision(const Sprite& other){};
 		virtual float getHitBoxPosX() {return 0.0;};
 		virtual float getHitBoxPosY() {return 0.0;};
-		void removeTexture(SDL_Texture* textureToRemove);
 		virtual ~Sprite();
 	protected:
 		Sprite(float x, float y, float w, float h) : rect{ x,y,w,h } {}

@@ -9,6 +9,7 @@
 #include "Label.h"
 #include "ValueLabel.h"
 #include "SpacePlayer.h"
+#include "EnemySpawner.h"
 
 using namespace std;
 using namespace cwing;
@@ -16,6 +17,7 @@ using namespace SpelMotor;
 
 int main(int argc, char** argv){
 
+	ses.addBackgroundMusic("sounds/rideInSpace.mp3");
 	GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 	ses.add(gamePanel);
 	Label* labelPoints = Label::getInstance(50, 13, 22, "Total Points: ", 60, 0, 10);
@@ -40,7 +42,7 @@ int main(int argc, char** argv){
 
 	EnemySpawner* enemySpawner = EnemySpawner::getInstance(500, 100, 465, 55.0);
 	ses.add(enemySpawner);
-	
+
 	ses.run();
 
 	return 0;
