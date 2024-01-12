@@ -26,6 +26,7 @@ namespace SpelMotor
 	private:
 		std::vector<Sprite*> spriteList;
 		std::vector<Sprite*> added, removed;
+		std::vector<Label*> endGamelabels;
 		std::string backgroundLoc;
 		bool paused = false;
 		Label* labelGameOver;
