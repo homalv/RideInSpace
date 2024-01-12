@@ -8,17 +8,14 @@
 
 namespace cwing 
 {
-    class EnemySpawner{
+    class EnemySpawner : public Sprite {
         public:
             static EnemySpawner* getInstance(int x, int startY, int endY, float enemySize);
             void tick();
-            
             void clearVector();
             ~EnemySpawner(){};
-        
         protected:
             EnemySpawner(int x, int startY, int endY, float enemySize);
-
         private:
             int nrOfPlaces = 0;
             int xPos = 0;

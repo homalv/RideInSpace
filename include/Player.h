@@ -1,27 +1,28 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include <MovableSprite.h>
-#include "PlayerBullet.h"
-#include "Label.h"
 #include <vector>
+#include "MovableSprite.h"
+#include <iostream>
 
-namespace cwing 
+namespace SpelMotor 
 {
     class Player : public MovableSprite {
+
     public:
         static Player* getInstance(float x, float y, float w, float h);
         void tick();
         void move(const SDL_Scancode&);
         void stop(const SDL_Scancode&);
-        void shoot();
+        virtual void spaceKeyPressed() {std::cout << "Player::spaceKeyPressed" << std::endl;};
         void looseLife();
         void addPoints();
         void resetPoints();
         int getLives() const;
         int getPoints() const;
-        bool isHit();
         void setHit(bool isHit);
-        void resetPlayer();
+        void reset();
+        int getCounter() const;
+        void resetCounter();
         void checkCollision(const Sprite& other);
         float getHitBoxPosX();
 		float getHitBoxPosY();

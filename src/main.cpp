@@ -8,14 +8,14 @@
 #include "GamePanel.h"
 #include "Label.h"
 #include "ValueLabel.h"
-
+#include "SpacePlayer.h"
 
 using namespace std;
 using namespace cwing;
+using namespace SpelMotor;
 
 int main(int argc, char** argv){
 
-	ses.addBackgroundMusic("sounds/rideInSpace.mp3");
 	GamePanel* gamePanel = GamePanel::getInstance(20,5, 660, 55);	
 	ses.add(gamePanel);
 	Label* labelPoints = Label::getInstance(50, 13, 22, "Total Points: ", 60, 0, 10);
@@ -25,9 +25,12 @@ int main(int argc, char** argv){
 
 	ses.addBackground("images/space_bg.png");
 
-	Player* newPlayer = Player::getInstance(100, 100, 60, 60);
+	SpacePlayer* newPlayer = SpacePlayer::getInstance(100, 100, 60, 60);
 
 	ses.addPlayer(newPlayer);
+
+	//Player* newPlayer = Player::getInstance(100, 100, 60, 60);
+	//ses.addPlayer(newPlayer);
 
 	ValueLabel* actualPoints = ValueLabel::getInstance(220, 13, 22 , newPlayer->getPoints(), 1, newPlayer, 60, 0, 10);
 	ses.add(actualPoints);
@@ -36,7 +39,7 @@ int main(int argc, char** argv){
 	ses.add(actualLives);
 
 	EnemySpawner* enemySpawner = EnemySpawner::getInstance(500, 100, 465, 55.0);
-	ses.addEnemySpawner(enemySpawner);
+	ses.add(enemySpawner);
 	
 	ses.run();
 

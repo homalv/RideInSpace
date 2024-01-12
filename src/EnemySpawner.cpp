@@ -2,7 +2,7 @@
 #include "Session.h"
 
 namespace cwing {
-    EnemySpawner::EnemySpawner(int x, int startY, int endY, float eSize) : nrOfPlaces((endY - startY) / eSize), xPos(x), firstPos(startY), enemySize(eSize), dist(1, nrOfPlaces), spawnVector(6, nullptr){
+    EnemySpawner::EnemySpawner(int x, int startY, int endY, float eSize) : Sprite(0, 0, 0, 0), nrOfPlaces((endY - startY) / eSize), xPos(x), firstPos(startY), enemySize(eSize), dist(1, nrOfPlaces), spawnVector(6, nullptr){
     }
 
     EnemySpawner* EnemySpawner::getInstance(int x, int startY, int endY, float enemySize){
@@ -11,7 +11,7 @@ namespace cwing {
 
     void EnemySpawner::tick(){
         counter++;
-        if(counter >= (FPS*2)){
+        if(counter >= (FPS*2) && !ses.getPause()){
             counter = 0;
             position = dist(rd);
             while(spawnVector[position - 1] != nullptr){

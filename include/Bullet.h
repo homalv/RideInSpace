@@ -2,6 +2,8 @@
 #define BULLET_H
 #include "MovableSprite.h"
 
+using namespace SpelMotor;
+
 namespace cwing 
 {
     class Bullet : public MovableSprite {

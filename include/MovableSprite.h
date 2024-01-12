@@ -2,7 +2,7 @@
 #define MovableSprite_H
 #include <Sprite.h>
 
-namespace cwing
+namespace SpelMotor
 {
 	class MovableSprite : public Sprite
 	{

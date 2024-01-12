@@ -5,13 +5,10 @@
 #include "Player.h"
 #include <string>
 
-namespace cwing 
-{
-
-	class Label: public Sprite
-	{
+namespace SpelMotor {
+	
+	class Label: public Sprite{
 	public:
-
 		static Label* getInstance(int x, int y, int fontSize, std::string txt, Uint8 r=0, Uint8 g=0, Uint8 b=0);
 		std::string getText() const;
 		void setText(std::string newText);
@@ -29,6 +26,5 @@ namespace cwing
 		int width;
 		int height;
 	};
-
 }
 #endif
