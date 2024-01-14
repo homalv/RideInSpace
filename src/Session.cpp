@@ -15,8 +15,6 @@
 #include "Label.h"
 #include <iostream>
 
-using namespace std;
-
 namespace spelmotor {
 
 	Uint32 startDelayTime = 0; 

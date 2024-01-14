@@ -15,8 +15,8 @@ namespace spacerider
 		if(getCounter() >= (FPS*1)){
 			resetCounter();
 			PlayerBullet* pb = PlayerBullet::getInstance(rect.x+rect.w, rect.y+(rect.h/2));
-			ses.playSound("sounds/laser_shot.mp3");
-			ses.add(pb);
+			spelmotor::ses.playSound("sounds/laser_shot.mp3");
+			spelmotor::ses.add(pb);
 		}
 	}
 }

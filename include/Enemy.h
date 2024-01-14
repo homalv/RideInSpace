@@ -8,7 +8,7 @@
 #include <iostream>
 
 namespace spacerider {
-    class Enemy : public MovableSprite {
+    class Enemy : public spelmotor::MovableSprite {
         public:
             static Enemy* getInstance(float x, float y, float w, float h, int lives);        
             void tick(); 
@@ -27,7 +27,8 @@ namespace spacerider {
             void dies();
             SDL_FRect enemyHitbox;
             int lives;
-            Uint32 stopTimer = 0;
+            int stopTimer1 = 0;
+            int stopTimer2 = 0;
             Uint32 endmyDeadTimer = 0;
             Uint32 currTimer = 0;
             Uint32 stopShootTimer = 0;

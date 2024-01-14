@@ -12,6 +12,7 @@ namespace spelmotor
 			MovableSprite(float x, float y, float w, float h) : Sprite{ x,y,w,h } {
 				SDL_GetWindowSize(sys.get_win(), &windowWidth, &windowHeight);
 			}
+			
 			~MovableSprite(){};
 			int windowWidth;
             int windowHeight;

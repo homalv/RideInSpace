@@ -2,11 +2,9 @@
 #define BULLET_H
 #include "MovableSprite.h"
 
-using namespace spelmotor;
-
 namespace spacerider 
 {
-    class Bullet : public MovableSprite {
+    class Bullet : public spelmotor::MovableSprite {
         public:
             static Bullet* getInstance(float x, float y, float w, float h);
             virtual void tick() {};
