@@ -15,8 +15,8 @@ namespace cwing
 		if(getCounter() >= (FPS*1)){
 			resetCounter();
 			PlayerBullet* pb = PlayerBullet::getInstance(rect.x+rect.w, rect.y+(rect.h/2));
-			SpelMotor::ses.playSound("sounds/laser_shot.mp3");
-			SpelMotor::ses.add(pb);
+			ses.playSound("sounds/laser_shot.mp3");
+			ses.add(pb);
 		}
 	}
 }
