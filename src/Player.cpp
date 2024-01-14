@@ -66,7 +66,6 @@ namespace SpelMotor {
 
 		if (isPlayerHit && counter >= (FPS*3) && lives>0) {
 			// Om det har gått 2 sekunder sedan träffen, återställ skeppet
-			std::cout << "Waiting" << std::endl;
 			setHit(false);
 			ses.setPause(false);
 		}
