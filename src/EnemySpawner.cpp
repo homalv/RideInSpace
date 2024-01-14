@@ -4,8 +4,7 @@
 
 namespace cwing {
     EnemySpawner::EnemySpawner(int x, int startY, int endY, float eSize) : Sprite(1, 1, 1, 1), nrOfPlaces((endY - startY) / eSize), xPos(x), firstPos(startY), enemySize(eSize), dist(1, nrOfPlaces), spawnVector(6, nullptr){
-        setTexture("images/enemy2.png");
-        
+        setTexture("images/enemy2.png");        
     }
 
     EnemySpawner* EnemySpawner::getInstance(int x, int startY, int endY, float enemySize){

@@ -8,11 +8,11 @@
 namespace cwing {  
     Enemy::Enemy(float x, float y, float w, float h, int livesInput) : MovableSprite(x,y,w,h){
         lives= livesInput;
-        setTexture("images/enemy2.png");   
+        setTexture("images/enemy2.png");
         hitbox.x = rect.x;
         hitbox.y = rect.y;
-    	hitbox.w = rect.w;
-    	hitbox.h = rect.h;
+    	  hitbox.w = rect.w;
+    	  hitbox.h = rect.h;
 	}
 
     Enemy* Enemy::getInstance(float x, float y, float w, float h, int lives) {

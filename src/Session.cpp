@@ -65,11 +65,10 @@ namespace SpelMotor {
 		if(startDelayTime == 0)	{
 			endGamelabels.push_back(labelGameOver);								
 			paused = true;										
-			//add(labelGameOver);
+			
 			startDelayTime = SDL_GetTicks();
 		} else if (SDL_GetTicks() - startDelayTime >= 3000 && inEndGame == false) {										
-			//add(labelRestart);						
-			//add(labelQuit);
+			
 			endGamelabels.push_back(labelRestart);
     		endGamelabels.push_back(labelQuit);	
 			inEndGame = true;														

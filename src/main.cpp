@@ -26,7 +26,7 @@ int main(int argc, char** argv){
 	cwing::SpacePlayer* newPlayer = cwing::SpacePlayer::getInstance(100, 100, 60, 60);
 
 	SpelMotor::ses.addPlayer(newPlayer);
-
+  
 	//Player* newPlayer = Player::getInstance(100, 100, 60, 60);
 	//ses.addPlayer(newPlayer);
 
