@@ -1,10 +1,13 @@
 #include "Label.h"
 #include <SDL2/SDL_ttf.h>
 #include "System.h"
+#include <iostream>
 #include "Constants.h"
 #include <string>
 #include "Player.h"
 #include "Sprite.h"
+
+using namespace std;
 
 namespace SpelMotor {
 	
@@ -25,7 +28,7 @@ namespace SpelMotor {
 		TTF_CloseFont(customFont);
 	}
 
-	std::string Label::getText() const {
+	string Label::getText() const {
 		return text;
 	}
 

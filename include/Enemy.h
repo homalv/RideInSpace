@@ -2,9 +2,13 @@
 #define Enemy_H
 
 #include "MovableSprite.h"
+#include "System.h"
+#include "EnemyBullet.h"
+#include "PlayerBullet.h"
+#include <iostream>
 
 namespace cwing {
-    class Enemy : public SpelMotor::MovableSprite {
+    class Enemy : public MovableSprite {
         public:
             static Enemy* getInstance(float x, float y, float w, float h, int lives);        
             void tick(); 
@@ -21,6 +25,7 @@ namespace cwing {
 
         private:
             void dies();
+            SDL_FRect enemyHitbox;
             int lives;
             Uint32 stopTimer = 0;
             Uint32 endmyDeadTimer = 0;

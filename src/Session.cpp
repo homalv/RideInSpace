@@ -13,6 +13,9 @@
 #include "EnemyBullet.h"
 #include "GamePanel.h"
 #include "Label.h"
+#include <iostream>
+
+using namespace std;
 
 namespace SpelMotor {
 
@@ -220,16 +223,17 @@ namespace SpelMotor {
 				}
 			}
 			removed.clear();
+			
+			newPlayer->draw();
 
 			for	(Sprite* c1 : spriteList){
 				for(Sprite* c2 : spriteList){
-
 					c1->checkCollision(*c2);
 				}
 				newPlayer->checkCollision(*c1);
 			}
 
-			newPlayer->draw();
+			//std::cout << "Player draw" << std::endl;
 
 			for (Sprite* c : spriteList)
 				c->draw();

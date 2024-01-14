@@ -13,7 +13,7 @@ namespace cwing {
 
     void EnemySpawner::tick(){
         counter++;
-        if(counter >= (FPS*2) && !SpelMotor::ses.getPause()){
+        if(counter >= (FPS*2) && !ses.getPause()){
             counter = 0;
             position = dist(rd);
             while(spawnVector[position - 1] != nullptr){
@@ -21,7 +21,7 @@ namespace cwing {
             }
             Enemy* newEnemy = Enemy::getInstance(700, firstPos + position * enemySize, 40, 40, 1);
             spawnVector[position-1] = newEnemy;
-            SpelMotor::ses.add(newEnemy);
+            ses.add(newEnemy);
             forCounter = 0;
             for (Enemy* ptr : spawnVector) {
                 if(ptr != nullptr){
@@ -31,15 +31,15 @@ namespace cwing {
                 }
                 forCounter++;
             }
-        } else if(SpelMotor::ses.getPause()){
+        } else if(ses.getPause()){
             clearVector();
         }
     }
 
     void EnemySpawner::clearVector(){
-        if(SpelMotor::ses.getPause()){
+        if(ses.getPause()){
             for (int i = 0; i < nrOfPlaces; ++i) {  
-				SpelMotor::ses.remove(spawnVector[i]); //Tömmer hela vektorn på fiender så det blir lite lugnt.
+				ses.remove(spawnVector[i]); //Tömmer hela vektorn på fiender så det blir lite lugnt.
 				spawnVector[i] = nullptr;
 			}
         }

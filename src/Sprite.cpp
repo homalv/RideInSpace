@@ -1,11 +1,8 @@
 #include "Sprite.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "System.h"
 
 namespace SpelMotor{
-
-
     void Sprite::draw() const{
         const SDL_FRect &rect = getRect();
 		

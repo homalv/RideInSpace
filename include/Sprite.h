@@ -21,9 +21,10 @@ namespace SpelMotor{
 	protected:
 		Sprite(float x, float y, float w, float h) : rect{ x,y,w,h } {}
 		void setTexture(std::string textLocation);	
-		bool removeThis = false;
 		SDL_FRect rect;
+		bool removeThis = false;
 		SDL_Texture* texture;
+		SDL_FRect hitbox;
 	};
 }
 
