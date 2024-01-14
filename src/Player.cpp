@@ -5,7 +5,6 @@
 #include "System.h"
 #include "Constants.h"
 #include "PlayerBullet.h"
-#include <iostream>
 #include "Session.h"
 
 namespace SpelMotor {
@@ -64,9 +63,8 @@ namespace SpelMotor {
 			hitbox.y += 5;
 		}
 
-		if (isPlayerHit && counter >= (FPS*3) && lives>0) {
+		if (isPlayerHit && counter >= (FPS*2) && lives>0) {
 			// Om det har gått 2 sekunder sedan träffen, återställ skeppet
-			std::cout << "Waiting" << std::endl;
 			setHit(false);
 			ses.setPause(false);
 		}
@@ -96,7 +94,7 @@ namespace SpelMotor {
 	}
 
 	void Player::checkCollision(const Sprite& other){
-		if(SDL_HasIntersectionF(&hitbox, &other.getRect()) && counter >= (FPS*3)){
+		if(SDL_HasIntersectionF(&hitbox, &other.getRect()) && isPlayerHit == false){
 			counter = 0;
 			ses.setPause(true);
 			setHit(true);

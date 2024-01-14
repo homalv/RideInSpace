@@ -2,7 +2,6 @@
 #define PLAYER_BULLET_H
 #include "Bullet.h"
 #include "System.h"
-#include <iostream>
 
 namespace cwing 
 {

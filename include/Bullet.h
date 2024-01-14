@@ -2,11 +2,9 @@
 #define BULLET_H
 #include "MovableSprite.h"
 
-using namespace SpelMotor;
-
 namespace cwing 
 {
-    class Bullet : public MovableSprite {
+    class Bullet : public SpelMotor::MovableSprite {
         public:
             static Bullet* getInstance(float x, float y, float w, float h);
             virtual void tick() {};
@@ -18,7 +16,5 @@ namespace cwing
 
     };
 }
-
-
 
 #endif
