@@ -2,7 +2,7 @@
 #include "System.h"
 #include <SDL2/SDL.h>
 
-namespace SpelMotor{
+namespace spelmotor{
 	System::System(){
 		SDL_Init(SDL_INIT_EVERYTHING);
 		win = SDL_CreateWindow("GameDemo", 10, 10, 700, 520, 0);

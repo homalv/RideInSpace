@@ -4,7 +4,7 @@
 #include "System.h"
 #include <iostream>
 
-namespace cwing 
+namespace spacerider 
 {
     class PlayerBullet : public Bullet {
         public:

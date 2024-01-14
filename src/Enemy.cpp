@@ -5,7 +5,7 @@
 #include "Session.h"
 #include <iostream>
 
-namespace cwing {  
+namespace spacerider {  
     Enemy::Enemy(float x, float y, float w, float h, int livesInput) : MovableSprite(x,y,w,h){
         lives= livesInput;
         setTexture("images/enemy2.png");   

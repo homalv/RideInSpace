@@ -2,7 +2,7 @@
 #include "Constants.h"
 #include "PlayerBullet.h"
 
-namespace cwing {
+namespace spacerider {
 	PlayerBullet::PlayerBullet(float x, float y) : Bullet(x,y,width,height){}
 
 	PlayerBullet* PlayerBullet::getInstance(float x, float y) {

@@ -2,7 +2,7 @@
 #define VALUELABEL_H
 #include "Label.h"
 
-namespace SpelMotor 
+namespace spelmotor 
 {
 	class ValueLabel: public Label
 	{

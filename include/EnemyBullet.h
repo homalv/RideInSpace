@@ -4,7 +4,7 @@
 #include <vector>
 #include "Bullet.h"
 
-namespace cwing 
+namespace spacerider 
 {
     class EnemyBullet : public Bullet{
         public:

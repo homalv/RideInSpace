@@ -9,7 +9,7 @@
 
 using namespace std;
 
-namespace SpelMotor {
+namespace spelmotor {
 	
 	Label* Label::getInstance(int x, int y, int fontSize, std::string txt, Uint8 r, Uint8 g, Uint8 b) {
 		return new Label(x, y, fontSize, txt, r, g, b);

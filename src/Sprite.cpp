@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-namespace SpelMotor{
+namespace spelmotor{
     void Sprite::draw() const{
         const SDL_FRect &rect = getRect();
 		

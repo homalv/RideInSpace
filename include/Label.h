@@ -5,7 +5,7 @@
 #include "Player.h"
 #include <string>
 
-namespace SpelMotor {
+namespace spelmotor {
 	
 	class Label: public Sprite{
 	public:

@@ -8,7 +8,7 @@
 #include <iostream>
 #include "Session.h"
 
-namespace SpelMotor {
+namespace spelmotor {
 	Player::Player(float x, float y, float w, float h) : MovableSprite(x,y,w,h){
 		setTexture("images/player_ship.png");
 		hitbox.x = rect.x;

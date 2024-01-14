@@ -6,7 +6,7 @@
 #include <string>
 #include "Sprite.h"
 
-namespace SpelMotor {
+namespace spelmotor {
  
     class GamePanel : public Sprite {
     public:

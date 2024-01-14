@@ -4,7 +4,7 @@
 #include "System.h"
 #include "Constants.h"
 
-namespace SpelMotor{
+namespace spelmotor{
 
 	class Sprite
 	{

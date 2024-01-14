@@ -1,7 +1,7 @@
 #include "ValueLabel.h"
 #include "Player.h"
 
-namespace SpelMotor {
+namespace spelmotor {
     ValueLabel* ValueLabel::getInstance(int x, int y, int fontSize, int playerValue, int labelTypeInput, Player* playerPointer, Uint8 r, Uint8 g, Uint8 b){
 		return new ValueLabel(x, y, fontSize, playerValue, labelTypeInput, playerPointer, r, g, b);
 	}

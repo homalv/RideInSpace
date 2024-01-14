@@ -17,7 +17,7 @@
 
 using namespace std;
 
-namespace SpelMotor {
+namespace spelmotor {
 
 	Uint32 startDelayTime = 0; 
 	

@@ -7,7 +7,7 @@
 #include "PlayerBullet.h"
 #include <iostream>
 
-namespace cwing {
+namespace spacerider {
     class Enemy : public MovableSprite {
         public:
             static Enemy* getInstance(float x, float y, float w, float h, int lives);        

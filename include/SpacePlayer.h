@@ -2,9 +2,9 @@
 #define SPACEPLAYER_H
 #include <Player.h>
 
-using namespace SpelMotor;
+using namespace spelmotor;
 
-namespace cwing 
+namespace spacerider 
 {
     class SpacePlayer : public Player {
     public:

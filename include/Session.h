@@ -6,7 +6,7 @@
 #include <vector>
 #include "Label.h"
 
-namespace SpelMotor
+namespace spelmotor
 {
 	class Session
 	{

@@ -4,7 +4,7 @@
 #include "MovableSprite.h"
 #include <iostream>
 
-namespace SpelMotor 
+namespace spelmotor 
 {
     class Player : public MovableSprite {
 

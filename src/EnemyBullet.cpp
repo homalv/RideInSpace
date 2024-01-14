@@ -2,7 +2,7 @@
 #include "Constants.h"
 #include "EnemyBullet.h"
 
-namespace cwing {
+namespace spacerider {
 
 	EnemyBullet::EnemyBullet(float x, float y, float currPlayerX, float currPlayerY): Bullet(x, y, width, height), playerX(currPlayerX), playerY(currPlayerY) {
         calcDist();       

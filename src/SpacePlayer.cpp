@@ -3,7 +3,7 @@
 #include "Session.h"
 #include "PlayerBullet.h"
 
-namespace cwing 
+namespace spacerider 
 {	
 	SpacePlayer::SpacePlayer(float x, float y, float w, float h) : Player(x,y,w,h) {}
 

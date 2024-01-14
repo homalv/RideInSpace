@@ -2,7 +2,7 @@
 #include "Constants.h"
 #include "Bullet.h"
 
-namespace cwing {
+namespace spacerider {
 	Bullet::Bullet(float x, float y, float w, float h) : MovableSprite(x,(y-(h/2)),w,h){
 		setTexture("images/bullet.png");        		
 	}

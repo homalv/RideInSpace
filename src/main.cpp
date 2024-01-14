@@ -12,8 +12,8 @@
 #include "EnemySpawner.h"
 
 using namespace std;
-using namespace cwing;
-using namespace SpelMotor;
+using namespace spacerider;
+using namespace spelmotor;
 
 int main(int argc, char** argv){
 

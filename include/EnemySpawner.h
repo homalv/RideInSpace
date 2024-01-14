@@ -7,9 +7,9 @@
 #include "Constants.h"
 #include "Sprite.h"
 
-using namespace SpelMotor;
+using namespace spelmotor;
 
-namespace cwing 
+namespace spacerider 
 {
     class EnemySpawner : public Sprite {
         public:
