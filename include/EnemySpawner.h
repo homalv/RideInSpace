@@ -7,11 +7,9 @@
 #include "Constants.h"
 #include "Sprite.h"
 
-using namespace SpelMotor;
-
 namespace cwing 
 {
-    class EnemySpawner : public Sprite {
+    class EnemySpawner : public SpelMotor::Sprite {
         public:
             static EnemySpawner* getInstance(int x, int startY, int endY, float enemySize);
             void tick();

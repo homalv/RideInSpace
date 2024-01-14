@@ -1,8 +1,6 @@
 // GamePanel.h
 #ifndef GamePanel_H
 #define GamePanel_H
-
-
 #include <string>
 #include "Sprite.h"
 

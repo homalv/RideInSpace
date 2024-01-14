@@ -2,7 +2,6 @@
 #define PLAYER_H
 #include <vector>
 #include "MovableSprite.h"
-#include <iostream>
 
 namespace SpelMotor 
 {

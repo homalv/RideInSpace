@@ -15,6 +15,7 @@ namespace SpelMotor
 			~MovableSprite(){};
 			int windowWidth;
             int windowHeight;
+			SDL_FRect hitbox;
 	};
 } 
 
