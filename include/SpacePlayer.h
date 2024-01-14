@@ -2,11 +2,9 @@
 #define SPACEPLAYER_H
 #include <Player.h>
 
-using namespace spelmotor;
-
 namespace spacerider 
 {
-    class SpacePlayer : public Player {
+    class SpacePlayer : public spelmotor::Player {
     public:
         static SpacePlayer* getInstance(float x, float y, float w, float h);
         void spaceKeyPressed();

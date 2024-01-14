@@ -7,8 +7,6 @@
 #include "Player.h"
 #include "Sprite.h"
 
-using namespace std;
-
 namespace spelmotor {
 	
 	Label* Label::getInstance(int x, int y, int fontSize, std::string txt, Uint8 r, Uint8 g, Uint8 b) {
@@ -28,7 +26,7 @@ namespace spelmotor {
 		TTF_CloseFont(customFont);
 	}
 
-	string Label::getText() const {
+	std::string Label::getText() const {
 		return text;
 	}
 

@@ -51,27 +51,28 @@ namespace spacerider {
 			removeThis = true;
 		}
         if(isDead()){
-            endmyDeadTimer = SDL_GetTicks();
-            if(stopTimer == 0){
-                stopTimer = SDL_GetTicks();
+            if(stopTimer1 == 0){
+                stopTimer1 = counter;
             }
-            if(endmyDeadTimer - stopTimer >= 2000){
+            if(counter - stopTimer1 >= FPS){
                 setRemoveThis(true);
             }
         }
         if(rect.x == 500){
-            currTimer = SDL_GetTicks();
-            if(stopTimer == 0){
-                stopTimer = SDL_GetTicks();
+            if(stopTimer2 == 0){
+                stopTimer2 = counter;
             }
-            if(currTimer - stopTimer >= 3000){
+            if(counter - stopTimer2 >= FPS*3){
+                stopTimer2 = 0;
                 rect.x--;
             }
         } else {
-            rect.x -= 5;  
+            if(!isDead()){
+                rect.x -= 5;  
+            }
         }
 
-        shoot(ses.getPlayer()->getHitBoxPosX(), ses.getPlayer()->getHitBoxPosY());
+        shoot(spelmotor::ses.getPlayer()->getHitBoxPosX(), spelmotor::ses.getPlayer()->getHitBoxPosY());
 
     };
  
@@ -79,17 +80,18 @@ namespace spacerider {
         if(shotCounter >= (FPS*3)){
             shotCounter = 0;
             EnemyBullet* eb = EnemyBullet::getInstance(rect.x, rect.y, playerX, playerY);
-            ses.playSound("sounds/laser_shot_enemy.mp3");
-            ses.add(eb);
+            spelmotor::ses.playSound("sounds/laser_shot_enemy.mp3");
+            spelmotor::ses.add(eb);
         }
     }
 
     void Enemy::checkCollision(const Sprite& other) {
-        if(SDL_HasIntersectionF(&enemyHitbox, &other.getRect()) && !isDead()){
+        //hasIntersection(&enemyHitbox, &other.getRect())
+        if(hasIntersection(enemyHitbox, other) && !isDead()){
             const PlayerBullet* playerBullet = dynamic_cast<const PlayerBullet*>(&other);
             if(playerBullet != nullptr){
-                ses.playSound("sounds/hit_sound_enemy.mp3");
-                ses.addPoints();
+                spelmotor::ses.playSound("sounds/hit_sound_enemy.mp3");
+                spelmotor::ses.addPoints();
                 looseLife();
             }   
         }

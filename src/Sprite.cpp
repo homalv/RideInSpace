@@ -15,6 +15,5 @@ namespace spelmotor{
 
     void Sprite::setTexture(std::string textLocaltion){
         texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + textLocaltion).c_str() );
-
     }
 }

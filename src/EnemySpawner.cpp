@@ -13,7 +13,7 @@ namespace spacerider {
 
     void EnemySpawner::tick(){
         counter++;
-        if(counter >= (FPS*2) && !ses.getPause()){
+        if(counter >= (FPS*2) && !spelmotor::ses.getPause()){
             counter = 0;
             position = dist(rd);
             while(spawnVector[position - 1] != nullptr){
@@ -21,7 +21,7 @@ namespace spacerider {
             }
             Enemy* newEnemy = Enemy::getInstance(700, firstPos + position * enemySize, 40, 40, 1);
             spawnVector[position-1] = newEnemy;
-            ses.add(newEnemy);
+            spelmotor::ses.add(newEnemy);
             forCounter = 0;
             for (Enemy* ptr : spawnVector) {
                 if(ptr != nullptr){
@@ -31,15 +31,15 @@ namespace spacerider {
                 }
                 forCounter++;
             }
-        } else if(ses.getPause()){
+        } else if(spelmotor::ses.getPause()){
             clearVector();
         }
     }
 
     void EnemySpawner::clearVector(){
-        if(ses.getPause()){
+        if(spelmotor::ses.getPause()){
             for (int i = 0; i < nrOfPlaces; ++i) {  
-				ses.remove(spawnVector[i]); //Tömmer hela vektorn på fiender så det blir lite lugnt.
+				spelmotor::ses.remove(spawnVector[i]); //Tömmer hela vektorn på fiender så det blir lite lugnt.
 				spawnVector[i] = nullptr;
 			}
         }
