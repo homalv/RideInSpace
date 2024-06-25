@@ -77,7 +77,7 @@ namespace spacerider {
     };
  
     void Enemy::shoot(float playerX, float playerY){
-        if(shotCounter >= (FPS*3)){
+        if(shotCounter >= (FPS*3) && !isDead()){
             shotCounter = 0;
             EnemyBullet* eb = EnemyBullet::getInstance(rect.x, rect.y, playerX, playerY);
             spelmotor::ses.playSound("sounds/laser_shot_enemy.mp3");
@@ -86,7 +86,6 @@ namespace spacerider {
     }
 
     void Enemy::checkCollision(const Sprite& other) {
-        //hasIntersection(&enemyHitbox, &other.getRect())
         if(hasIntersection(enemyHitbox, other) && !isDead()){
             const PlayerBullet* playerBullet = dynamic_cast<const PlayerBullet*>(&other);
             if(playerBullet != nullptr){
